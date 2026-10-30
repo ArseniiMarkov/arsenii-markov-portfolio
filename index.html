@@ -7,69 +7,142 @@
 <meta name="description" content="Portfolio of Arsenii Markov, a Texas A&M Engineering Academy student building automated carbon fiber manufacturing systems.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:opsz,wght@8..60,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400..700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <style>
-:root{--bg:#0A0D10;--surface:#12161B;--ink:#F0F4F8;--muted:#72808E;--rule:#222930;--accent:#FFFFFF;--on-accent:#0A0D10;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{
+  --bg:#0A0D10;
+  --surface:#12161B;
+  --ink:#F0F4F8;
+  --muted:#72808E;
+  --rule:#222930;
+  --accent:#FFFFFF;
+  --on-accent:#0A0D10;
+  --red:#FF3B1F;
+  --cyan:#00E5FF;
+  --mono:'JetBrains Mono',monospace;
+  color-scheme:dark;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-top,0px);
+}
 *,*::before,*::after{box-sizing:inherit}
 html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.65 "Source Serif 4",Georgia,serif}
+body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.65 "Source Serif 4",Georgia,serif;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
 h1,h2,h3,.ui{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
 a{color:inherit;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--on-accent);padding:.5rem 1rem;z-index:20}
 .skip:focus{left:0}
-.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
+.wrap{max-width:1360px;margin:0 auto;padding:0 clamp(1rem,3.5vw,2rem)}
 
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:1px solid var(--rule)}
-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.1rem 1.5rem;padding-block:.6rem}
+/* Sticky Top Header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(10,13,16,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.2rem 1.5rem;padding-block:.65rem}
 .brand{font:800 1.1rem Archivo,sans-serif;font-stretch:120%;text-decoration:none}
-nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0;overflow-x:auto}
-nav a{display:block;padding:.45rem 0;font:500 .92rem Archivo,sans-serif;color:var(--muted);text-decoration:none;white-space:nowrap}
-nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:6px}
+nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0;overflow-x:auto;align-items:center}
+nav a{display:block;padding:.45rem 0;font:500 .92rem Archivo,sans-serif;color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .15s ease}
+nav a:hover,nav a.active{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:6px}
+nav a.nav-linkedin{display:inline-flex;align-items:center;gap:.35rem;color:var(--ink);font-weight:600}
+.nav-resume-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  padding:.3rem .7rem;
+  background:var(--surface);
+  color:var(--ink);
+  border:1px solid var(--rule);
+  border-radius:2px;
+  font:600 .85rem Archivo,sans-serif;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:border-color .15s ease,background .15s ease;
+}
+.nav-resume-btn:hover{border-color:var(--cyan);background:rgba(0,229,255,0.08)}
+.scroll-hairline{position:absolute;bottom:-1px;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--red),var(--cyan));transition:width .06s linear}
 
+/* 3-Column Symmetrical Layout: Left F1 Track | Main Editorial Content | Right Rocket Track */
 .main-layout{display:grid;grid-template-columns:1fr;gap:2rem}
 @media (min-width:1024px){
-  .main-layout{grid-template-columns:1fr 280px;align-items:start}
-  .f1-stage{position:sticky;top:80px;height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:center;align-items:center}
+  .main-layout{grid-template-columns:160px minmax(0,1fr) 160px;gap:2.5rem;align-items:start}
 }
 
-.hero{padding-block:clamp(3rem,9vw,6.5rem) 3rem}
-h1{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(2.7rem,9vw,6rem);line-height:.95;letter-spacing:-.02em}
-.lede{max-width:40rem;margin:1.75rem 0;font-size:1.25rem;color:#B0BCC8}
-.actions{display:flex;flex-wrap:wrap;gap:.75rem}
-.btn{display:inline-block;padding:.8rem 1.4rem;background:var(--ink);color:var(--on-accent);border:1px solid var(--ink);border-radius:2px;font:700 .95rem Archivo,sans-serif;text-decoration:none}
+.side-track{display:none}
+@media (min-width:1024px){
+  .side-track{
+    position:sticky;
+    top:72px;
+    height:calc(100vh - 88px);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-items:center;
+    padding:.75rem 0;
+    pointer-events:none;
+    user-select:none;
+  }
+}
+
+.track-hud{
+  width:100%;
+  padding:.4rem .5rem;
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:2px;
+  font:500 .66rem/1.35 var(--mono);
+  color:var(--muted);
+  text-align:center;
+}
+.track-hud strong{display:block;font-size:.74rem;color:var(--ink)}
+.track-hud .accent-red{color:var(--red)}
+.track-hud .accent-cyan{color:var(--cyan)}
+
+.track-svg-wrap{flex:1;width:100%;position:relative;overflow:hidden}
+.track-svg{width:100%;height:100%;display:block;overflow:visible}
+
+/* CFD Aerodynamic Wind Streamline Keyframes from Redesign */
+@keyframes cfdFlowUp {
+  0% { stroke-dashoffset: 0; opacity: 0.2; }
+  50% { opacity: 0.85; }
+  100% { stroke-dashoffset: -110; opacity: 0.2; }
+}
+@keyframes cfdFlowDown {
+  0% { stroke-dashoffset: 110; opacity: 0.2; }
+  50% { opacity: 0.85; }
+  100% { stroke-dashoffset: 0; opacity: 0.2; }
+}
+.cfd-f1-cyan{stroke:var(--cyan);stroke-width:1.3;stroke-dasharray:18 36;stroke-linecap:round;fill:none;animation:cfdFlowUp 1.8s linear infinite}
+.cfd-f1-red{stroke:var(--red);stroke-width:1.2;stroke-dasharray:14 34;stroke-linecap:round;fill:none;animation:cfdFlowUp 1.25s linear infinite}
+.cfd-f1-white{stroke:#FFFFFF;stroke-width:1;stroke-dasharray:12 38;stroke-linecap:round;fill:none;opacity:.45;animation:cfdFlowUp 2.3s linear infinite}
+
+.cfd-rocket-cyan{stroke:var(--cyan);stroke-width:1.3;stroke-dasharray:18 36;stroke-linecap:round;fill:none;animation:cfdFlowDown 1.8s linear infinite}
+.cfd-rocket-red{stroke:var(--red);stroke-width:1.2;stroke-dasharray:14 34;stroke-linecap:round;fill:none;animation:cfdFlowDown 1.25s linear infinite}
+.cfd-rocket-white{stroke:#FFFFFF;stroke-width:1;stroke-dasharray:12 38;stroke-linecap:round;fill:none;opacity:.45;animation:cfdFlowDown 2.3s linear infinite}
+
+/* Editorial Hero Section */
+.hero{padding-block:clamp(3rem,8vw,6rem) 3rem}
+h1{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(2.7rem,8vw,5.75rem);line-height:.95;letter-spacing:-.02em}
+.lede{max-width:42rem;margin:1.75rem 0;font-size:1.25rem;color:#B0BCC8}
+.actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.8rem 1.4rem;background:var(--ink);color:var(--on-accent);border:1px solid var(--ink);border-radius:2px;font:700 .95rem Archivo,sans-serif;text-decoration:none;cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease}
+.btn:hover{background:#D8E2EC;border-color:#D8E2EC}
 .btn.alt{background:transparent;color:var(--ink);border-color:var(--rule)}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0 1rem;margin:3rem 0 0;border-top:1px solid var(--rule)}
+.btn.alt:hover{border-color:var(--ink);background:var(--surface)}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:0 1rem;margin:3rem 0 0;border-top:1px solid var(--rule)}
 .facts div{padding:1rem 0}
 .facts dt{font:500 .85rem Archivo,sans-serif;color:var(--muted)}
 .facts dd{margin:.15rem 0 0;font:700 1.35rem Archivo,sans-serif}
+.facts dd small{display:block;font:500 .78rem Archivo,sans-serif;color:var(--muted);margin-top:.15rem}
 
-/* Minimalist Air & F1 Car Container */
-.f1-stage{width:100%;height:100%;min-height:500px;position:relative;overflow:hidden}
-.f1-svg{width:100%;height:100%;display:block}
-
-/* Continuous Air Streamlines */
-@keyframes airFlow {
-  0% { stroke-dashoffset: 160; opacity: 0.1; }
-  50% { opacity: 0.55; }
-  100% { stroke-dashoffset: 0; opacity: 0.1; }
-}
-.air-line {
-  stroke: #FFFFFF;
-  stroke-width: 1;
-  stroke-dasharray: 25 50;
-  stroke-linecap: round;
-  animation: airFlow 2.8s linear infinite;
-  opacity: 0.35;
-}
-.air-line-fast {
-  animation-duration: 1.6s;
-}
-
+/* Editorial Content Sections */
 section{border-top:1px solid var(--rule);padding-block:clamp(2.5rem,6vw,4.5rem)}
 .grid{display:grid;gap:1.5rem 3rem}
-@media (min-width:800px){.grid{grid-template-columns:160px 1fr}h2{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);align-self:start}}
+@media (min-width:800px){
+  .grid{grid-template-columns:150px 1fr}
+  h2{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);align-self:start}
+}
 h2{margin:0;font-weight:800;font-stretch:112%;font-size:1.5rem;line-height:1.2}
 .prose p{max-width:62ch;margin:0 0 1em}
 .meta{margin:0 0 .5rem;font:500 .9rem Archivo,sans-serif;color:var(--muted)}
@@ -77,30 +150,335 @@ h3{margin:0;font-weight:700;font-size:1.3rem;line-height:1.25}
 ul{padding-left:1.1rem}
 li{margin-bottom:.35em}
 
-article{padding-bottom:2.25rem;margin-bottom:2.25rem;border-bottom:1px solid var(--rule)}
+article{padding-bottom:2.5rem;margin-bottom:2.5rem;border-bottom:1px solid var(--rule)}
 article:last-child{padding:0;margin:0;border:0}
 article>p{max-width:62ch}
 .tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:1rem 0 0}
 .tags li{margin:0;padding:.15rem .65rem;border:1px solid var(--rule);border-radius:2px;font:500 .82rem Archivo,sans-serif;color:var(--muted)}
-summary{margin-top:1rem;cursor:pointer;font:600 .95rem Archivo,sans-serif}
+summary{margin-top:1.1rem;cursor:pointer;font:600 .95rem Archivo,sans-serif;color:var(--ink)}
 details ul{margin-top:.75rem;max-width:62ch}
 
+/* Interactive 6-Motor Carbon Fiber Filament Winder Simulator (from Redesign) */
+.simulator-console{
+  margin:1.5rem 0 1.25rem;
+  background:#080B0E;
+  border:1px solid var(--rule);
+  border-radius:2px;
+  overflow:hidden;
+}
+.sim-console-header{
+  background:var(--surface);
+  padding:.65rem 1rem;
+  border-bottom:1px solid var(--rule);
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  gap:.5rem;
+  font:600 .74rem var(--mono);
+}
+.sim-title{color:var(--cyan);display:flex;align-items:center;gap:.5rem}
+.sim-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan)}
+.preset-group{display:flex;flex-wrap:wrap;gap:.35rem}
+.preset-btn{
+  background:var(--bg);
+  color:var(--muted);
+  border:1px solid var(--rule);
+  padding:.25rem .55rem;
+  font:500 .68rem var(--mono);
+  cursor:pointer;
+  border-radius:2px;
+  transition:all .15s ease;
+}
+.preset-btn:hover,.preset-btn.active{
+  color:var(--ink);
+  border-color:var(--cyan);
+  background:rgba(0,229,255,0.12);
+}
+.sim-canvas-stage{
+  position:relative;
+  width:100%;
+  height:220px;
+  background:radial-gradient(circle at 50% 50%,#0E151D 0%,#06080B 100%);
+  border-bottom:1px solid var(--rule);
+}
+#winder-canvas{width:100%;height:100%;display:block}
+.sim-controls-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:1rem;
+  padding:1rem;
+  border-bottom:1px solid var(--rule);
+  background:var(--surface);
+}
+.control-group label{
+  display:flex;
+  justify-content:space-between;
+  font:500 .75rem var(--mono);
+  color:var(--muted);
+  margin-bottom:.4rem;
+}
+.control-group label strong{color:var(--cyan)}
+.control-slider{width:100%;accent-color:var(--red);cursor:pointer}
+.sim-telemetry-footer{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:.5rem;
+  padding:.75rem 1rem;
+  background:var(--bg);
+  font-family:var(--mono);
+}
+.sim-metric{padding:.3rem .5rem;border-left:2px solid var(--rule)}
+.sim-metric-label{display:block;font-size:.65rem;color:var(--muted);text-transform:uppercase}
+.sim-metric-val{font-size:.84rem;font-weight:700;color:var(--ink)}
+
+/* Experience, Education, Honors & Skills */
 .role{margin-bottom:2.25rem}
-.role header{position:static;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0 1rem;border:0;background:none;padding:0}
+.role:last-child{margin-bottom:0}
+.role header{position:static;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0 1rem;border:0;background:none;padding:0;backdrop-filter:none}
 .role ul{max-width:62ch}
+
 .honors{list-style:none;padding:0;margin:0}
 .honors li{margin-bottom:1.5rem;padding-left:1rem;border-left:2px solid var(--accent);max-width:62ch}
+.honors li:last-child{margin-bottom:0}
 .honors h3{font-size:1.1rem}
 .honors p{margin:.2rem 0 0;color:var(--muted)}
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:2rem}
 .skills h3{margin-bottom:.75rem;font-size:1.1rem}
 .skills ul,.skills dl{list-style:none;padding:0;margin:0}
 .skills li,.skills dl div{display:flex;justify-content:space-between;gap:1rem;margin:0;padding:.4rem 0;border-bottom:1px solid var(--rule)}
 .skills dd{margin:0;color:var(--muted)}
 
-.mail{display:inline-block;font:700 clamp(1.3rem,4.2vw,2.3rem) Archivo,sans-serif;overflow-wrap:anywhere}
+/* Contact Section & Single-Line Email */
 .contact p{max-width:52ch}
+.mail-row{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin:1.25rem 0}
+.mail{
+  display:inline-block;
+  font:700 clamp(0.95rem, 2vw, 1.35rem) Archivo,sans-serif;
+  white-space:nowrap;
+}
+.copy-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  padding:.45rem .85rem;
+  background:var(--surface);
+  color:var(--ink);
+  border:1px solid var(--rule);
+  border-radius:2px;
+  font:600 .8rem Archivo,sans-serif;
+  cursor:pointer;
+  transition:border-color .15s ease;
+}
+.copy-btn:hover{border-color:var(--ink)}
+.copy-status{font:600 .8rem Archivo,sans-serif;color:var(--cyan);opacity:0;transition:opacity .2s ease}
+.copy-status.show{opacity:1}
+
+.contact-links{display:flex;flex-wrap:wrap;gap:.65rem 1.75rem;margin-top:1rem;font:500 .95rem Archivo,sans-serif;color:var(--muted)}
+.contact-links a{color:var(--ink);font-weight:600}
+
 footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.9rem Archivo,sans-serif}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+
+/* Resume PDF Viewer Modal & 1-Page Black-and-White Sheet */
+.resume-modal-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(6,8,11,0.86);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  padding:clamp(0.75rem,2.5vw,2rem);
+  overflow-y:auto;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .2s ease,visibility .2s ease;
+}
+.resume-modal-backdrop.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+.resume-modal-dialog{
+  width:100%;
+  max-width:860px;
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:4px;
+  box-shadow:0 24px 64px rgba(0,0,0,0.75);
+  overflow:hidden;
+  margin-block:auto;
+}
+.resume-modal-toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:.75rem;
+  padding:.85rem 1.25rem;
+  background:#0D1116;
+  border-bottom:1px solid var(--rule);
+}
+.resume-toolbar-title{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  font:700 .9rem var(--mono);
+  color:var(--ink);
+}
+.resume-toolbar-badge{
+  padding:.15rem .45rem;
+  background:rgba(0,229,255,0.12);
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  font:600 .68rem var(--mono);
+  border-radius:2px;
+}
+.resume-toolbar-actions{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:.5rem;
+}
+.toolbar-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  padding:.5rem .95rem;
+  background:var(--ink);
+  color:var(--on-accent);
+  border:1px solid var(--ink);
+  border-radius:2px;
+  font:700 .82rem Archivo,sans-serif;
+  cursor:pointer;
+  text-decoration:none;
+  transition:background .15s ease,border-color .15s ease;
+}
+.toolbar-btn:hover{background:#D8E2EC;border-color:#D8E2EC}
+.toolbar-btn.secondary{
+  background:var(--surface);
+  color:var(--ink);
+  border-color:var(--rule);
+}
+.toolbar-btn.secondary:hover{border-color:var(--ink);background:#1A2027}
+.resume-sheet-viewport{
+  padding:clamp(0.75rem,3vw,2rem);
+  background:#161B22;
+  display:flex;
+  justify-content:center;
+  overflow-x:auto;
+}
+
+/* Clean 1-Page Black & White Resume Sheet (Matches Uploaded Document) */
+.resume-paper{
+  width:100%;
+  max-width:780px;
+  background:#FFFFFF;
+  color:#000000;
+  padding:2.2rem 2.5rem;
+  box-shadow:0 10px 30px rgba(0,0,0,0.45);
+  font:400 0.88rem/1.42 "Source Serif 4",Georgia,serif;
+  text-align:left;
+}
+.resume-paper *{color:#000000}
+.resume-paper-header{
+  text-align:center;
+  border-bottom:1.5px solid #000000;
+  padding-bottom:.65rem;
+  margin-bottom:.75rem;
+}
+.resume-paper-header h2{
+  position:static;
+  margin:0;
+  font:800 1.65rem/1.15 Archivo,"Helvetica Neue",Arial,sans-serif;
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+}
+.resume-paper-sub{
+  margin:.2rem 0 0;
+  font:600 .9rem/1.3 Archivo,sans-serif;
+}
+.resume-paper-contact{
+  margin:.2rem 0 0;
+  font:400 .83rem/1.35 Archivo,sans-serif;
+}
+.resume-paper-contact a{
+  color:#000000;
+  text-decoration:none;
+}
+.resume-paper-contact a:hover{text-decoration:underline}
+.resume-sec{margin-bottom:.68rem}
+.resume-sec:last-child{margin-bottom:0}
+.resume-sec-title{
+  margin:0 0 .28rem;
+  padding-bottom:.12rem;
+  border-bottom:1px solid #000000;
+  font:800 .78rem/1.2 Archivo,sans-serif;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.resume-sec p{margin:0 0 .22rem}
+.resume-entry{margin-bottom:.42rem}
+.resume-entry:last-child{margin-bottom:0}
+.resume-entry-line{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:.75rem;
+  font:700 .87rem/1.3 Archivo,sans-serif;
+}
+.resume-entry-line span{
+  font:600 .8rem/1.3 Archivo,sans-serif;
+  white-space:nowrap;
+}
+.resume-paper ul{
+  margin:.18rem 0 0;
+  padding-left:1.15rem;
+}
+.resume-paper li{margin-bottom:.14rem}
+
+/* Dedicated Print Stylesheet: Prints ONLY the 1-Page Black & White Resume */
+@media print{
+  @page{size:letter portrait;margin:0.45in}
+  html,body{background:#FFFFFF !important;color:#000000 !important;padding:0 !important;margin:0 !important;overflow:visible !important}
+  body::before,.skip,header,.main-layout,footer,.resume-modal-toolbar{display:none !important}
+  .resume-modal-backdrop{
+    position:static !important;
+    display:block !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    background:#FFFFFF !important;
+    backdrop-filter:none !important;
+    padding:0 !important;
+    overflow:visible !important;
+  }
+  .resume-modal-dialog{
+    max-width:100% !important;
+    border:0 !important;
+    box-shadow:none !important;
+    background:#FFFFFF !important;
+    margin:0 !important;
+  }
+  .resume-sheet-viewport{
+    padding:0 !important;
+    background:#FFFFFF !important;
+    overflow:visible !important;
+  }
+  .resume-paper{
+    max-width:100% !important;
+    width:100% !important;
+    padding:0 !important;
+    box-shadow:none !important;
+    font-size:9.5pt !important;
+    line-height:1.36 !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -112,29 +490,124 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
     <nav aria-label="Main">
       <ul>
         <li><a href="#about">About</a></li>
+        <li><a href="#education">Education</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#honors">Honors</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li>
+          <a class="nav-linkedin" href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">
+            LinkedIn &#8599;
+          </a>
+        </li>
+        <li>
+          <button type="button" class="nav-resume-btn" data-open-resume="true" aria-haspopup="dialog">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+            Resume PDF
+          </button>
+        </li>
       </ul>
     </nav>
   </div>
+  <div class="scroll-hairline" id="scroll-hairline" aria-hidden="true"></div>
 </header>
 
 <div class="wrap main-layout">
+
+  <!-- LEFT STICKY TRACK: F1 Car & CFD Wind Lines from Redesign (Moving Top to Bottom on Scroll) -->
+  <aside class="side-track" aria-hidden="true">
+    <div class="track-hud">
+      <span>CFD // AERO-CHASSIS</span>
+      <strong id="f1-downforce-readout" class="accent-red">DF: 1.20 G</strong>
+    </div>
+
+    <div class="track-svg-wrap">
+      <svg class="track-svg" viewBox="0 0 160 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <!-- Vertical Datum & Elevation Ticks -->
+        <line x1="80" y1="20" x2="80" y2="780" stroke="#222930" stroke-width="1" stroke-dasharray="3 6"/>
+        <g stroke="#222930" stroke-width="1">
+          <line x1="12" y1="80" x2="24" y2="80"/><line x1="12" y1="200" x2="20" y2="200"/>
+          <line x1="12" y1="320" x2="24" y2="320"/><line x1="12" y1="440" x2="20" y2="440"/>
+          <line x1="12" y1="560" x2="24" y2="560"/><line x1="12" y1="680" x2="20" y2="680"/>
+        </g>
+
+        <!-- Moving F1 Car & Wrapped CFD Streamlines (Facing Straight DOWN) -->
+        <g id="f1-cfd-assembly" transform="translate(80, 85)">
+          <!-- Symmetric CFD Pressure Streamlines curving around downward nosecone -->
+          <path class="cfd-f1-cyan" d="M -6 52 C -26 26, -38 -4, -48 -62" />
+          <path class="cfd-f1-red" d="M -2 56 C -16 30, -25 0, -30 -58" />
+          <path class="cfd-f1-white" d="M -12 40 C -34 15, -45 -15, -54 -65" />
+          <path class="cfd-f1-red" d="M 2 56 C 16 30, 25 0, 30 -58" />
+          <path class="cfd-f1-cyan" d="M 6 52 C 26 26, 38 -4, 48 -62" />
+          <path class="cfd-f1-white" d="M 12 40 C 34 15, 45 -15, 54 -65" />
+
+          <!-- Detailed Wireframe F1 Car rotated 180 deg (pointed straight DOWN) -->
+          <g transform="rotate(180)">
+            <!-- Diffuser Wake Plume -->
+            <line x1="-6" y1="24" x2="-9" y2="42" stroke="#00E5FF" stroke-width="1" opacity="0.5"/>
+            <line x1="6" y1="24" x2="9" y2="42" stroke="#00E5FF" stroke-width="1" opacity="0.5"/>
+            <!-- Sidepods & Aero Floor -->
+            <path d="M -12 -6 L -14 14 L 14 14 L 12 -6 Z" fill="#12161B" stroke="#72808E" stroke-width="1"/>
+            <!-- Main Monocoque & Nosecone -->
+            <path d="M -5 19 L -3 -18 L 0 -29 L 3 -18 L 5 19 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
+            <!-- Multi-Element Front Wing -->
+            <line x1="-19" y1="-24" x2="19" y2="-24" stroke="#00E5FF" stroke-width="2"/>
+            <line x1="-17" y1="-21" x2="17" y2="-21" stroke="#FFFFFF" stroke-width="1.2"/>
+            <!-- Rear Wing Assembly -->
+            <rect x="-15" y="19" width="30" height="4" fill="#0A0D10" stroke="#FF3B1F" stroke-width="1.5"/>
+            <!-- Front Tires -->
+            <rect x="-22" y="-20" width="4.5" height="10" rx="1" fill="#FFFFFF"/>
+            <rect x="17.5" y="-20" width="4.5" height="10" rx="1" fill="#FFFFFF"/>
+            <!-- Rear Tires -->
+            <rect x="-23" y="10" width="5.5" height="12" rx="1" fill="#FFFFFF"/>
+            <rect x="17.5" y="10" width="5.5" height="12" rx="1" fill="#FFFFFF"/>
+            <!-- Cockpit Halo Titanium Structure -->
+            <circle cx="0" cy="-2" r="3.2" fill="none" stroke="#00E5FF" stroke-width="1.3"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="track-hud">
+      <span>TRACK // SECTOR 01-06</span>
+      <strong id="f1-vel-readout">VEL: 210 KPH</strong>
+    </div>
+  </aside>
+
+  <!-- CENTER COLUMN: Original Minimalist Editorial Content + Winder Graphic & LinkedIn -->
   <main id="main">
     <div class="hero" id="top">
       <h1>Arsenii<br>Markov</h1>
-      <p class="lede">I’m an engineering student at the Texas A&amp;M Engineering Academy at Austin Community College. I build automated systems for making composite parts, and I hope to design structures for companies in motorsport and aerospace.</p>
+      <p class="lede">I’m an engineering student at the Texas A&amp;M Engineering Academy at Austin Community College holding an Associate of Arts in General Studies. I build automated systems for making composite parts, and I hope to design structures for companies in motorsport and aerospace.</p>
       <div class="actions">
         <a class="btn" href="#projects">See my projects</a>
+        <button type="button" class="btn alt" data-open-resume="true" aria-haspopup="dialog">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <polyline points="9 15 12 18 15 15"/>
+          </svg>
+          Resume PDF
+        </button>
         <a class="btn alt" href="#contact">Get in touch</a>
+        <a class="btn alt" href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+          </svg>
+          LinkedIn
+        </a>
       </div>
       <dl class="facts">
         <div><dt>GPA</dt><dd>3.9</dd></div>
         <div><dt>Class rank</dt><dd>Top 10%</dd></div>
-        <div><dt>College credit earned</dt><dd>63 hours</dd></div>
+        <div><dt>College credit earned</dt><dd>63 hours<small>A.A. in General Studies</small></dd></div>
         <div><dt>Based in</dt><dd>Round Rock, Texas</dd></div>
       </dl>
     </div>
@@ -142,9 +615,37 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
     <section id="about"><div class="grid">
       <h2>About</h2>
       <div class="prose">
-        <p>I joined the Texas A&amp;M Engineering Academy at Austin Community College in Fall 2026. Along with strong grades, I have hands-on experience in design, manufacturing, and team leadership.</p>
+        <p>I joined the Texas A&amp;M Engineering Academy at Austin Community College in Fall 2026 after earning my Associate of Arts in General Studies degree with 63 college credit hours. Along with strong grades, I have hands-on experience in design, manufacturing, and team leadership.</p>
         <p>I want to design strong, lightweight structures for motorsport and aerospace applications. This includes aerodynamic parts and composite components that can handle heavy forces and tough conditions. I’m interested in companies developing advanced technology in these fields.</p>
         <p>Alongside my engineering projects, I worked for two years as an Aquatics Manager for the City of Round Rock. I helped enforce safety rules, prepared teams for emergencies, and managed staff across several city facilities.</p>
+      </div>
+    </div></section>
+
+    <section id="education"><div class="grid">
+      <h2>Education</h2>
+      <div>
+        <div class="role">
+          <header><h3>Texas A&amp;M Engineering Academy</h3><span class="meta">Fall 2026 to present</span></header>
+          <p class="meta">Austin Community College &amp; Texas A&amp;M University • 3.9 GPA • Top 10% Class Rank</p>
+          <ul>
+            <li>Co-enrolled engineering student focusing on composite manufacturing, automated systems, and structural design for motorsport and aerospace.</li>
+            <li>Active researcher and builder in the F.O.R.G.E. engineering lab at Austin Community College.</li>
+          </ul>
+        </div>
+        <div class="role">
+          <header><h3>Associate of Arts in General Studies</h3><span class="meta">2026 • 63 Credit Hours</span></header>
+          <p class="meta">Austin Community College</p>
+          <ul>
+            <li>Completed 63 hours of college credit at Austin Community College to earn an Associate of Arts in General Studies alongside engineering and mathematics coursework.</li>
+          </ul>
+        </div>
+        <div class="role">
+          <header><h3>Early College High School</h3><span class="meta">Graduated 2026</span></header>
+          <p class="meta">GPA: 3.9 • Ranked in the Top 10% of graduating class</p>
+          <ul>
+            <li>Graduated in the top 10% of high school graduating class while dual-enrolled full-time in college coursework at Austin Community College.</li>
+          </ul>
+        </div>
       </div>
     </div></section>
 
@@ -155,6 +656,62 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
           <p class="meta">F.O.R.G.E., Austin Community College. October 2026 to present.</p>
           <h3>Automated carbon fiber filament winder</h3>
           <p>This automated machine is designed to make carbon fiber composite tubes that are 3 feet long, have a 3-inch inner diameter, and 4 mm-thick walls. Its custom six-motor system controls the rotating mandrel, the moving carriage, and how the fiber is fed and angled.</p>
+
+          <!-- Interactive 6-Motor Carbon Fiber Filament Winder Graphic from Redesign -->
+          <div class="simulator-console" aria-label="Interactive Carbon Fiber Filament Winding Simulator">
+            <div class="sim-console-header">
+              <span class="sim-title">
+                <span class="sim-dot"></span>
+                LIVE KINEMATICS SIMULATOR // 6-AXIS MANDREL LAYUP
+              </span>
+              <div class="preset-group" role="group" aria-label="Winding Angle Presets">
+                <button type="button" class="preset-btn" data-angle="85" data-rpm="38">Hoop (85°)</button>
+                <button type="button" class="preset-btn active" data-angle="45" data-rpm="30">Helical (45°)</button>
+                <button type="button" class="preset-btn" data-angle="25" data-rpm="22">Axial (25°)</button>
+              </div>
+            </div>
+
+            <div class="sim-canvas-stage">
+              <canvas id="winder-canvas" width="760" height="220"></canvas>
+            </div>
+
+            <div class="sim-controls-grid">
+              <div class="control-group">
+                <label for="sim-angle-slider">
+                  <span>FIBER WINDING ANGLE (&plusmn;&theta;)</span>
+                  <strong id="sim-angle-val">&plusmn;45&deg;</strong>
+                </label>
+                <input type="range" id="sim-angle-slider" class="control-slider" min="15" max="85" value="45" step="1">
+              </div>
+              <div class="control-group">
+                <label for="sim-rpm-slider">
+                  <span>MANDREL ROTATION SPEED (RPM)</span>
+                  <strong id="sim-rpm-val">30 RPM</strong>
+                </label>
+                <input type="range" id="sim-rpm-slider" class="control-slider" min="10" max="60" value="30" step="1">
+              </div>
+            </div>
+
+            <div class="sim-telemetry-footer">
+              <div class="sim-metric">
+                <span class="sim-metric-label">Carriage Feed Rate</span>
+                <span class="sim-metric-val" id="sim-feed-readout">126.3 mm/s</span>
+              </div>
+              <div class="sim-metric">
+                <span class="sim-metric-label">Fiber Payout Speed</span>
+                <span class="sim-metric-val" id="sim-payout-readout">178.6 mm/s</span>
+              </div>
+              <div class="sim-metric">
+                <span class="sim-metric-label">Mandrel Geometry</span>
+                <span class="sim-metric-val">3 ft &times; 3.0 in ID (4 mm)</span>
+              </div>
+              <div class="sim-metric">
+                <span class="sim-metric-label">Structural Load Bias</span>
+                <span class="sim-metric-val" id="sim-bias-readout">Balanced Torsion/Shear</span>
+              </div>
+            </div>
+          </div>
+
           <ul class="tags"><li>Six-motor motion system</li><li>Carbon fiber composites</li><li>Onshape CAD</li><li>Open-source publication</li></ul>
           <details>
             <summary>Technical details</summary>
@@ -226,16 +783,21 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
       <h2>Skills</h2>
       <div class="skills">
         <div>
-          <h3>Engineering &amp; CAD</h3>
-          <ul><li>Python (ENGR 102)</li><li>Onshape CAD</li><li>3D printing</li><li>Filament winding</li><li>Composites</li></ul>
+          <h3>Technical Skills</h3>
+          <ul><li>Python (ENGR 102)</li><li>CAD (Onshape)</li><li>3D printing</li><li>Filament winding</li><li>Composites</li></ul>
         </div>
         <div>
-          <h3>Leadership</h3>
-          <ul><li>Operations</li><li>Public speaking</li><li>Swim coaching</li><li>First Aid / CPR</li></ul>
+          <h3>Additional Skills</h3>
+          <ul><li>Team Leadership</li><li>Coaching</li><li>Athletic Training</li><li>CPR/AED/First Aid Certified</li><li>Public Speaking</li></ul>
         </div>
         <div>
           <h3>Languages</h3>
-          <dl><div><dt>English</dt><dd>Fluent</dd></div><div><dt>Russian</dt><dd>Fluent</dd></div></dl>
+          <dl>
+            <div><dt>English</dt><dd>Fluent</dd></div>
+            <div><dt>Russian</dt><dd>Fluent</dd></div>
+            <div><dt>Ukrainian</dt><dd>Basic Reading</dd></div>
+            <div><dt>Serbian</dt><dd>Basic Reading</dd></div>
+          </dl>
         </div>
       </div>
     </div></section>
@@ -244,69 +806,587 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
       <h2>Contact</h2>
       <div>
         <p>I’m looking for engineering internship opportunities and would be happy to talk about composite manufacturing, motorsport technology, or working together on projects.</p>
-        <a class="mail" href="mailto:arsenii.markov2020@gmail.com?subject=Hello%20Arsenii">arsenii.markov2020@gmail.com</a>
-        <p>Prefer to call? <a href="tel:+16502018605">650-201-8605</a></p>
+        <div class="mail-row">
+          <a class="mail" href="mailto:arsenii.markov2020@gmail.com?subject=Hello%20Arsenii">arsenii.markov2020@gmail.com</a>
+          <button type="button" class="copy-btn" id="copy-email-btn">Copy email</button>
+          <button type="button" class="copy-btn" data-open-resume="true" aria-haspopup="dialog">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            Resume PDF
+          </button>
+          <span class="copy-status" id="copy-status" role="status" aria-live="polite">Copied!</span>
+        </div>
+        <div class="contact-links">
+          <span>Prefer to call? <a href="tel:+16502018605">650-201-8605</a></span>
+          <span>LinkedIn: <a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/arsenii-markov</a></span>
+        </div>
       </div>
     </div></section>
   </main>
 
-  <aside class="f1-stage">
-    <svg class="f1-svg" viewBox="0 0 240 800" xmlns="http://www.w3.org/2000/svg">
-      <!-- Atmospheric Streamlines in Space -->
-      <path class="air-line" d="M 40 40 L 40 760" fill="none" />
-      <path class="air-line air-line-fast" d="M 80 100 L 80 720" fill="none" />
-      <path class="air-line" d="M 160 80 L 160 740" fill="none" />
-      <path class="air-line air-line-fast" d="M 200 30 L 200 770" fill="none" />
+  <!-- RIGHT STICKY TRACK: Space Rocket & CFD Wind Lines from Redesign (Moving Bottom to Top on Scroll) -->
+  <aside class="side-track" aria-hidden="true">
+    <div class="track-hud">
+      <span>CFD // ASCENT VEHICLE</span>
+      <strong id="rocket-mach-readout" class="accent-cyan">MACH: 0.85</strong>
+    </div>
 
-      <!-- F1 Wireframe Car Group Moving Vertically -->
-      <g id="f1-car" transform="translate(120, 50)">
-        <!-- Aerodynamic Car Air Trails -->
-        <path class="air-line air-line-fast" d="M -16 -12 L -16 -60" fill="none"/>
-        <path class="air-line air-line-fast" d="M 16 -12 L 16 -60" fill="none"/>
-        <path class="air-line" d="M 0 -22 L 0 -80" fill="none"/>
+    <div class="track-svg-wrap">
+      <svg class="track-svg" viewBox="0 0 160 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <!-- Vertical Datum & Altitude Ticks -->
+        <line x1="80" y1="20" x2="80" y2="780" stroke="#222930" stroke-width="1" stroke-dasharray="3 6"/>
+        <g stroke="#222930" stroke-width="1">
+          <line x1="136" y1="80" x2="148" y2="80"/><line x1="140" y1="200" x2="148" y2="200"/>
+          <line x1="136" y1="320" x2="148" y2="320"/><line x1="140" y1="440" x2="148" y2="440"/>
+          <line x1="136" y1="560" x2="148" y2="560"/><line x1="140" y1="680" x2="148" y2="680"/>
+        </g>
 
-        <!-- Chassis Wireframe -->
-        <path d="M -6 20 L -3 -20 L 0 -30 L 3 -20 L 6 20 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
-        <!-- Front Wing -->
-        <line x1="-18" y1="-26" x2="18" y2="-26" stroke="#FFFFFF" stroke-width="2"/>
-        <!-- Rear Wing -->
-        <line x1="-16" y1="24" x2="16" y2="24" stroke="#FFFFFF" stroke-width="2.5"/>
-        <!-- Front Tires -->
-        <rect x="-22" y="-28" width="4" height="11" fill="#FFFFFF"/>
-        <rect x="18" y="-28" width="4" height="11" fill="#FFFFFF"/>
-        <!-- Rear Tires -->
-        <rect x="-23" y="16" width="5" height="13" fill="#FFFFFF"/>
-        <rect x="18" y="16" width="5" height="13" fill="#FFFFFF"/>
-        <!-- Cockpit Halo -->
-        <circle cx="0" cy="-2" r="3.5" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
-      </g>
-    </svg>
+        <!-- Moving Space Rocket & Wrapped CFD Shockwave Streamlines (Facing Straight UP) -->
+        <g id="rocket-cfd-assembly" transform="translate(80, 715)">
+          <!-- Symmetric CFD Bow-Shock & Slipstream Lines curving downward around nosecone -->
+          <path class="cfd-rocket-cyan" d="M -6 -52 C -26 -24, -38 10, -48 64" />
+          <path class="cfd-rocket-red" d="M -2 -56 C -16 -28, -24 8, -29 60" />
+          <path class="cfd-rocket-white" d="M -12 -42 C -34 -14, -44 18, -54 68" />
+          <path class="cfd-rocket-red" d="M 2 -56 C 16 -28, 24 8, 29 60" />
+          <path class="cfd-rocket-cyan" d="M 6 -52 C 26 -24, 38 10, 48 64" />
+          <path class="cfd-rocket-white" d="M 12 -42 C 34 -14, 44 18, 54 68" />
+
+          <!-- Detailed Aerospace Launch Vehicle Pointed Straight UP -->
+          <!-- Mach Plume Core -->
+          <path d="M -5 26 L 0 58 L 5 26 Z" fill="#FF3B1F" opacity="0.85"/>
+          <path d="M -2.5 26 L 0 46 L 2.5 26 Z" fill="#00E5FF" opacity="0.9"/>
+          <!-- Composite Filament-Wound Airframe Fuselage -->
+          <path d="M 0 -38 C 7 -22, 10 -6, 10 24 L -10 24 C -10 -6, -7 -22, 0 -38 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
+          <!-- Interstage Ring Detail -->
+          <line x1="-9.5" y1="-2" x2="9.5" y2="-2" stroke="#00E5FF" stroke-width="1.2"/>
+          <!-- Swept Delta Grid/Aero Fins -->
+          <path d="M -10 10 L -20 28 L -10 24 Z" fill="#FFFFFF"/>
+          <path d="M 10 10 L 20 28 L 10 24 Z" fill="#FFFFFF"/>
+          <!-- Telemetry Sensor Viewport -->
+          <circle cx="0" cy="-14" r="3" fill="none" stroke="#00E5FF" stroke-width="1.2"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="track-hud">
+      <span>ALTITUDE // APOGEE</span>
+      <strong id="rocket-alt-readout">ALT: 0.0 KM</strong>
+    </div>
   </aside>
+
 </div>
 
-<footer><div class="wrap">© 2026 Arsenii Markov. Texas A&amp;M Engineering Academy at Austin Community College.</div></footer>
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Arsenii Markov. Texas A&amp;M Engineering Academy at Austin Community College.</span>
+    <div style="display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center">
+      <a href="#resume" data-open-resume="true">Resume PDF</a>
+      <a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/arsenii-markov</a>
+    </div>
+  </div>
+</footer>
+
+<!-- INTERACTIVE RESUME PDF MODAL / PRINTABLE 1-PAGE SHEET -->
+<div class="resume-modal-backdrop" id="resume-modal" role="dialog" aria-modal="true" aria-labelledby="resume-modal-title" aria-hidden="true">
+  <div class="resume-modal-dialog">
+    <div class="resume-modal-toolbar">
+      <div class="resume-toolbar-title">
+        <span class="resume-toolbar-badge">PDF</span>
+        <span id="resume-modal-title">arsenii-markov-resume.pdf</span>
+      </div>
+      <div class="resume-toolbar-actions">
+        <button type="button" class="toolbar-btn" id="download-pdf-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span id="download-pdf-label">Download PDF</span>
+        </button>
+        <button type="button" class="toolbar-btn secondary" id="print-pdf-btn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          Print / Save PDF
+        </button>
+        <button type="button" class="toolbar-btn secondary" id="close-resume-btn" aria-label="Close resume viewer">
+          &#10005; Close
+        </button>
+      </div>
+    </div>
+
+    <div class="resume-sheet-viewport">
+      <div class="resume-paper" id="resume-printable-sheet">
+        <div class="resume-paper-header">
+          <h2>Arsenii Markov</h2>
+          <p class="resume-paper-sub">Texas A&amp;M Engineering Academy at Austin Community College</p>
+          <p class="resume-paper-contact">
+            Round Rock, TX &nbsp;|&nbsp;
+            <a href="tel:+16502018605">650-201-8605</a> &nbsp;|&nbsp;
+            <a href="mailto:arsenii.markov2020@gmail.com">arsenii.markov2020@gmail.com</a> &nbsp;|&nbsp;
+            <a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">linkedin.com/in/arsenii-markov</a>
+          </p>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">About Me</h3>
+          <p>Engineering student in the Texas A&amp;M Engineering Academy at Austin Community College, combining leadership experience in aquatics with hands-on engineering project work. Seeking an engineering internship to apply technical and teamwork skills.</p>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">Education</h3>
+          <div class="resume-entry">
+            <div class="resume-entry-line">
+              <strong>Texas A&amp;M Engineering Academy at Austin Community College</strong>
+              <span>Fall 2026 &ndash; Present</span>
+            </div>
+            <div class="resume-entry-line">
+              <strong>Associate of Arts in General Studies &ndash; Austin Community College</strong>
+              <span>2026</span>
+            </div>
+            <div class="resume-entry-line">
+              <strong>Early College High School</strong>
+              <span>2026</span>
+            </div>
+            <ul>
+              <li>GPA: 3.9 &nbsp;&bull;&nbsp; Ranked in the top 10% of high school graduating class</li>
+              <li>63 hours earned at Austin Community College</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">Technical Skills</h3>
+          <p>Python (ENGR 102) &nbsp;&bull;&nbsp; CAD (Onshape) &nbsp;&bull;&nbsp; 3D printing</p>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">Projects</h3>
+          <div class="resume-entry">
+            <div class="resume-entry-line">
+              <strong>Filament Winder &ndash; F.O.R.G.E., Austin Community College</strong>
+              <span>Oct 2026 &ndash; Present</span>
+            </div>
+            <ul>
+              <li>Building an automated filament winder to manufacture carbon fiber composite tubes (3 ft long, 3&Prime; inner diameter, 4 mm walls)</li>
+              <li>6-motor motion system: mandrel rotation, carriage translation, and fiber delivery/angle control</li>
+              <li>Team project under F.O.R.G.E.; all work documented open-source for publication</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">Work Experience</h3>
+          <div class="resume-entry">
+            <div class="resume-entry-line">
+              <strong>City of Round Rock Aquatics Manager</strong>
+              <span>2 Years</span>
+            </div>
+            <ul>
+              <li>2 years of experience managing 3 City of Round Rock facilities &ndash; Rock n&rsquo; River, Lake Creek Pool, and Micki Krebsbach Pool &ndash; within a city aquatics program employing 365 lifeguards</li>
+              <li>Provided lifeguard coverage for a Water Polo tournament</li>
+            </ul>
+          </div>
+          <div class="resume-entry">
+            <div class="resume-entry-line">
+              <strong>Water Safety Instructor Manager</strong>
+              <span>City of Round Rock</span>
+            </div>
+            <ul>
+              <li>Provided swim instruction to children and adults, ages 6 months to 13+ years</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">Volunteer Experience</h3>
+          <ul>
+            <li>Volunteered with &ldquo;Together To Serve&rdquo; club &ndash; supported women with breast cancer, assisted elderly community members, and assisted with conservation planting</li>
+            <li>Served as a Student Ambassador at AVID Expo, representing the school&rsquo;s voice by advocating for students through public speaking</li>
+            <li>Tutored fellow students as a school volunteer, supporting their academic success</li>
+          </ul>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">Competitions &amp; Awards</h3>
+          <ul>
+            <li><strong>Texas State Lifeguard Competition</strong> representing City of Round Rock &mdash; First Place</li>
+            <li><strong>&ldquo;All American&rdquo; Award</strong> from City of Round Rock</li>
+            <li><strong>VEX V5 Robotics Competition</strong> &mdash; Judges Award</li>
+          </ul>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">Languages</h3>
+          <p>English (Fluent) &nbsp;&bull;&nbsp; Russian (Fluent) &nbsp;&bull;&nbsp; Ukrainian (Basic Reading) &nbsp;&bull;&nbsp; Serbian (Basic Reading)</p>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">Additional Skills</h3>
+          <p>Coaching &nbsp;&bull;&nbsp; Team Leadership &nbsp;&bull;&nbsp; Athletic Training &nbsp;&bull;&nbsp; CPR/AED/First Aid Certified &nbsp;&bull;&nbsp; Public Speaking</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const f1Car = document.getElementById('f1-car');
-    if (!f1Car) return;
+(function() {
+  /* 1. Scroll-Driven F1 Car (Top -> Bottom) & Space Rocket (Bottom -> Top) */
+  const f1Assembly = document.getElementById('f1-cfd-assembly');
+  const rocketAssembly = document.getElementById('rocket-cfd-assembly');
+  const hairline = document.getElementById('scroll-hairline');
+  const f1DownforceReadout = document.getElementById('f1-downforce-readout');
+  const f1VelReadout = document.getElementById('f1-vel-readout');
+  const rocketMachReadout = document.getElementById('rocket-mach-readout');
+  const rocketAltReadout = document.getElementById('rocket-alt-readout');
 
-    // Movement boundaries in SVG coordinates
-    const startY = 50;
-    const endY = 750;
+  let ticking = false;
 
-    function updateCarPosition() {
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollTop = window.scrollY;
-      const progress = Math.min(Math.max(scrollTop / (scrollHeight || 1), 0), 1);
+  function updateVehiclesOnScroll() {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    const frac = Math.min(Math.max(scrollY / maxScroll, 0), 1);
 
-      const currentY = startY + progress * (endY - startY);
-      f1Car.setAttribute('transform', `translate(120, ${currentY})`);
+    const f1Y = 85 + (frac * 630);
+    const rocketY = 715 - (frac * 630);
+
+    if (f1Assembly) {
+      f1Assembly.setAttribute('transform', 'translate(80, ' + f1Y.toFixed(2) + ')');
+    }
+    if (rocketAssembly) {
+      rocketAssembly.setAttribute('transform', 'translate(80, ' + rocketY.toFixed(2) + ')');
+    }
+    if (hairline) {
+      hairline.style.width = (frac * 100).toFixed(2) + '%';
     }
 
-    window.addEventListener('scroll', updateCarPosition, { passive: true });
-    updateCarPosition();
+    if (f1DownforceReadout) {
+      f1DownforceReadout.textContent = 'DF: ' + (1.20 + frac * 3.65).toFixed(2) + ' G';
+    }
+    if (f1VelReadout) {
+      f1VelReadout.textContent = 'VEL: ' + Math.round(210 + frac * 132) + ' KPH';
+    }
+    if (rocketMachReadout) {
+      rocketMachReadout.textContent = 'MACH: ' + (0.85 + frac * 6.40).toFixed(2);
+    }
+    if (rocketAltReadout) {
+      rocketAltReadout.textContent = 'ALT: ' + (frac * 142.0).toFixed(1) + ' KM';
+    }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(updateVehiclesOnScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  window.addEventListener('resize', updateVehiclesOnScroll, { passive: true });
+  updateVehiclesOnScroll();
+
+  /* 2. Interactive 6-Motor Carbon Fiber Filament Winder Simulator */
+  const canvas = document.getElementById('winder-canvas');
+  const angleSlider = document.getElementById('sim-angle-slider');
+  const rpmSlider = document.getElementById('sim-rpm-slider');
+  const angleValEl = document.getElementById('sim-angle-val');
+  const rpmValEl = document.getElementById('sim-rpm-val');
+  const feedReadoutEl = document.getElementById('sim-feed-readout');
+  const payoutReadoutEl = document.getElementById('sim-payout-readout');
+  const biasReadoutEl = document.getElementById('sim-bias-readout');
+  const presetBtns = document.querySelectorAll('.preset-btn');
+
+  if (canvas && angleSlider && rpmSlider) {
+    const ctx = canvas.getContext('2d');
+    let windingAngleDeg = 45;
+    let mandrelRpm = 30;
+    let phase = 0;
+    let carriageX = 0.25;
+    let carriageDir = 1;
+
+    function updateSimTelemetry() {
+      windingAngleDeg = parseInt(angleSlider.value, 10);
+      mandrelRpm = parseInt(rpmSlider.value, 10);
+
+      angleValEl.innerHTML = '&plusmn;' + windingAngleDeg + '&deg;';
+      rpmValEl.textContent = mandrelRpm + ' RPM';
+
+      const radiusMm = 42.1;
+      const omegaRadSec = (mandrelRpm * 2 * Math.PI) / 60;
+      const surfaceTangentialSpeed = omegaRadSec * radiusMm;
+      const angleRad = (windingAngleDeg * Math.PI) / 180;
+
+      const carriageFeedMmSec = surfaceTangentialSpeed / Math.tan(angleRad);
+      const fiberPayoutMmSec = Math.sqrt(
+        Math.pow(surfaceTangentialSpeed, 2) + Math.pow(carriageFeedMmSec, 2)
+      );
+
+      feedReadoutEl.textContent = carriageFeedMmSec.toFixed(1) + ' mm/s';
+      payoutReadoutEl.textContent = fiberPayoutMmSec.toFixed(1) + ' mm/s';
+
+      if (windingAngleDeg >= 70) {
+        biasReadoutEl.textContent = 'Hoop / Burst Pressure';
+      } else if (windingAngleDeg >= 38) {
+        biasReadoutEl.textContent = 'Balanced Torsion/Shear';
+      } else {
+        biasReadoutEl.textContent = 'Axial Bending Stiffness';
+      }
+    }
+
+    presetBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        presetBtns.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        angleSlider.value = btn.getAttribute('data-angle');
+        rpmSlider.value = btn.getAttribute('data-rpm');
+        updateSimTelemetry();
+      });
+    });
+
+    angleSlider.addEventListener('input', function() {
+      presetBtns.forEach(function(b) { b.classList.remove('active'); });
+      updateSimTelemetry();
+    });
+
+    rpmSlider.addEventListener('input', updateSimTelemetry);
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+    resizeCanvas();
+    updateSimTelemetry();
+
+    function renderWinderFrame() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = canvas.width / dpr;
+      const height = canvas.height / dpr;
+      ctx.clearRect(0, 0, width, height);
+
+      const leftX = Math.max(44, width * 0.1);
+      const rightX = Math.min(width - 44, width * 0.9);
+      const tubeLen = rightX - leftX;
+      const centerY = height * 0.43;
+      const tubeRadius = 32;
+
+      const speedFactor = mandrelRpm / 30;
+      phase += 0.045 * speedFactor;
+      const tanTheta = Math.tan((windingAngleDeg * Math.PI) / 180);
+      const carriageStep = (0.0055 * speedFactor) / Math.max(tanTheta, 0.35);
+      carriageX += carriageDir * carriageStep;
+      if (carriageX >= 0.94) {
+        carriageX = 0.94;
+        carriageDir = -1;
+      } else if (carriageX <= 0.06) {
+        carriageX = 0.06;
+        carriageDir = 1;
+      }
+
+      // Headstock & Tailstock Chuck Mounts
+      ctx.strokeStyle = '#2E3B4E';
+      ctx.fillStyle = '#0E1318';
+      ctx.lineWidth = 1.5;
+      ctx.fillRect(leftX - 20, centerY - 40, 20, 80);
+      ctx.strokeRect(leftX - 20, centerY - 40, 20, 80);
+      ctx.fillRect(rightX, centerY - 36, 16, 72);
+      ctx.strokeRect(rightX, centerY - 36, 16, 72);
+
+      // Cylindrical Mandrel Body (3 ft / 914 mm)
+      const grad = ctx.createLinearGradient(0, centerY - tubeRadius, 0, centerY + tubeRadius);
+      grad.addColorStop(0, '#161F2B');
+      grad.addColorStop(0.5, '#263345');
+      grad.addColorStop(1, '#0D131A');
+      ctx.fillStyle = grad;
+      ctx.fillRect(leftX, centerY - tubeRadius, tubeLen, tubeRadius * 2);
+      ctx.strokeStyle = '#72808E';
+      ctx.strokeRect(leftX, centerY - tubeRadius, tubeLen, tubeRadius * 2);
+
+      // Helical / Hoop Carbon Fiber Weave Pattern clipped to Mandrel
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(leftX, centerY - tubeRadius, tubeLen, tubeRadius * 2);
+      ctx.clip();
+
+      const pitchPx = Math.max(12, 95 * Math.cos((windingAngleDeg * Math.PI) / 180));
+      const numWaves = Math.ceil(tubeLen / pitchPx) + 4;
+
+      ctx.strokeStyle = 'rgba(0, 229, 255, 0.55)';
+      ctx.lineWidth = 1.3;
+      for (let i = -2; i < numWaves; i++) {
+        const startX = leftX + i * pitchPx + ((phase * 14) % pitchPx);
+        ctx.beginPath();
+        ctx.moveTo(startX - pitchPx * 0.6, centerY - tubeRadius);
+        ctx.lineTo(startX + pitchPx * 0.6, centerY + tubeRadius);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = 'rgba(240, 244, 248, 0.42)';
+      ctx.lineWidth = 1.2;
+      for (let i = -2; i < numWaves; i++) {
+        const startX = leftX + i * pitchPx - ((phase * 14) % pitchPx);
+        ctx.beginPath();
+        ctx.moveTo(startX - pitchPx * 0.6, centerY + tubeRadius);
+        ctx.lineTo(startX + pitchPx * 0.6, centerY - tubeRadius);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Linear Carriage Guide Rail
+      const railY = height * 0.80;
+      ctx.strokeStyle = '#222930';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(leftX - 10, railY);
+      ctx.lineTo(rightX + 10, railY);
+      ctx.stroke();
+
+      // Reciprocating Payout Carriage & Active Carbon Tow Feed
+      const curCarriagePx = leftX + carriageX * tubeLen;
+      const towTouchX = Math.min(Math.max(curCarriagePx - carriageDir * (28 / Math.max(tanTheta, 0.4)), leftX + 6), rightX - 6);
+
+      ctx.strokeStyle = '#FF3B1F';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(curCarriagePx, railY - 14);
+      ctx.lineTo(towTouchX, centerY + tubeRadius);
+      ctx.stroke();
+
+      ctx.fillStyle = '#00E5FF';
+      ctx.beginPath();
+      ctx.arc(towTouchX, centerY + tubeRadius, 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#12161B';
+      ctx.strokeStyle = '#00E5FF';
+      ctx.lineWidth = 1.5;
+      ctx.fillRect(curCarriagePx - 20, railY - 14, 40, 20);
+      ctx.strokeRect(curCarriagePx - 20, railY - 14, 40, 20);
+
+      ctx.beginPath();
+      ctx.arc(curCarriagePx, railY - 14, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#FF3B1F';
+      ctx.fill();
+
+      ctx.fillStyle = '#72808E';
+      ctx.font = '600 10px "JetBrains Mono", monospace';
+      ctx.fillText('MANDREL: L = 3 FT (914 MM) // ID = 3.0 IN (76.2 MM) // WALL = 4.0 MM', leftX, 20);
+
+      window.requestAnimationFrame(renderWinderFrame);
+    }
+
+    window.requestAnimationFrame(renderWinderFrame);
+  }
+
+  /* 3. Copy Email Button */
+  const copyBtn = document.getElementById('copy-email-btn');
+  const copyStatus = document.getElementById('copy-status');
+  if (copyBtn && copyStatus) {
+    copyBtn.addEventListener('click', function() {
+      const textarea = document.createElement('textarea');
+      textarea.value = 'arsenii.markov2020@gmail.com';
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        copyStatus.classList.add('show');
+        setTimeout(function() {
+          copyStatus.classList.remove('show');
+        }, 2000);
+      } catch (err) {}
+      document.body.removeChild(textarea);
+    });
+  }
+
+  /* 4. Interactive Resume PDF Viewer Modal & Direct PDF Download / Print */
+  const resumeModal = document.getElementById('resume-modal');
+  const openResumeBtns = document.querySelectorAll('[data-open-resume]');
+  const closeResumeBtn = document.getElementById('close-resume-btn');
+  const printPdfBtn = document.getElementById('print-pdf-btn');
+  const downloadPdfBtn = document.getElementById('download-pdf-btn');
+  const downloadPdfLabel = document.getElementById('download-pdf-label');
+  const printableSheet = document.getElementById('resume-printable-sheet');
+
+  function openResumeModal(e) {
+    if (e) e.preventDefault();
+    if (!resumeModal) return;
+    resumeModal.classList.add('open');
+    resumeModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeResumeModal() {
+    if (!resumeModal) return;
+    resumeModal.classList.remove('open');
+    resumeModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  openResumeBtns.forEach(function(btn) {
+    btn.addEventListener('click', openResumeModal);
   });
+
+  if (closeResumeBtn) {
+    closeResumeBtn.addEventListener('click', closeResumeModal);
+  }
+
+  if (resumeModal) {
+    resumeModal.addEventListener('click', function(e) {
+      if (e.target === resumeModal) {
+        closeResumeModal();
+      }
+    });
+  }
+
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && resumeModal && resumeModal.classList.contains('open')) {
+      closeResumeModal();
+    }
+  });
+
+  if (printPdfBtn) {
+    printPdfBtn.addEventListener('click', function() {
+      window.print();
+    });
+  }
+
+  if (downloadPdfBtn && printableSheet) {
+    downloadPdfBtn.addEventListener('click', function() {
+      if (typeof window.html2pdf !== 'undefined') {
+        const origText = downloadPdfLabel ? downloadPdfLabel.textContent : 'Download PDF';
+        if (downloadPdfLabel) downloadPdfLabel.textContent = 'Generating PDF...';
+        const opt = {
+          margin: [0.35, 0.4, 0.35, 0.4],
+          filename: 'Arsenii-Markov-Resume.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        window.html2pdf().set(opt).from(printableSheet).save().then(function() {
+          if (downloadPdfLabel) downloadPdfLabel.textContent = origText;
+        }).catch(function() {
+          if (downloadPdfLabel) downloadPdfLabel.textContent = origText;
+          window.print();
+        });
+      } else {
+        window.print();
+      }
+    });
+  }
+})();
 </script>
 
 </body>
