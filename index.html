@@ -21,7 +21,7 @@ a{color:inherit;text-decoration-color:var(--accent);text-decoration-thickness:3p
 :focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--on-accent);padding:.5rem 1rem;z-index:20}
 .skip:focus{left:0}
-.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
 
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:1px solid var(--rule)}
 header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.1rem 1.5rem;padding-block:.6rem}
@@ -29,6 +29,12 @@ header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:spac
 nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0;overflow-x:auto}
 nav a{display:block;padding:.45rem 0;font:500 .92rem Archivo,sans-serif;color:var(--muted);text-decoration:none;white-space:nowrap}
 nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:3px;text-underline-offset:6px}
+
+.main-layout{display:grid;grid-template-columns:1fr;gap:2rem}
+@media (min-width:1024px){
+  .main-layout{grid-template-columns:1fr 340px;align-items:start}
+  .f1-sticky-container{position:sticky;top:100px;height:calc(100vh - 120px);display:flex;flex-direction:column;justify-content:center}
+}
 
 .hero{padding-block:clamp(3rem,9vw,6.5rem) 3rem}
 h1{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(2.7rem,9vw,6rem);line-height:.95;letter-spacing:-.02em}
@@ -40,23 +46,19 @@ h1{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(2.7rem,9vw,6rem);l
 .facts div{padding:1rem 0}
 .facts dt{font:500 .85rem Archivo,sans-serif;color:var(--muted)}
 .facts dd{margin:.15rem 0 0;font:700 1.35rem Archivo,sans-serif}
-figure{margin:3rem 0 0}
-.fig{overflow-x:auto}
-.fig svg{display:block;width:100%;min-width:640px;height:auto}
-figcaption{max-width:60ch;margin-top:.75rem;font-size:.92rem;color:var(--muted)}
-.body{fill:var(--surface)}
-.weave{stroke:var(--ink);stroke-opacity:.3;stroke-width:1.2;fill:none}
-.edge,.rim{stroke:var(--ink);stroke-width:2;fill:none}
-.cl{stroke:var(--muted);stroke-width:1;stroke-dasharray:18 6 3 6}
-.tow{fill:none;stroke:var(--accent);stroke-width:6;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1}
-.dim path{stroke:var(--muted);stroke-width:1.5;fill:none}
-svg text{fill:var(--muted);font:500 20px Archivo,Arial,sans-serif}
-@media (prefers-reduced-motion:no-preference){.tow{animation:wind 3.2s ease-out both}}
-@keyframes wind{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+
+/* F1 Assembly Visualizer Styles */
+.f1-card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:1.25rem;box-shadow:0 10px 30px rgba(0,0,0,0.05)}
+.f1-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;border-bottom:1px solid var(--rule);padding-bottom:0.5rem}
+.f1-title{font:800 0.85rem Archivo,sans-serif;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted)}
+.f1-badge{background:var(--accent);color:var(--on-accent);font:700 0.75rem Archivo,sans-serif;padding:0.15rem 0.5rem;border-radius:3px}
+.f1-svg{width:100%;height:auto;max-height:360px;display:block}
+.f1-part{transition:transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;transform-box:fill-box;transform-origin:center}
+.f1-status{font:600 0.85rem Archivo,sans-serif;color:var(--ink);margin-top:0.75rem;text-align:center}
 
 section{border-top:1px solid var(--rule);padding-block:clamp(2.5rem,6vw,4.5rem)}
 .grid{display:grid;gap:1.5rem 3rem}
-@media (min-width:800px){.grid{grid-template-columns:190px 1fr}h2{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);align-self:start}}
+@media (min-width:800px){.grid{grid-template-columns:160px 1fr}h2{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);align-self:start}}
 h2{margin:0;font-weight:800;font-stretch:112%;font-size:1.5rem;line-height:1.2}
 .prose p{max-width:62ch;margin:0 0 1em}
 .meta{margin:0 0 .5rem;font:500 .9rem Archivo,sans-serif;color:var(--muted)}
@@ -79,7 +81,7 @@ details ul{margin-top:.75rem;max-width:62ch}
 .honors li{margin-bottom:1.5rem;padding-left:1rem;border-left:4px solid var(--accent);max-width:62ch}
 .honors h3{font-size:1.1rem}
 .honors p{margin:.2rem 0 0}
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2rem}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem}
 .skills h3{margin-bottom:.75rem;font-size:1.1rem}
 .skills ul,.skills dl{list-style:none;padding:0;margin:0}
 .skills li,.skills dl div{display:flex;justify-content:space-between;gap:1rem;margin:0;padding:.4rem 0;border-bottom:1px solid var(--rule)}
@@ -91,6 +93,7 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
 </style>
 </head>
 <body>
+
 <a class="skip" href="#main">Skip to content</a>
 <header>
   <div class="wrap">
@@ -108,155 +111,271 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
   </div>
 </header>
 
-<main id="main">
-  <div class="hero wrap" id="top">
-    <h1>Arsenii<br>Markov</h1>
-    <p class="lede">I’m an engineering student at the Texas A&amp;M Engineering Academy at Austin Community College. I build automated composite manufacturing systems, and I’m aiming to design carbon fiber structures at Formula 1, SpaceX, or NASA.</p>
-    <div class="actions">
-      <a class="btn" href="#projects">See my projects</a>
-      <a class="btn alt" href="#contact">Get in touch</a>
-    </div>
-    <dl class="facts">
-      <div><dt>GPA</dt><dd>3.9</dd></div>
-      <div><dt>Class rank</dt><dd>Top 10%</dd></div>
-      <div><dt>College credit earned</dt><dd>63 hours</dd></div>
-      <div><dt>Based in</dt><dd>Round Rock, Texas</dd></div>
-    </dl>
-    <figure>
-      <div class="fig">
-        <svg viewBox="0 0 1040 280" role="img" aria-labelledby="fig-t" xmlns="http://www.w3.org/2000/svg">
-          <title id="fig-t">Schematic of a carbon fiber tube being wound, with its length and inner diameter</title>
-          <defs>
-            <pattern id="lat" width="40" height="40" patternUnits="userSpaceOnUse"><path class="weave" d="M0 40L40 0M0 0L40 40"/></pattern>
-            <clipPath id="tube"><rect x="90" y="70" width="780" height="120"/></clipPath>
-          </defs>
-          <rect class="body" x="90" y="70" width="780" height="120"/>
-          <rect fill="url(#lat)" x="90" y="70" width="780" height="120"/>
-          <path class="edge" d="M90 70H870M90 190H870"/>
-          <ellipse class="rim" cx="90" cy="130" rx="20" ry="60"/>
-          <ellipse class="rim" cx="870" cy="130" rx="20" ry="60"/>
-          <line class="cl" x1="40" y1="130" x2="905" y2="130"/>
-          <g clip-path="url(#tube)"><path class="tow" pathLength="1" d="M90 70L150 190L210 70L270 190L330 70L390 190L450 70L510 190L570 70L630 190L690 70L750 190L810 70L870 190"/></g>
-          <g class="dim"><path d="M90 236H870M90 228V244M870 228V244M920 70H936M920 190H936M928 70V190"/></g>
-          <text x="480" y="226" text-anchor="middle">3 ft</text>
-          <text x="946" y="136">3 in ID</text>
-        </svg>
+<div class="wrap main-layout">
+  <main id="main">
+    <div class="hero" id="top">
+      <h1>Arsenii<br>Markov</h1>
+      <p class="lede">I’m an engineering student at the Texas A&amp;M Engineering Academy at Austin Community College. I build automated systems for making composite parts, and I hope to design structures for companies in motorsport and aerospace.</p>
+      <div class="actions">
+        <a class="btn" href="#projects">See my projects</a>
+        <a class="btn alt" href="#contact">Get in touch</a>
       </div>
-      <figcaption>The tube F.O.R.G.E. filament winder is designed to make: 3 ft long, 3 in inner diameter, 4 mm walls.</figcaption>
-    </figure>
-  </div>
-
-  <section id="about"><div class="wrap grid">
-    <h2>About</h2>
-    <div class="prose">
-      <p>I started in the Texas A&amp;M Engineering Academy at Austin Community College in Fall 2026, and I pair strong grades with hands-on design, manufacturing, and team leadership.</p>
-      <p>I want to work on high-load structures in motorsport and aerospace: aerodynamic surfaces, extreme structural loads, and lightweight composite parts that hold up under harsh conditions. Formula 1 teams, SpaceX, and NASA are where that work happens at the highest level.</p>
-      <p>Alongside my engineering projects, I spent two years as an Aquatics Manager for the City of Round Rock. There I enforced safety protocols, led emergency-response readiness, and managed large teams across several municipal facilities.</p>
+      <dl class="facts">
+        <div><dt>GPA</dt><dd>3.9</dd></div>
+        <div><dt>Class rank</dt><dd>Top 10%</dd></div>
+        <div><dt>College credit earned</dt><dd>63 hours</dd></div>
+        <div><dt>Based in</dt><dd>Round Rock, Texas</dd></div>
+      </dl>
     </div>
-  </div></section>
 
-  <section id="projects"><div class="wrap grid">
-    <h2>Projects</h2>
-    <div>
-      <article>
-        <p class="meta">F.O.R.G.E., Austin Community College. October 2026 to present.</p>
-        <h3>Automated carbon fiber filament winder</h3>
-        <p>An automated winder that produces carbon fiber composite tubes 3 ft long, with a 3 in inner diameter and 4 mm walls. A custom six-motor motion system controls mandrel rotation, carriage travel, and fiber delivery and angle.</p>
-        <ul class="tags"><li>Six-motor motion system</li><li>Carbon fiber composites</li><li>Onshape CAD</li><li>Open-source publication</li></ul>
-        <details>
-          <summary>Technical details</summary>
+    <section id="about"><div class="grid">
+      <h2>About</h2>
+      <div class="prose">
+        <p>I joined the Texas A&amp;M Engineering Academy at Austin Community College in Fall 2026. Along with strong grades, I have hands-on experience in design, manufacturing, and team leadership.</p>
+        <p>I want to design strong, lightweight structures for motorsport and aerospace applications. This includes aerodynamic parts and composite components that can handle heavy forces and tough conditions. I’m interested in companies developing advanced technology in these fields.</p>
+        <p>Alongside my engineering projects, I worked for two years as an Aquatics Manager for the City of Round Rock. I helped enforce safety rules, prepared teams for emergencies, and managed staff across several city facilities.</p>
+      </div>
+    </div></section>
+
+    <section id="projects"><div class="grid">
+      <h2>Projects</h2>
+      <div>
+        <article>
+          <p class="meta">F.O.R.G.E., Austin Community College. October 2026 to present.</p>
+          <h3>Automated carbon fiber filament winder</h3>
+          <p>This automated machine is designed to make carbon fiber composite tubes that are 3 feet long, have a 3-inch inner diameter, and 4 mm-thick walls. Its custom six-motor system controls the rotating mandrel, the moving carriage, and how the fiber is fed and angled.</p>
+          <ul class="tags"><li>Six-motor motion system</li><li>Carbon fiber composites</li><li>Onshape CAD</li><li>Open-source publication</li></ul>
+          <details>
+            <summary>Technical details</summary>
+            <ul>
+              <li><strong>Motion system:</strong> coordinates mandrel rotation speed, carriage travel along the tube, resin bath positioning, and fiber angle.</li>
+              <li><strong>CAD:</strong> fully modeled and simulated in Onshape before machining and assembly.</li>
+              <li><strong>Open source:</strong> design files, motor controllers, and software logic are being documented for academic publication.</li>
+            </ul>
+          </details>
+        </article>
+        <article>
+          <p class="meta">VEX Robotics Competition. Judges Award recipient.</p>
+          <h3>VEX V5 competition robot</h3>
+          <p>I designed, programmed, and improved the mechanical parts of a VEX V5 competition robot. I focused on gear ratios, intake systems, and making the frame strong enough to handle competition.</p>
+          <ul class="tags"><li>Judges Award</li><li>VEX V5</li><li>Mechanical kinematics</li><li>Competitive drivetrain</li></ul>
+          <details>
+            <summary>Technical details</summary>
+            <ul>
+              <li>Tuned the gear train and motor distribution for maneuverability and defensive stability.</li>
+              <li>Built custom intake mechanisms with pneumatic actuation.</li>
+              <li>Earned the Judges Award for the team’s design process and engineering documentation.</li>
+            </ul>
+          </details>
+        </article>
+      </div>
+    </div></section>
+
+    <section id="experience"><div class="grid">
+      <h2>Experience</h2>
+      <div>
+        <div class="role">
+          <header><h3>Aquatics Manager</h3><span class="meta">2 years</span></header>
+          <p class="meta">City of Round Rock: Rock’n River Water Park, Lake Creek Pool, and Micki Krebsbach Pool</p>
           <ul>
-            <li><strong>Motion system:</strong> coordinates mandrel rotation speed, carriage travel along the tube, resin bath positioning, and fiber angle.</li>
-            <li><strong>CAD:</strong> fully modeled and simulated in Onshape before machining and assembly.</li>
-            <li><strong>Open source:</strong> design files, motor controllers, and software logic are being documented for academic publication.</li>
+            <li>Managed operations at three City of Round Rock facilities within an aquatics program that employs 365 lifeguards.</li>
+            <li>Enforced safety compliance and emergency protocols, and handled staff scheduling and patron care.</li>
+            <li>Planned and led specialized lifeguard coverage for competitive events, including a regional water polo tournament.</li>
           </ul>
-        </details>
-      </article>
-      <article>
-        <p class="meta">VEX Robotics Competition. Judges Award recipient.</p>
-        <h3>VEX V5 competition robot</h3>
-        <p>I designed, programmed, and refined the mechanical assemblies for a competition robot on the VEX V5 platform. I focused on gear-drive ratios, intake mechanisms, and frame rigidity under match loads.</p>
-        <ul class="tags"><li>Judges Award</li><li>VEX V5</li><li>Mechanical kinematics</li><li>Competitive drivetrain</li></ul>
-        <details>
-          <summary>Technical details</summary>
+        </div>
+        <div class="role">
+          <header><h3>Water Safety Instructor Manager</h3></header>
+          <p class="meta">City of Round Rock, Aquatics Division</p>
           <ul>
-            <li>Tuned the gear train and motor distribution for maneuverability and defensive stability.</li>
-            <li>Built custom intake mechanisms with pneumatic actuation.</li>
-            <li>Earned the Judges Award for the team’s design process and engineering documentation.</li>
+            <li>Led swim instruction for children and adults, from 6 months old to 13 and up.</li>
+            <li>Supervised curriculum delivery, stroke-mechanics coaching, and student progress evaluations.</li>
           </ul>
-        </details>
-      </article>
-    </div>
-  </div></section>
-
-  <section id="experience"><div class="wrap grid">
-    <h2>Experience</h2>
-    <div>
-      <div class="role">
-        <header><h3>Aquatics Manager</h3><span class="meta">2 years</span></header>
-        <p class="meta">City of Round Rock: Rock’n River Water Park, Lake Creek Pool, and Micki Krebsbach Pool</p>
-        <ul>
-          <li>Managed operations at three City of Round Rock facilities within an aquatics program that employs 365 lifeguards.</li>
-          <li>Enforced safety compliance and emergency protocols, and handled staff scheduling and patron care.</li>
-          <li>Planned and led specialized lifeguard coverage for competitive events, including a regional water polo tournament.</li>
-        </ul>
+        </div>
+        <div class="role">
+          <header><h3>Volunteer and community leadership</h3></header>
+          <ul>
+            <li><strong>AVID Expo Student Ambassador:</strong> spoke publicly to represent my school and promote academic advancement.</li>
+            <li><strong>“Together to Serve” club:</strong> supported women facing breast cancer, assisted older adults in the community, and took part in conservation planting.</li>
+            <li><strong>STEM tutor:</strong> tutored peers in math and engineering principles.</li>
+          </ul>
+        </div>
       </div>
-      <div class="role">
-        <header><h3>Water Safety Instructor Manager</h3></header>
-        <p class="meta">City of Round Rock, Aquatics Division</p>
-        <ul>
-          <li>Led swim instruction for children and adults, from 6 months old to 13 and up.</li>
-          <li>Supervised curriculum delivery, stroke-mechanics coaching, and student progress evaluations.</li>
-        </ul>
-      </div>
-      <div class="role">
-        <header><h3>Volunteer and community leadership</h3></header>
-        <ul>
-          <li><strong>AVID Expo Student Ambassador:</strong> spoke publicly to represent my school and promote academic advancement.</li>
-          <li><strong>“Together to Serve” club:</strong> supported women facing breast cancer, assisted older adults in the community, and took part in conservation planting.</li>
-          <li><strong>STEM tutor:</strong> tutored peers in math and engineering principles.</li>
-        </ul>
-      </div>
-    </div>
-  </div></section>
+    </div></section>
 
-  <section id="honors"><div class="wrap grid">
-    <h2>Honors</h2>
-    <ul class="honors">
-      <li><h3>1st place, Texas State Lifeguard Competition</h3><p>Won first place statewide for the City of Round Rock in rescue speed, scenario execution, and endurance.</p></li>
-      <li><h3>“All American” Award</h3><p>Presented by the City of Round Rock Aquatics department for work ethic, safety leadership, and operational excellence.</p></li>
-      <li><h3>Judges Award, VEX Robotics</h3><p>Recognized by tournament judges for engineering documentation, robot design, and teamwork.</p></li>
-    </ul>
-  </div></section>
+    <section id="honors"><div class="grid">
+      <h2>Honors</h2>
+      <ul class="honors">
+        <li><h3>1st place, Texas State Lifeguard Competition</h3><p>Earned first place in the state while representing the City of Round Rock. The competition tested rescue speed, response to emergency scenarios, and endurance.</p></li>
+        <li><h3>“All American” Award</h3><p>Awarded by the City of Round Rock Aquatics Department for strong work ethic, safety leadership, and excellent performance.</p></li>
+        <li><h3>Judges Award, VEX Robotics</h3><p>Tournament judges recognized the team’s engineering records, robot design, and teamwork.</p></li>
+      </ul>
+    </div></section>
 
-  <section id="skills"><div class="wrap grid">
-    <h2>Skills</h2>
-    <div class="skills">
+    <section id="skills"><div class="grid">
+      <h2>Skills</h2>
+      <div class="skills">
+        <div>
+          <h3>Engineering &amp; CAD</h3>
+          <ul><li>Python (ENGR 102)</li><li>Onshape CAD</li><li>3D printing</li><li>Filament winding</li><li>Composites</li></ul>
+        </div>
+        <div>
+          <h3>Leadership</h3>
+          <ul><li>Operations</li><li>Public speaking</li><li>Swim coaching</li><li>First Aid / CPR</li></ul>
+        </div>
+        <div>
+          <h3>Languages</h3>
+          <dl><div><dt>English</dt><dd>Fluent</dd></div><div><dt>Russian</dt><dd>Fluent</dd></div></dl>
+        </div>
+      </div>
+    </div></section>
+
+    <section id="contact" class="contact"><div class="grid">
+      <h2>Contact</h2>
       <div>
-        <h3>Engineering and CAD</h3>
-        <ul><li>Python (ENGR 102)</li><li>Onshape CAD</li><li>3D printing and slicing</li><li>Filament winding</li><li>Carbon fiber composites</li><li>Kinematic motion systems</li></ul>
+        <p>I’m looking for engineering internship opportunities and would be happy to talk about composite manufacturing, motorsport technology, or working together on projects.</p>
+        <a class="mail" href="mailto:arsenii.markov2020@gmail.com?subject=Hello%20Arsenii">arsenii.markov2020@gmail.com</a>
+        <p>Prefer to call? <a href="tel:+16502018605">650-201-8605</a></p>
       </div>
-      <div>
-        <h3>Leadership and operations</h3>
-        <ul><li>Operations management</li><li>Public speaking</li><li>Swim coaching</li><li>Athletic training</li><li>CPR, AED, and first aid</li><li>Water Safety Instructor</li></ul>
-      </div>
-      <div>
-        <h3>Languages</h3>
-        <dl><div><dt>English</dt><dd>Fluent</dd></div><div><dt>Russian</dt><dd>Fluent</dd></div><div><dt>Ukrainian</dt><dd>Basic reading</dd></div><div><dt>Serbian</dt><dd>Basic reading</dd></div></dl>
-      </div>
-    </div>
-  </div></section>
+    </div></section>
+  </main>
 
-  <section id="contact" class="contact"><div class="wrap grid">
-    <h2>Contact</h2>
-    <div>
-      <p>I’m open to engineering internships and to conversations about composite manufacturing, motorsport technology, and project collaboration.</p>
-      <a class="mail" href="mailto:arsenii.markov2020@gmail.com?subject=Hello%20Arsenii">arsenii.markov2020@gmail.com</a>
-      <p>Prefer to call? <a href="tel:+16502018605">650-201-8605</a></p>
+  <aside class="f1-sticky-container">
+    <div class="f1-card">
+      <div class="f1-header">
+        <span class="f1-title">Aerodynamic Chassis</span>
+        <span class="f1-badge" id="assembly-pct">0%</span>
+      </div>
+      <svg class="f1-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="carbon" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2A323A"/>
+            <stop offset="100%" stop-color="#0F1317"/>
+          </linearGradient>
+        </defs>
+        
+        <!-- Reference Grid Lines -->
+        <line x1="20" y1="170" x2="380" y2="170" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 4"/>
+        
+        <!-- Assembly Component Groups -->
+        <!-- 1. Monocoque Tub -->
+        <g id="part-tub" class="f1-part">
+          <path d="M120 120 L260 120 L280 135 L260 145 L110 145 Z" fill="url(#carbon)" stroke="var(--ink)" stroke-width="2"/>
+          <path d="M180 120 L200 105 L220 105 L230 120 Z" fill="#1A2128" stroke="var(--ink)" stroke-width="1.5"/>
+          <!-- Cockpit / Halo Base -->
+          <path d="M190 105 Q210 90 220 105" fill="none" stroke="var(--accent)" stroke-width="3"/>
+        </g>
+
+        <!-- 2. Engine & Airbox -->
+        <g id="part-engine" class="f1-part">
+          <path d="M160 120 L180 90 L220 90 L210 120 Z" fill="var(--accent)" opacity="0.9"/>
+          <circle cx="195" cy="100" r="4" fill="var(--on-accent)"/>
+        </g>
+
+        <!-- 3. Sidepods & Floor -->
+        <g id="part-sidepods" class="f1-part">
+          <path d="M140 145 L250 145 L270 155 L120 155 Z" fill="#2A323A" stroke="var(--ink)" stroke-width="1.5"/>
+          <path d="M160 125 Q200 120 220 138 L150 138 Z" fill="var(--accent)"/>
+        </g>
+
+        <!-- 4. Front Wing Assembly -->
+        <g id="part-frontwing" class="f1-part">
+          <path d="M300 142 L360 142 L365 150 L295 150 Z" fill="url(#carbon)" stroke="var(--ink)" stroke-width="1.5"/>
+          <path d="M350 135 L350 152 M355 135 L355 152" stroke="var(--accent)" stroke-width="2"/>
+          <path d="M300 142 L320 135 L280 135 Z" fill="var(--accent)"/>
+        </g>
+
+        <!-- 5. Rear Wing Assembly -->
+        <g id="part-rearwing" class="f1-part">
+          <path d="M60 100 L110 100 L105 110 L65 110 Z" fill="url(#carbon)" stroke="var(--ink)" stroke-width="1.5"/>
+          <path d="M70 100 L70 145 M100 100 L100 145" stroke="var(--muted)" stroke-width="2"/>
+          <path d="M55 95 L60 115 M115 95 L110 115" stroke="var(--accent)" stroke-width="3"/>
+        </g>
+
+        <!-- 6. Front Wheels & Suspension -->
+        <g id="part-frontwheels" class="f1-part">
+          <!-- Wishbones -->
+          <line x1="260" y1="135" x2="300" y2="125" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="260" y1="140" x2="300" y2="155" stroke="var(--ink)" stroke-width="2"/>
+          <!-- Front Tire -->
+          <rect x="285" y="115" width="30" height="50" rx="6" fill="#0F1317" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="300" cy="140" r="8" fill="var(--surface)"/>
+        </g>
+
+        <!-- 7. Rear Wheels & Suspension -->
+        <g id="part-rearwheels" class="f1-part">
+          <!-- Wishbones -->
+          <line x1="110" y1="135" x2="80" y2="125" stroke="var(--ink)" stroke-width="2"/>
+          <line x1="110" y1="140" x2="80" y2="155" stroke="var(--ink)" stroke-width="2"/>
+          <!-- Rear Tire -->
+          <rect x="65" y="110" width="35" height="60" rx="6" fill="#0F1317" stroke="var(--accent)" stroke-width="2"/>
+          <circle cx="82.5" cy="140" r="10" fill="var(--surface)"/>
+        </g>
+      </svg>
+      <div class="f1-status" id="assembly-status">Initializing Monocoque...</div>
     </div>
-  </div></section>
-</main>
+  </aside>
+</div>
 
 <footer><div class="wrap">© 2026 Arsenii Markov. Texas A&amp;M Engineering Academy at Austin Community College.</div></footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const parts = [
+      { id: 'part-tub', label: '1. Carbon Monocoque Tub', startX: 0, startY: -60 },
+      { id: 'part-engine', label: '2. Power Unit & Airbox', startX: 0, startY: -80 },
+      { id: 'part-sidepods', label: '3. Sidepods & Floor Vanes', startX: -50, startY: 0 },
+      { id: 'part-frontwing', label: '4. Front Wing & Endplates', startX: 80, startY: 0 },
+      { id: 'part-rearwing', label: '5. Rear Wing & DRS Unit', startX: -80, startY: 0 },
+      { id: 'part-frontwheels', label: '6. Front Suspension & Tires', startX: 60, startY: 60 },
+      { id: 'part-rearwheels', label: '7. Rear Axle & Compound Tires', startX: -60, startY: 60 }
+    ];
+
+    const elements = parts.map(p => ({
+      ...p,
+      el: document.getElementById(p.id)
+    }));
+
+    const statusEl = document.getElementById('assembly-status');
+    const pctEl = document.getElementById('assembly-pct');
+
+    function updateAssembly() {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollTop = window.scrollY;
+      const progress = Math.min(Math.max(scrollTop / (scrollHeight || 1), 0), 1);
+      
+      const totalParts = elements.length;
+      const currentStep = progress * totalParts;
+
+      elements.forEach((item, idx) => {
+        const partProgress = Math.min(Math.max(currentStep - idx, 0), 1);
+        
+        // Calculate offset transformation
+        const offsetX = (1 - partProgress) * item.startX;
+        const offsetY = (1 - partProgress) * item.startY;
+        const opacity = partProgress;
+
+        if (item.el) {
+          item.el.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+          item.el.style.opacity = opacity;
+        }
+      });
+
+      // Update HUD Labels
+      const activeIdx = Math.min(Math.floor(currentStep), totalParts - 1);
+      const overallPct = Math.round(progress * 100);
+      pctEl.textContent = `${overallPct}%`;
+
+      if (overallPct >= 95) {
+        statusEl.textContent = 'Race-Ready F1 Vehicle Assembled';
+      } else {
+        statusEl.textContent = elements[activeIdx].label;
+      }
+    }
+
+    window.addEventListener('scroll', updateAssembly, { passive: true });
+    updateAssembly();
+  });
+</script>
+
 </body>
 </html>
