@@ -9,16 +9,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Source+Serif+4:opsz,wght@8..60,400..700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#ECEFF2;--surface:#DDE2E7;--ink:#0F1720;--muted:#46525E;--rule:#C3CAD1;--accent:#F2B705;--on-accent:#0F1720;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1317;--surface:#1A2128;--ink:#E8ECEF;--muted:#A0AAB4;--rule:#2A323A;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0F1317;--surface:#1A2128;--ink:#E8ECEF;--muted:#A0AAB4;--rule:#2A323A;color-scheme:dark}
+:root{--bg:#0A0D10;--surface:#12161B;--ink:#F0F4F8;--muted:#72808E;--rule:#222930;--accent:#FFFFFF;--on-accent:#0A0D10;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *,*::before,*::after{box-sizing:inherit}
 html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px)}
 body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.65 "Source Serif 4",Georgia,serif}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
 h1,h2,h3,.ui{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
-a{color:inherit;text-decoration-color:var(--accent);text-decoration-thickness:3px;text-underline-offset:3px}
-:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+a{color:inherit;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 .skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--on-accent);padding:.5rem 1rem;z-index:20}
 .skip:focus{left:0}
 .wrap{max-width:1280px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
@@ -28,33 +26,46 @@ header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:spac
 .brand{font:800 1.1rem Archivo,sans-serif;font-stretch:120%;text-decoration:none}
 nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0;overflow-x:auto}
 nav a{display:block;padding:.45rem 0;font:500 .92rem Archivo,sans-serif;color:var(--muted);text-decoration:none;white-space:nowrap}
-nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:3px;text-underline-offset:6px}
+nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:6px}
 
 .main-layout{display:grid;grid-template-columns:1fr;gap:2rem}
 @media (min-width:1024px){
-  .main-layout{grid-template-columns:1fr 340px;align-items:start}
-  .f1-sticky-container{position:sticky;top:100px;height:calc(100vh - 120px);display:flex;flex-direction:column;justify-content:center}
+  .main-layout{grid-template-columns:1fr 320px;align-items:start}
+  .f1-track-stage{position:sticky;top:80px;height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:center;align-items:center}
 }
 
 .hero{padding-block:clamp(3rem,9vw,6.5rem) 3rem}
 h1{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(2.7rem,9vw,6rem);line-height:.95;letter-spacing:-.02em}
-.lede{max-width:40rem;margin:1.75rem 0;font-size:1.25rem}
+.lede{max-width:40rem;margin:1.75rem 0;font-size:1.25rem;color:#B0BCC8}
 .actions{display:flex;flex-wrap:wrap;gap:.75rem}
-.btn{display:inline-block;padding:.8rem 1.4rem;background:var(--accent);color:var(--on-accent);border:2px solid var(--accent);border-radius:2px;font:700 .95rem Archivo,sans-serif;text-decoration:none}
-.btn.alt{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn{display:inline-block;padding:.8rem 1.4rem;background:var(--ink);color:var(--on-accent);border:1px solid var(--ink);border-radius:2px;font:700 .95rem Archivo,sans-serif;text-decoration:none}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--rule)}
 .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0 1rem;margin:3rem 0 0;border-top:1px solid var(--rule)}
 .facts div{padding:1rem 0}
 .facts dt{font:500 .85rem Archivo,sans-serif;color:var(--muted)}
 .facts dd{margin:.15rem 0 0;font:700 1.35rem Archivo,sans-serif}
 
-/* F1 Assembly Visualizer Styles */
-.f1-card{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:1.25rem;box-shadow:0 10px 30px rgba(0,0,0,0.05)}
-.f1-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;border-bottom:1px solid var(--rule);padding-bottom:0.5rem}
-.f1-title{font:800 0.85rem Archivo,sans-serif;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted)}
-.f1-badge{background:var(--accent);color:var(--on-accent);font:700 0.75rem Archivo,sans-serif;padding:0.15rem 0.5rem;border-radius:3px}
-.f1-svg{width:100%;height:auto;max-height:360px;display:block}
-.f1-part{transition:transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;transform-box:fill-box;transform-origin:center}
-.f1-status{font:600 0.85rem Archivo,sans-serif;color:var(--ink);margin-top:0.75rem;text-align:center}
+/* Minimalist Canvas Track Container */
+.f1-track-stage{width:100%;height:100%;min-height:500px;position:relative;overflow:hidden}
+.f1-track-svg{width:100%;height:100%;display:block}
+
+/* Air Streamlines Animation */
+@keyframes airFlow {
+  0% { stroke-dashoffset: 120; opacity: 0.1; }
+  50% { opacity: 0.5; }
+  100% { stroke-dashoffset: 0; opacity: 0.1; }
+}
+.air-line {
+  stroke: #FFFFFF;
+  stroke-width: 1;
+  stroke-dasharray: 20 40;
+  stroke-linecap: round;
+  animation: airFlow 3s linear infinite;
+  opacity: 0.3;
+}
+.air-line-fast {
+  animation-duration: 1.8s;
+}
 
 section{border-top:1px solid var(--rule);padding-block:clamp(2.5rem,6vw,4.5rem)}
 .grid{display:grid;gap:1.5rem 3rem}
@@ -70,7 +81,7 @@ article{padding-bottom:2.25rem;margin-bottom:2.25rem;border-bottom:1px solid var
 article:last-child{padding:0;margin:0;border:0}
 article>p{max-width:62ch}
 .tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:1rem 0 0}
-.tags li{margin:0;padding:.15rem .65rem;border:1px solid var(--rule);border-radius:2px;font:500 .82rem Archivo,sans-serif}
+.tags li{margin:0;padding:.15rem .65rem;border:1px solid var(--rule);border-radius:2px;font:500 .82rem Archivo,sans-serif;color:var(--muted)}
 summary{margin-top:1rem;cursor:pointer;font:600 .95rem Archivo,sans-serif}
 details ul{margin-top:.75rem;max-width:62ch}
 
@@ -78,9 +89,9 @@ details ul{margin-top:.75rem;max-width:62ch}
 .role header{position:static;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0 1rem;border:0;background:none;padding:0}
 .role ul{max-width:62ch}
 .honors{list-style:none;padding:0;margin:0}
-.honors li{margin-bottom:1.5rem;padding-left:1rem;border-left:4px solid var(--accent);max-width:62ch}
+.honors li{margin-bottom:1.5rem;padding-left:1rem;border-left:2px solid var(--accent);max-width:62ch}
 .honors h3{font-size:1.1rem}
-.honors p{margin:.2rem 0 0}
+.honors p{margin:.2rem 0 0;color:var(--muted)}
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem}
 .skills h3{margin-bottom:.75rem;font-size:1.1rem}
 .skills ul,.skills dl{list-style:none;padding:0;margin:0}
@@ -239,80 +250,38 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
     </div></section>
   </main>
 
-  <aside class="f1-sticky-container">
-    <div class="f1-card">
-      <div class="f1-header">
-        <span class="f1-title">Aerodynamic Chassis</span>
-        <span class="f1-badge" id="assembly-pct">0%</span>
-      </div>
-      <svg class="f1-svg" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="carbon" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#2A323A"/>
-            <stop offset="100%" stop-color="#0F1317"/>
-          </linearGradient>
-        </defs>
-        
-        <!-- Reference Grid Lines -->
-        <line x1="20" y1="170" x2="380" y2="170" stroke="var(--rule)" stroke-width="1" stroke-dasharray="4 4"/>
-        
-        <!-- Assembly Component Groups -->
-        <!-- 1. Monocoque Tub -->
-        <g id="part-tub" class="f1-part">
-          <path d="M120 120 L260 120 L280 135 L260 145 L110 145 Z" fill="url(#carbon)" stroke="var(--ink)" stroke-width="2"/>
-          <path d="M180 120 L200 105 L220 105 L230 120 Z" fill="#1A2128" stroke="var(--ink)" stroke-width="1.5"/>
-          <!-- Cockpit / Halo Base -->
-          <path d="M190 105 Q210 90 220 105" fill="none" stroke="var(--accent)" stroke-width="3"/>
-        </g>
+  <aside class="f1-track-stage">
+    <svg class="f1-track-svg" viewBox="0 0 300 800" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ambient Air Lines flowing in background -->
+      <path class="air-line" d="M 30 50 Q 80 120 40 220" fill="none" />
+      <path class="air-line air-line-fast" d="M 260 100 Q 200 250 250 380" fill="none" />
+      <path class="air-line" d="M 20 300 Q 120 450 30 600" fill="none" />
+      <path class="air-line air-line-fast" d="M 270 520 Q 180 650 240 760" fill="none" />
 
-        <!-- 2. Engine & Airbox -->
-        <g id="part-engine" class="f1-part">
-          <path d="M160 120 L180 90 L220 90 L210 120 Z" fill="var(--accent)" opacity="0.9"/>
-          <circle cx="195" cy="100" r="4" fill="var(--on-accent)"/>
-        </g>
+      <!-- Minimalist Track Outline (White Lines) -->
+      <path id="track-edge-left" d="M 135 40 Q 255 180 235 320 T 65 520 Q 45 660 165 760" fill="none" stroke="#222930" stroke-width="28" stroke-linecap="round"/>
+      <path id="track-path" d="M 135 40 Q 255 180 235 320 T 65 520 Q 45 660 165 760" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.6"/>
 
-        <!-- 3. Sidepods & Floor -->
-        <g id="part-sidepods" class="f1-part">
-          <path d="M140 145 L250 145 L270 155 L120 155 Z" fill="#2A323A" stroke="var(--ink)" stroke-width="1.5"/>
-          <path d="M160 125 Q200 120 220 138 L150 138 Z" fill="var(--accent)"/>
-        </g>
+      <!-- Minimal Start / Finish Line -->
+      <line x1="120" y1="50" x2="150" y2="50" stroke="#FFFFFF" stroke-width="3"/>
+      <line x1="150" y1="750" x2="180" y2="750" stroke="#FFFFFF" stroke-width="3"/>
 
-        <!-- 4. Front Wing Assembly -->
-        <g id="part-frontwing" class="f1-part">
-          <path d="M300 142 L360 142 L365 150 L295 150 Z" fill="url(#carbon)" stroke="var(--ink)" stroke-width="1.5"/>
-          <path d="M350 135 L350 152 M355 135 L355 152" stroke="var(--accent)" stroke-width="2"/>
-          <path d="M300 142 L320 135 L280 135 Z" fill="var(--accent)"/>
-        </g>
+      <!-- Minimalist F1 Wireframe Car Group -->
+      <g id="f1-car" transform="translate(135, 40) rotate(0)">
+        <path class="air-line air-line-fast" d="M -12 -10 L -12 -35" fill="none"/>
+        <path class="air-line air-line-fast" d="M 12 -10 L 12 -35" fill="none"/>
+        <path class="air-line" d="M 0 -15 L 0 -45" fill="none"/>
 
-        <!-- 5. Rear Wing Assembly -->
-        <g id="part-rearwing" class="f1-part">
-          <path d="M60 100 L110 100 L105 110 L65 110 Z" fill="url(#carbon)" stroke="var(--ink)" stroke-width="1.5"/>
-          <path d="M70 100 L70 145 M100 100 L100 145" stroke="var(--muted)" stroke-width="2"/>
-          <path d="M55 95 L60 115 M115 95 L110 115" stroke="var(--accent)" stroke-width="3"/>
-        </g>
-
-        <!-- 6. Front Wheels & Suspension -->
-        <g id="part-frontwheels" class="f1-part">
-          <!-- Wishbones -->
-          <line x1="260" y1="135" x2="300" y2="125" stroke="var(--ink)" stroke-width="2"/>
-          <line x1="260" y1="140" x2="300" y2="155" stroke="var(--ink)" stroke-width="2"/>
-          <!-- Front Tire -->
-          <rect x="285" y="115" width="30" height="50" rx="6" fill="#0F1317" stroke="var(--accent)" stroke-width="2"/>
-          <circle cx="300" cy="140" r="8" fill="var(--surface)"/>
-        </g>
-
-        <!-- 7. Rear Wheels & Suspension -->
-        <g id="part-rearwheels" class="f1-part">
-          <!-- Wishbones -->
-          <line x1="110" y1="135" x2="80" y2="125" stroke="var(--ink)" stroke-width="2"/>
-          <line x1="110" y1="140" x2="80" y2="155" stroke="var(--ink)" stroke-width="2"/>
-          <!-- Rear Tire -->
-          <rect x="65" y="110" width="35" height="60" rx="6" fill="#0F1317" stroke="var(--accent)" stroke-width="2"/>
-          <circle cx="82.5" cy="140" r="10" fill="var(--surface)"/>
-        </g>
-      </svg>
-      <div class="f1-status" id="assembly-status">Initializing Monocoque...</div>
-    </div>
+        <path d="M -5 15 L -3 -15 L 0 -22 L 3 -15 L 5 15 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
+        <line x1="-14" y1="-20" x2="14" y2="-20" stroke="#FFFFFF" stroke-width="2"/>
+        <line x1="-12" y1="18" x2="12" y2="18" stroke="#FFFFFF" stroke-width="2.5"/>
+        <rect x="-16" y="-22" width="3" height="8" fill="#FFFFFF"/>
+        <rect x="13" y="-22" width="3" height="8" fill="#FFFFFF"/>
+        <rect x="-17" y="12" width="4" height="10" fill="#FFFFFF"/>
+        <rect x="13" y="12" width="4" height="10" fill="#FFFFFF"/>
+        <circle cx="0" cy="-2" r="2.5" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+      </g>
+    </svg>
   </aside>
 </div>
 
@@ -320,60 +289,30 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const parts = [
-      { id: 'part-tub', label: '1. Carbon Monocoque Tub', startX: 0, startY: -60 },
-      { id: 'part-engine', label: '2. Power Unit & Airbox', startX: 0, startY: -80 },
-      { id: 'part-sidepods', label: '3. Sidepods & Floor Vanes', startX: -50, startY: 0 },
-      { id: 'part-frontwing', label: '4. Front Wing & Endplates', startX: 80, startY: 0 },
-      { id: 'part-rearwing', label: '5. Rear Wing & DRS Unit', startX: -80, startY: 0 },
-      { id: 'part-frontwheels', label: '6. Front Suspension & Tires', startX: 60, startY: 60 },
-      { id: 'part-rearwheels', label: '7. Rear Axle & Compound Tires', startX: -60, startY: 60 }
-    ];
+    const trackPath = document.getElementById('track-path');
+    const f1Car = document.getElementById('f1-car');
 
-    const elements = parts.map(p => ({
-      ...p,
-      el: document.getElementById(p.id)
-    }));
+    if (!trackPath || !f1Car) return;
 
-    const statusEl = document.getElementById('assembly-status');
-    const pctEl = document.getElementById('assembly-pct');
+    const pathLength = trackPath.getTotalLength();
 
-    function updateAssembly() {
+    function updateCarPosition() {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollTop = window.scrollY;
-      const progress = Math.min(Math.max(scrollTop / (scrollHeight || 1), 0), 1);
-      
-      const totalParts = elements.length;
-      const currentStep = progress * totalParts;
+      const progress = Math.min(Math.max(scrollTop / (scrollHeight || 1), 0), 0.999);
 
-      elements.forEach((item, idx) => {
-        const partProgress = Math.min(Math.max(currentStep - idx, 0), 1);
-        
-        // Calculate offset transformation
-        const offsetX = (1 - partProgress) * item.startX;
-        const offsetY = (1 - partProgress) * item.startY;
-        const opacity = partProgress;
+      const point = trackPath.getPointAtLength(progress * pathLength);
+      const nextPoint = trackPath.getPointAtLength(Math.min((progress + 0.005) * pathLength, pathLength));
 
-        if (item.el) {
-          item.el.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-          item.el.style.opacity = opacity;
-        }
-      });
+      const dx = nextPoint.x - point.x;
+      const dy = nextPoint.y - point.y;
+      const angle = Math.atan2(dy, dx) * (180 / Math.PI) - 90;
 
-      // Update HUD Labels
-      const activeIdx = Math.min(Math.floor(currentStep), totalParts - 1);
-      const overallPct = Math.round(progress * 100);
-      pctEl.textContent = `${overallPct}%`;
-
-      if (overallPct >= 95) {
-        statusEl.textContent = 'Race-Ready F1 Vehicle Assembled';
-      } else {
-        statusEl.textContent = elements[activeIdx].label;
-      }
+      f1Car.setAttribute('transform', `translate(${point.x}, ${point.y}) rotate(${angle})`);
     }
 
-    window.addEventListener('scroll', updateAssembly, { passive: true });
-    updateAssembly();
+    window.addEventListener('scroll', updateCarPosition, { passive: true });
+    updateCarPosition();
   });
 </script>
 
