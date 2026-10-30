@@ -2,481 +2,1004 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Arsenii Markov | Engineering student, composites and automation</title>
 <meta name="description" content="Portfolio of Arsenii Markov, a Texas A&M Engineering Academy student building automated carbon fiber manufacturing systems.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400..700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <style>
-:root{
-  --bg:#0A0D10;
-  --surface:#12161B;
-  --ink:#F0F4F8;
-  --muted:#72808E;
-  --rule:#222930;
-  --accent:#FFFFFF;
-  --on-accent:#0A0D10;
-  --red:#FF3B1F;
-  --cyan:#00E5FF;
-  --mono:'JetBrains Mono',monospace;
-  color-scheme:dark;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-top,0px);
-}
-*,*::before,*::after{box-sizing:inherit}
-html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:1.0625rem/1.65 "Source Serif 4",Georgia,serif;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
-h1,h2,h3,.ui{font-family:Archivo,"Helvetica Neue",Arial,sans-serif}
-a{color:inherit;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--on-accent);padding:.5rem 1rem;z-index:20}
-.skip:focus{left:0}
-.wrap{max-width:1360px;margin:0 auto;padding:0 clamp(1rem,3.5vw,2rem)}
-
-/* Sticky Top Header */
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(10,13,16,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.2rem 1.5rem;padding-block:.65rem}
-.brand{font:800 1.1rem Archivo,sans-serif;font-stretch:120%;text-decoration:none}
-nav ul{display:flex;gap:1.25rem;list-style:none;margin:0;padding:0;overflow-x:auto;align-items:center}
-nav a{display:block;padding:.45rem 0;font:500 .92rem Archivo,sans-serif;color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .15s ease}
-nav a:hover,nav a.active{color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:6px}
-nav a.nav-linkedin{display:inline-flex;align-items:center;gap:.35rem;color:var(--ink);font-weight:600}
-.nav-resume-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.35rem;
-  padding:.3rem .7rem;
-  background:var(--surface);
-  color:var(--ink);
-  border:1px solid var(--rule);
-  border-radius:2px;
-  font:600 .85rem Archivo,sans-serif;
-  cursor:pointer;
-  white-space:nowrap;
-  transition:border-color .15s ease,background .15s ease;
-}
-.nav-resume-btn:hover{border-color:var(--cyan);background:rgba(0,229,255,0.08)}
-.scroll-hairline{position:absolute;bottom:-1px;left:0;height:2px;width:0%;background:linear-gradient(90deg,var(--red),var(--cyan));transition:width .06s linear}
-
-/* 3-Column Symmetrical Layout: Left F1 Track | Main Editorial Content | Right Rocket Track */
-.main-layout{display:grid;grid-template-columns:1fr;gap:2rem}
-@media (min-width:1024px){
-  .main-layout{grid-template-columns:160px minmax(0,1fr) 160px;gap:2.5rem;align-items:start}
+:root {
+  --bg: #0A0D10;
+  --surface: #12161B;
+  --ink: #F0F4F8;
+  --muted: #72808E;
+  --rule: #222930;
+  --accent: #FFFFFF;
+  --on-accent: #0A0D10;
+  --cyan: #00E5FF;
+  --red: #FF3366;
+  --forest-hex: #19442c;
+  color-scheme: dark;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-.side-track{display:none}
-@media (min-width:1024px){
-  .side-track{
-    position:sticky;
-    top:72px;
-    height:calc(100vh - 88px);
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    align-items:center;
-    padding:.75rem 0;
-    pointer-events:none;
-    user-select:none;
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #0A0D10 !important;
+  color: #F0F4F8 !important;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 80px);
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 50% 15%, rgba(25, 68, 44, 0.22) 0%, rgba(10, 13, 16, 0) 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50L0 16L28 0L56 16L56 50L28 66L28 100' fill='none' stroke='%2319442c' stroke-width='1.15' stroke-opacity='0.38'/%3E%3Cpath d='M28 0L28 34L0 50L0 84L28 100L56 84L56 50L28 34' fill='none' stroke='%2319442c' stroke-width='1.15' stroke-opacity='0.38'/%3E%3C/svg%3E");
+  background-size: 100% 100%, 56px 100px;
+  background-attachment: fixed;
+  font: 1.0625rem/1.65 "Source Serif 4", Georgia, serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--bg);
+  z-index: 25;
+}
+
+h1, h2, h3, .ui {
+  font-family: Archivo, "Helvetica Neue", Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+  padding: .5rem 1rem;
+  z-index: 30;
+}
+.skip:focus {
+  left: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3.5vw, 2rem);
+}
+
+/* Sticky Top Header with Horizontally Scrollable Nav */
+header.site-header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 20;
+  background: rgba(10, 13, 16, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+  width: 100%;
+}
+
+header.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: .6rem;
+  overflow: hidden;
+}
+
+.brand {
+  font: 800 1.1rem Archivo, sans-serif;
+  font-stretch: 120%;
+  text-decoration: none;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+nav {
+  flex-grow: 1;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+nav::-webkit-scrollbar {
+  display: none;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+nav a, .nav-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .42rem 0;
+  font: 500 .9rem Archivo, sans-serif;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+nav a:hover,
+nav a.active,
+.nav-resume-btn:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+.nav-resume-pill {
+  padding: .28rem .68rem !important;
+  border: 1px solid var(--rule) !important;
+  border-radius: 2px;
+  background: var(--surface) !important;
+  color: var(--ink) !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+.nav-resume-pill:hover {
+  border-color: var(--ink) !important;
+  background: var(--ink) !important;
+  color: var(--on-accent) !important;
+}
+
+.scroll-progress {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--ink);
+  transition: width 0.08s linear;
+}
+
+/* 3-Column Symmetrical Layout on PC (Left F1 Track | Main Content | Right Rocket Track) */
+.main-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.side-track {
+  display: none;
+}
+
+@media (min-width: 1040px) {
+  .main-layout {
+    grid-template-columns: 180px minmax(0, 1fr) 180px;
+    gap: 2.25rem;
+    align-items: start;
+  }
+  .side-track {
+    display: flex;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    user-select: none;
   }
 }
 
-.track-hud{
-  width:100%;
-  padding:.4rem .5rem;
-  background:var(--surface);
-  border:1px solid var(--rule);
-  border-radius:2px;
-  font:500 .66rem/1.35 var(--mono);
-  color:var(--muted);
-  text-align:center;
+.track-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 820px;
+  display: block;
+  overflow: visible;
 }
-.track-hud strong{display:block;font-size:.74rem;color:var(--ink)}
-.track-hud .accent-red{color:var(--red)}
-.track-hud .accent-cyan{color:var(--cyan)}
 
-.track-svg-wrap{flex:1;width:100%;position:relative;overflow:hidden}
-.track-svg{width:100%;height:100%;display:block;overflow:visible}
-
-/* CFD Aerodynamic Wind Streamline Keyframes from Redesign */
+/* CFD Wind Streamline Animations */
 @keyframes cfdFlowUp {
-  0% { stroke-dashoffset: 0; opacity: 0.2; }
-  50% { opacity: 0.85; }
-  100% { stroke-dashoffset: -110; opacity: 0.2; }
-}
-@keyframes cfdFlowDown {
-  0% { stroke-dashoffset: 110; opacity: 0.2; }
-  50% { opacity: 0.85; }
+  0% { stroke-dashoffset: 160; opacity: 0.2; }
+  50% { opacity: 0.78; }
   100% { stroke-dashoffset: 0; opacity: 0.2; }
 }
-.cfd-f1-cyan{stroke:var(--cyan);stroke-width:1.3;stroke-dasharray:18 36;stroke-linecap:round;fill:none;animation:cfdFlowUp 1.8s linear infinite}
-.cfd-f1-red{stroke:var(--red);stroke-width:1.2;stroke-dasharray:14 34;stroke-linecap:round;fill:none;animation:cfdFlowUp 1.25s linear infinite}
-.cfd-f1-white{stroke:#FFFFFF;stroke-width:1;stroke-dasharray:12 38;stroke-linecap:round;fill:none;opacity:.45;animation:cfdFlowUp 2.3s linear infinite}
 
-.cfd-rocket-cyan{stroke:var(--cyan);stroke-width:1.3;stroke-dasharray:18 36;stroke-linecap:round;fill:none;animation:cfdFlowDown 1.8s linear infinite}
-.cfd-rocket-red{stroke:var(--red);stroke-width:1.2;stroke-dasharray:14 34;stroke-linecap:round;fill:none;animation:cfdFlowDown 1.25s linear infinite}
-.cfd-rocket-white{stroke:#FFFFFF;stroke-width:1;stroke-dasharray:12 38;stroke-linecap:round;fill:none;opacity:.45;animation:cfdFlowDown 2.3s linear infinite}
-
-/* Editorial Hero Section */
-.hero{padding-block:clamp(3rem,8vw,6rem) 3rem}
-h1{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(2.7rem,8vw,5.75rem);line-height:.95;letter-spacing:-.02em}
-.lede{max-width:42rem;margin:1.75rem 0;font-size:1.25rem;color:#B0BCC8}
-.actions{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
-.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.8rem 1.4rem;background:var(--ink);color:var(--on-accent);border:1px solid var(--ink);border-radius:2px;font:700 .95rem Archivo,sans-serif;text-decoration:none;cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease}
-.btn:hover{background:#D8E2EC;border-color:#D8E2EC}
-.btn.alt{background:transparent;color:var(--ink);border-color:var(--rule)}
-.btn.alt:hover{border-color:var(--ink);background:var(--surface)}
-
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:0 1rem;margin:3rem 0 0;border-top:1px solid var(--rule)}
-.facts div{padding:1rem 0}
-.facts dt{font:500 .85rem Archivo,sans-serif;color:var(--muted)}
-.facts dd{margin:.15rem 0 0;font:700 1.35rem Archivo,sans-serif}
-.facts dd small{display:block;font:500 .78rem Archivo,sans-serif;color:var(--muted);margin-top:.15rem}
-
-/* Editorial Content Sections */
-section{border-top:1px solid var(--rule);padding-block:clamp(2.5rem,6vw,4.5rem)}
-.grid{display:grid;gap:1.5rem 3rem}
-@media (min-width:800px){
-  .grid{grid-template-columns:150px 1fr}
-  h2{position:sticky;top:calc(env(safe-area-inset-top,0px) + 96px);align-self:start}
-}
-h2{margin:0;font-weight:800;font-stretch:112%;font-size:1.5rem;line-height:1.2}
-.prose p{max-width:62ch;margin:0 0 1em}
-.meta{margin:0 0 .5rem;font:500 .9rem Archivo,sans-serif;color:var(--muted)}
-h3{margin:0;font-weight:700;font-size:1.3rem;line-height:1.25}
-ul{padding-left:1.1rem}
-li{margin-bottom:.35em}
-
-article{padding-bottom:2.5rem;margin-bottom:2.5rem;border-bottom:1px solid var(--rule)}
-article:last-child{padding:0;margin:0;border:0}
-article>p{max-width:62ch}
-.tags{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;padding:0;margin:1rem 0 0}
-.tags li{margin:0;padding:.15rem .65rem;border:1px solid var(--rule);border-radius:2px;font:500 .82rem Archivo,sans-serif;color:var(--muted)}
-summary{margin-top:1.1rem;cursor:pointer;font:600 .95rem Archivo,sans-serif;color:var(--ink)}
-details ul{margin-top:.75rem;max-width:62ch}
-
-/* Interactive 6-Motor Carbon Fiber Filament Winder Simulator (from Redesign) */
-.simulator-console{
-  margin:1.5rem 0 1.25rem;
-  background:#080B0E;
-  border:1px solid var(--rule);
-  border-radius:2px;
-  overflow:hidden;
-}
-.sim-console-header{
-  background:var(--surface);
-  padding:.65rem 1rem;
-  border-bottom:1px solid var(--rule);
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  align-items:center;
-  gap:.5rem;
-  font:600 .74rem var(--mono);
-}
-.sim-title{color:var(--cyan);display:flex;align-items:center;gap:.5rem}
-.sim-dot{width:6px;height:6px;background:var(--cyan);border-radius:50%;box-shadow:0 0 8px var(--cyan)}
-.preset-group{display:flex;flex-wrap:wrap;gap:.35rem}
-.preset-btn{
-  background:var(--bg);
-  color:var(--muted);
-  border:1px solid var(--rule);
-  padding:.25rem .55rem;
-  font:500 .68rem var(--mono);
-  cursor:pointer;
-  border-radius:2px;
-  transition:all .15s ease;
-}
-.preset-btn:hover,.preset-btn.active{
-  color:var(--ink);
-  border-color:var(--cyan);
-  background:rgba(0,229,255,0.12);
-}
-.sim-canvas-stage{
-  position:relative;
-  width:100%;
-  height:220px;
-  background:radial-gradient(circle at 50% 50%,#0E151D 0%,#06080B 100%);
-  border-bottom:1px solid var(--rule);
-}
-#winder-canvas{width:100%;height:100%;display:block}
-.sim-controls-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:1rem;
-  padding:1rem;
-  border-bottom:1px solid var(--rule);
-  background:var(--surface);
-}
-.control-group label{
-  display:flex;
-  justify-content:space-between;
-  font:500 .75rem var(--mono);
-  color:var(--muted);
-  margin-bottom:.4rem;
-}
-.control-group label strong{color:var(--cyan)}
-.control-slider{width:100%;accent-color:var(--red);cursor:pointer}
-.sim-telemetry-footer{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:.5rem;
-  padding:.75rem 1rem;
-  background:var(--bg);
-  font-family:var(--mono);
-}
-.sim-metric{padding:.3rem .5rem;border-left:2px solid var(--rule)}
-.sim-metric-label{display:block;font-size:.65rem;color:var(--muted);text-transform:uppercase}
-.sim-metric-val{font-size:.84rem;font-weight:700;color:var(--ink)}
-
-/* Experience, Education, Honors & Skills */
-.role{margin-bottom:2.25rem}
-.role:last-child{margin-bottom:0}
-.role header{position:static;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:0 1rem;border:0;background:none;padding:0;backdrop-filter:none}
-.role ul{max-width:62ch}
-
-.honors{list-style:none;padding:0;margin:0}
-.honors li{margin-bottom:1.5rem;padding-left:1rem;border-left:2px solid var(--accent);max-width:62ch}
-.honors li:last-child{margin-bottom:0}
-.honors h3{font-size:1.1rem}
-.honors p{margin:.2rem 0 0;color:var(--muted)}
-
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:2rem}
-.skills h3{margin-bottom:.75rem;font-size:1.1rem}
-.skills ul,.skills dl{list-style:none;padding:0;margin:0}
-.skills li,.skills dl div{display:flex;justify-content:space-between;gap:1rem;margin:0;padding:.4rem 0;border-bottom:1px solid var(--rule)}
-.skills dd{margin:0;color:var(--muted)}
-
-/* Contact Section & Single-Line Email */
-.contact p{max-width:52ch}
-.mail-row{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin:1.25rem 0}
-.mail{
-  display:inline-block;
-  font:700 clamp(0.95rem, 2vw, 1.35rem) Archivo,sans-serif;
-  white-space:nowrap;
-}
-.copy-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-  padding:.45rem .85rem;
-  background:var(--surface);
-  color:var(--ink);
-  border:1px solid var(--rule);
-  border-radius:2px;
-  font:600 .8rem Archivo,sans-serif;
-  cursor:pointer;
-  transition:border-color .15s ease;
-}
-.copy-btn:hover{border-color:var(--ink)}
-.copy-status{font:600 .8rem Archivo,sans-serif;color:var(--cyan);opacity:0;transition:opacity .2s ease}
-.copy-status.show{opacity:1}
-
-.contact-links{display:flex;flex-wrap:wrap;gap:.65rem 1.75rem;margin-top:1rem;font:500 .95rem Archivo,sans-serif;color:var(--muted)}
-.contact-links a{color:var(--ink);font-weight:600}
-
-footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.9rem Archivo,sans-serif}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
-
-/* Resume PDF Viewer Modal & 1-Page Black-and-White Sheet */
-.resume-modal-backdrop{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:rgba(6,8,11,0.86);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  padding:clamp(0.75rem,2.5vw,2rem);
-  overflow-y:auto;
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-  transition:opacity .2s ease,visibility .2s ease;
-}
-.resume-modal-backdrop.open{
-  opacity:1;
-  visibility:visible;
-  pointer-events:auto;
-}
-.resume-modal-dialog{
-  width:100%;
-  max-width:860px;
-  background:var(--surface);
-  border:1px solid var(--rule);
-  border-radius:4px;
-  box-shadow:0 24px 64px rgba(0,0,0,0.75);
-  overflow:hidden;
-  margin-block:auto;
-}
-.resume-modal-toolbar{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:space-between;
-  gap:.75rem;
-  padding:.85rem 1.25rem;
-  background:#0D1116;
-  border-bottom:1px solid var(--rule);
-}
-.resume-toolbar-title{
-  display:flex;
-  align-items:center;
-  gap:.6rem;
-  font:700 .9rem var(--mono);
-  color:var(--ink);
-}
-.resume-toolbar-badge{
-  padding:.15rem .45rem;
-  background:rgba(0,229,255,0.12);
-  border:1px solid var(--cyan);
-  color:var(--cyan);
-  font:600 .68rem var(--mono);
-  border-radius:2px;
-}
-.resume-toolbar-actions{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap:.5rem;
-}
-.toolbar-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:.4rem;
-  padding:.5rem .95rem;
-  background:var(--ink);
-  color:var(--on-accent);
-  border:1px solid var(--ink);
-  border-radius:2px;
-  font:700 .82rem Archivo,sans-serif;
-  cursor:pointer;
-  text-decoration:none;
-  transition:background .15s ease,border-color .15s ease;
-}
-.toolbar-btn:hover{background:#D8E2EC;border-color:#D8E2EC}
-.toolbar-btn.secondary{
-  background:var(--surface);
-  color:var(--ink);
-  border-color:var(--rule);
-}
-.toolbar-btn.secondary:hover{border-color:var(--ink);background:#1A2027}
-.resume-sheet-viewport{
-  padding:clamp(0.75rem,3vw,2rem);
-  background:#161B22;
-  display:flex;
-  justify-content:center;
-  overflow-x:auto;
+@keyframes cfdFlowDown {
+  0% { stroke-dashoffset: 0; opacity: 0.2; }
+  50% { opacity: 0.78; }
+  100% { stroke-dashoffset: 160; opacity: 0.2; }
 }
 
-/* Clean 1-Page Black & White Resume Sheet (Matches Uploaded Document) */
-.resume-paper{
-  width:100%;
-  max-width:780px;
-  background:#FFFFFF;
-  color:#000000;
-  padding:2.2rem 2.5rem;
-  box-shadow:0 10px 30px rgba(0,0,0,0.45);
-  font:400 0.88rem/1.42 "Source Serif 4",Georgia,serif;
-  text-align:left;
+.cfd-stream-up {
+  fill: none;
+  stroke-dasharray: 18 36;
+  stroke-linecap: round;
+  animation: cfdFlowUp 2.1s linear infinite;
 }
-.resume-paper *{color:#000000}
-.resume-paper-header{
-  text-align:center;
-  border-bottom:1.5px solid #000000;
-  padding-bottom:.65rem;
-  margin-bottom:.75rem;
+.cfd-stream-up.fast {
+  animation-duration: 1.25s;
 }
-.resume-paper-header h2{
-  position:static;
-  margin:0;
-  font:800 1.65rem/1.15 Archivo,"Helvetica Neue",Arial,sans-serif;
-  letter-spacing:-.01em;
-  text-transform:uppercase;
-}
-.resume-paper-sub{
-  margin:.2rem 0 0;
-  font:600 .9rem/1.3 Archivo,sans-serif;
-}
-.resume-paper-contact{
-  margin:.2rem 0 0;
-  font:400 .83rem/1.35 Archivo,sans-serif;
-}
-.resume-paper-contact a{
-  color:#000000;
-  text-decoration:none;
-}
-.resume-paper-contact a:hover{text-decoration:underline}
-.resume-sec{margin-bottom:.68rem}
-.resume-sec:last-child{margin-bottom:0}
-.resume-sec-title{
-  margin:0 0 .28rem;
-  padding-bottom:.12rem;
-  border-bottom:1px solid #000000;
-  font:800 .78rem/1.2 Archivo,sans-serif;
-  letter-spacing:.05em;
-  text-transform:uppercase;
-}
-.resume-sec p{margin:0 0 .22rem}
-.resume-entry{margin-bottom:.42rem}
-.resume-entry:last-child{margin-bottom:0}
-.resume-entry-line{
-  display:flex;
-  justify-content:space-between;
-  align-items:baseline;
-  gap:.75rem;
-  font:700 .87rem/1.3 Archivo,sans-serif;
-}
-.resume-entry-line span{
-  font:600 .8rem/1.3 Archivo,sans-serif;
-  white-space:nowrap;
-}
-.resume-paper ul{
-  margin:.18rem 0 0;
-  padding-left:1.15rem;
-}
-.resume-paper li{margin-bottom:.14rem}
 
-/* Dedicated Print Stylesheet: Prints ONLY the 1-Page Black & White Resume */
-@media print{
-  @page{size:letter portrait;margin:0.45in}
-  html,body{background:#FFFFFF !important;color:#000000 !important;padding:0 !important;margin:0 !important;overflow:visible !important}
-  body::before,.skip,header,.main-layout,footer,.resume-modal-toolbar{display:none !important}
-  .resume-modal-backdrop{
-    position:static !important;
-    display:block !important;
-    opacity:1 !important;
-    visibility:visible !important;
-    background:#FFFFFF !important;
-    backdrop-filter:none !important;
-    padding:0 !important;
-    overflow:visible !important;
+.cfd-stream-down {
+  fill: none;
+  stroke-dasharray: 18 36;
+  stroke-linecap: round;
+  animation: cfdFlowDown 2.1s linear infinite;
+}
+.cfd-stream-down.fast {
+  animation-duration: 1.25s;
+}
+
+/* Hero Section */
+.hero {
+  padding-block: clamp(2.5rem, 7vw, 5.5rem) 2.75rem;
+  width: 100%;
+}
+
+h1 {
+  margin: 0;
+  font-weight: 800;
+  font-stretch: 125%;
+  font-size: clamp(2.5rem, 8vw, 5.6rem);
+  line-height: .95;
+  letter-spacing: -.02em;
+  word-break: break-word;
+}
+
+.lede {
+  max-width: 42rem;
+  margin: 1.6rem 0;
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  color: #B0BCC8;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .65rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  padding: .75rem 1.25rem;
+  background: var(--ink);
+  color: var(--on-accent);
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  font: 700 .92rem Archivo, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn.alt {
+  background: rgba(18, 22, 27, 0.75);
+  color: var(--ink);
+  border-color: var(--rule);
+}
+
+.btn.alt:hover {
+  border-color: var(--ink);
+  background: var(--surface);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0 1rem;
+  margin: 2.75rem 0 0;
+  border-top: 1px solid var(--rule);
+  width: 100%;
+}
+
+.facts div {
+  padding: .95rem 0;
+}
+
+.facts dt {
+  font: 500 .82rem Archivo, sans-serif;
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: .15rem 0 0;
+  font: 700 1.2rem Archivo, sans-serif;
+}
+
+/* Main Content Sections */
+section {
+  border-top: 1px solid var(--rule);
+  padding-block: clamp(2.25rem, 5vw, 4rem);
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem 2.5rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 150px minmax(0, 1fr);
   }
-  .resume-modal-dialog{
-    max-width:100% !important;
-    border:0 !important;
-    box-shadow:none !important;
-    background:#FFFFFF !important;
-    margin:0 !important;
+  .grid > h2 {
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 92px);
+    align-self: start;
   }
-  .resume-sheet-viewport{
-    padding:0 !important;
-    background:#FFFFFF !important;
-    overflow:visible !important;
+}
+
+h2 {
+  margin: 0;
+  font-weight: 800;
+  font-stretch: 112%;
+  font-size: 1.45rem;
+  line-height: 1.2;
+}
+
+.prose p {
+  max-width: 64ch;
+  margin: 0 0 1em;
+  word-break: break-word;
+}
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.meta {
+  margin: 0 0 .45rem;
+  font: 500 .88rem Archivo, sans-serif;
+  color: var(--muted);
+}
+
+h3 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+ul {
+  padding-left: 1.15rem;
+}
+
+li {
+  margin-bottom: .35em;
+  word-break: break-word;
+}
+
+article {
+  padding-bottom: 2.25rem;
+  margin-bottom: 2.25rem;
+  border-bottom: 1px solid var(--rule);
+  width: 100%;
+}
+article:last-child {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+article > p {
+  max-width: 64ch;
+}
+
+/* Engineering Spec Grid */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: .65rem;
+  margin: 1.15rem 0;
+  max-width: 64ch;
+  width: 100%;
+}
+
+.spec-card {
+  padding: .65rem .8rem;
+  background: rgba(18, 22, 27, 0.85);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+}
+
+.spec-label {
+  display: block;
+  font: 500 .74rem "JetBrains Mono", monospace;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.spec-val {
+  display: block;
+  margin-top: .15rem;
+  font: 700 1.05rem Archivo, sans-serif;
+  color: var(--ink);
+}
+
+/* Interactive 6-Motor Carbon Fiber Filament Winder Simulator */
+.winder-sim {
+  margin: 1.35rem 0;
+  padding: 1.1rem;
+  background: rgba(18, 22, 27, 0.9);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  max-width: 64ch;
+  width: 100%;
+}
+
+.winder-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  margin-bottom: .8rem;
+}
+
+.winder-title {
+  font: 700 .75rem "JetBrains Mono", monospace;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.winder-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.preset-btn {
+  padding: .28rem .6rem;
+  font: 600 .74rem "JetBrains Mono", monospace;
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.preset-btn:hover,
+.preset-btn.active {
+  color: var(--ink);
+  border-color: var(--cyan);
+  background: rgba(0, 229, 255, 0.1);
+}
+
+.winder-canvas-wrap {
+  width: 100%;
+  height: 185px;
+  background: #070A0D;
+  border: 1px solid var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+
+#winder-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.winder-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: .85rem 1.25rem;
+  margin-top: .9rem;
+}
+
+.control-group label {
+  display: flex;
+  justify-content: space-between;
+  font: 600 .78rem "JetBrains Mono", monospace;
+  color: var(--muted);
+  margin-bottom: .3rem;
+}
+
+.control-group label span {
+  color: var(--ink);
+}
+
+.control-group input[type="range"] {
+  width: 100%;
+  accent-color: var(--cyan);
+  cursor: pointer;
+}
+
+.winder-telemetry {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  margin-top: .85rem;
+  padding-top: .75rem;
+  border-top: 1px solid var(--rule);
+  font: 500 .72rem "JetBrains Mono", monospace;
+  color: var(--muted);
+}
+
+.winder-telemetry strong {
+  display: block;
+  color: var(--ink);
+  font-size: .84rem;
+  margin-top: .1rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.tags li {
+  margin: 0;
+  padding: .18rem .65rem;
+  border: 1px solid var(--rule);
+  background: rgba(18, 22, 27, 0.7);
+  border-radius: 2px;
+  font: 500 .8rem Archivo, sans-serif;
+  color: var(--muted);
+}
+
+details {
+  margin-top: 1rem;
+  max-width: 64ch;
+  width: 100%;
+  border: 1px solid var(--rule);
+  background: rgba(18, 22, 27, 0.55);
+  padding: .65rem .9rem;
+  border-radius: 2px;
+}
+
+summary {
+  cursor: pointer;
+  font: 600 .92rem Archivo, sans-serif;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+summary::-webkit-details-marker {
+  display: none;
+}
+summary::after {
+  content: "+";
+  font: 700 1.1rem "JetBrains Mono", monospace;
+  color: var(--muted);
+}
+details[open] summary::after {
+  content: "−";
+}
+details ul {
+  margin: .75rem 0 .2rem;
+}
+
+.role {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--rule);
+  width: 100%;
+}
+.role:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.role header {
+  position: static;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: .25rem 1rem;
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+.role ul {
+  max-width: 64ch;
+}
+
+.honors {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.honors li {
+  margin-bottom: 1.4rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent);
+  max-width: 64ch;
+}
+.honors li:last-child {
+  margin-bottom: 0;
+}
+
+.honors h3 {
+  font-size: 1.1rem;
+}
+
+.honors p {
+  margin: .2rem 0 0;
+  color: var(--muted);
+}
+
+.skills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.75rem;
+  width: 100%;
+}
+
+.skills h3 {
+  margin-bottom: .65rem;
+  font-size: 1.05rem;
+}
+
+.skills ul,
+.skills dl {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skills li,
+.skills dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: 0;
+  padding: .4rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: .96rem;
+}
+
+.skills dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* Contact Section */
+.mail-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .75rem;
+  margin: 1rem 0;
+}
+
+.mail {
+  display: inline-block;
+  font: 700 clamp(0.9rem, 2vw, 1.35rem) Archivo, sans-serif;
+  white-space: nowrap;
+}
+
+.copy-btn {
+  padding: .42rem .75rem;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font: 600 .8rem Archivo, sans-serif;
+  cursor: pointer;
+}
+.copy-btn:hover {
+  border-color: var(--ink);
+}
+
+.contact p {
+  max-width: 56ch;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin-top: 1rem;
+  font: 600 .95rem Archivo, sans-serif;
+}
+
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 2rem 0;
+  color: var(--muted);
+  font: .88rem Archivo, sans-serif;
+  width: 100%;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: .75rem 1.5rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+/* ==========================================================================
+   RESUME PDF MODAL
+   ========================================================================== */
+.resume-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(5, 7, 10, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 2rem);
+  overflow-y: auto;
+}
+
+.resume-modal-backdrop.open {
+  display: flex;
+}
+
+.resume-modal-dialog {
+  width: 100%;
+  max-width: 860px;
+  background: #12161B;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  margin: auto;
+}
+
+.resume-modal-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .65rem 1rem;
+  padding: .85rem 1.2rem;
+  background: #0A0D10;
+  border-bottom: 1px solid var(--rule);
+}
+
+.resume-toolbar-title {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  font: 700 .88rem "JetBrains Mono", monospace;
+  color: var(--ink);
+}
+
+.resume-toolbar-badge {
+  padding: .15rem .45rem;
+  background: var(--red);
+  color: #FFFFFF;
+  font: 700 .7rem "JetBrains Mono", monospace;
+  border-radius: 2px;
+}
+
+.resume-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .48rem .9rem;
+  background: var(--ink);
+  color: var(--on-accent);
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  font: 700 .82rem Archivo, sans-serif;
+  cursor: pointer;
+}
+
+.toolbar-btn.secondary {
+  background: #12161B;
+  color: var(--ink);
+  border-color: var(--rule);
+}
+.toolbar-btn.secondary:hover {
+  border-color: var(--ink);
+  background: #1A2027;
+}
+
+.resume-sheet-viewport {
+  padding: clamp(0.75rem, 2.5vw, 1.75rem);
+  background: #161B22;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+/* Exact 1-Page Black & White Resume Sheet matching arsenii-markov-resume-bw (4).pdf */
+.resume-paper {
+  width: 100%;
+  max-width: 780px;
+  background: #FFFFFF;
+  color: #000000;
+  padding: clamp(1.25rem, 3.5vw, 2.2rem) clamp(1.25rem, 4vw, 2.5rem);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  font: 400 0.87rem/1.4 "Source Serif 4", Georgia, serif;
+  text-align: left;
+}
+.resume-paper * {
+  color: #000000;
+}
+
+.resume-paper-header {
+  text-align: center;
+  border-bottom: 1.5px solid #000000;
+  padding-bottom: .6rem;
+  margin-bottom: .7rem;
+}
+
+.resume-paper-header h2 {
+  position: static;
+  margin: 0;
+  font: 800 1.6rem/1.15 Archivo, "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: -.01em;
+}
+
+.resume-paper-sub {
+  margin: .2rem 0 0;
+  font: 600 .92rem/1.3 Archivo, sans-serif;
+}
+
+.resume-paper-contact {
+  margin: .2rem 0 0;
+  font: 400 .84rem/1.35 Archivo, sans-serif;
+}
+
+.resume-paper-contact a {
+  color: #000000;
+  text-decoration: none;
+}
+.resume-paper-contact a:hover {
+  text-decoration: underline;
+}
+
+.resume-sec {
+  margin-bottom: .62rem;
+}
+.resume-sec:last-child {
+  margin-bottom: 0;
+}
+
+.resume-sec-title {
+  margin: 0 0 .25rem;
+  padding-bottom: .1rem;
+  border-bottom: 1px solid #000000;
+  font: 800 .78rem/1.2 Archivo, sans-serif;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.resume-sec p {
+  margin: 0 0 .2rem;
+}
+
+.resume-line {
+  margin: 0 0 .14rem;
+  font: 600 .86rem/1.35 Archivo, sans-serif;
+}
+
+.resume-paper ul {
+  margin: .12rem 0 .28rem;
+  padding-left: 1.2rem;
+}
+.resume-paper ul:last-child {
+  margin-bottom: 0;
+}
+.resume-paper li {
+  margin-bottom: .12rem;
+}
+
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 0.45in;
   }
-  .resume-paper{
-    max-width:100% !important;
-    width:100% !important;
-    padding:0 !important;
-    box-shadow:none !important;
-    font-size:9.5pt !important;
-    line-height:1.36 !important;
+  html, body {
+    background: #FFFFFF !important;
+    background-image: none !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  body::before,
+  .skip,
+  header.site-header,
+  .main-layout,
+  footer,
+  .resume-modal-toolbar {
+    display: none !important;
+  }
+  .resume-modal-backdrop {
+    position: static !important;
+    display: block !important;
+    background: #FFFFFF !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  .resume-modal-dialog,
+  .resume-sheet-viewport {
+    background: #FFFFFF !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  .resume-paper {
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
   }
 }
 </style>
@@ -484,7 +1007,8 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
-<header>
+
+<header class="site-header">
   <div class="wrap">
     <a class="brand" href="#top">Arsenii Markov</a>
     <nav aria-label="Main">
@@ -496,118 +1020,80 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
         <li><a href="#honors">Honors</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li>
-          <a class="nav-linkedin" href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">
-            LinkedIn &#8599;
-          </a>
-        </li>
-        <li>
-          <button type="button" class="nav-resume-btn" data-open-resume="true" aria-haspopup="dialog">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-              <line x1="16" y1="13" x2="8" y2="13"/>
-              <line x1="16" y1="17" x2="8" y2="17"/>
-            </svg>
-            Resume PDF
-          </button>
-        </li>
+        <li><a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">LinkedIn &#8599;</a></li>
+        <li><button type="button" class="nav-resume-btn nav-resume-pill" data-open-resume>Resume</button></li>
       </ul>
     </nav>
   </div>
-  <div class="scroll-hairline" id="scroll-hairline" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scroll-progress"></div>
 </header>
 
 <div class="wrap main-layout">
 
-  <!-- LEFT STICKY TRACK: F1 Car & CFD Wind Lines from Redesign (Moving Top to Bottom on Scroll) -->
+  <!-- LEFT STICKY TRACK (PC): Detailed F1 Car Facing Down, Moving Top -> Bottom on Scroll -->
   <aside class="side-track" aria-hidden="true">
-    <div class="track-hud">
-      <span>CFD // AERO-CHASSIS</span>
-      <strong id="f1-downforce-readout" class="accent-red">DF: 1.20 G</strong>
-    </div>
-
-    <div class="track-svg-wrap">
-      <svg class="track-svg" viewBox="0 0 160 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <!-- Vertical Datum & Elevation Ticks -->
-        <line x1="80" y1="20" x2="80" y2="780" stroke="#222930" stroke-width="1" stroke-dasharray="3 6"/>
-        <g stroke="#222930" stroke-width="1">
-          <line x1="12" y1="80" x2="24" y2="80"/><line x1="12" y1="200" x2="20" y2="200"/>
-          <line x1="12" y1="320" x2="24" y2="320"/><line x1="12" y1="440" x2="20" y2="440"/>
-          <line x1="12" y1="560" x2="24" y2="560"/><line x1="12" y1="680" x2="20" y2="680"/>
+    <svg class="track-svg" viewBox="0 0 200 800" xmlns="http://www.w3.org/2000/svg">
+      <line x1="100" y1="30" x2="100" y2="770" stroke="#222930" stroke-width="1" stroke-dasharray="4 8"/>
+      <g id="f1-assembly" transform="translate(100, 90)">
+        <path class="cfd-stream-up" d="M -4 44 C -14 20, -28 -5, -36 -55" stroke="#00E5FF" stroke-width="1.3"/>
+        <path class="cfd-stream-up fast" d="M -12 38 C -26 12, -42 -15, -52 -65" stroke="#FFFFFF" stroke-width="1.15"/>
+        <path class="cfd-stream-up" d="M -22 25 C -38 -2, -55 -28, -68 -72" stroke="#FF3366" stroke-width="1.1"/>
+        <path class="cfd-stream-up" d="M 4 44 C 14 20, 28 -5, 36 -55" stroke="#00E5FF" stroke-width="1.3"/>
+        <path class="cfd-stream-up fast" d="M 12 38 C 26 12, 42 -15, 52 -65" stroke="#FFFFFF" stroke-width="1.15"/>
+        <path class="cfd-stream-up" d="M 22 25 C 38 -2, 55 -28, 68 -72" stroke="#FF3366" stroke-width="1.1"/>
+        <g transform="rotate(180)">
+          <path d="M -9 28 L -14 54 M 0 28 L 0 58 M 9 28 L 14 54" stroke="#00E5FF" stroke-width="1" stroke-dasharray="4 5" opacity="0.55"/>
+          <path d="M -14 -4 L -16 14 L -6 20 L 6 20 L 16 14 L 14 -4 L 7 -10 L -7 -10 Z" fill="#12161B" stroke="#72808E" stroke-width="1.1"/>
+          <path d="M -5 22 L -4 -18 L 0 -34 L 4 -18 L 5 22 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
+          <path d="M -22 -28 L 22 -28 L 20 -24 L -20 -24 Z" fill="#0A0D10" stroke="#00E5FF" stroke-width="1.4"/>
+          <line x1="-22" y1="-30" x2="-22" y2="-23" stroke="#FFFFFF" stroke-width="1.6"/>
+          <line x1="22" y1="-30" x2="22" y2="-23" stroke="#FFFFFF" stroke-width="1.6"/>
+          <line x1="-4" y1="-16" x2="-16" y2="-18" stroke="#72808E" stroke-width="1"/>
+          <line x1="4" y1="-16" x2="16" y2="-18" stroke="#72808E" stroke-width="1"/>
+          <rect x="-23" y="-22" width="5.5" height="12" rx="1" fill="#FFFFFF"/>
+          <rect x="17.5" y="-22" width="5.5" height="12" rx="1" fill="#FFFFFF"/>
+          <line x1="-5" y1="15" x2="-17" y2="17" stroke="#72808E" stroke-width="1"/>
+          <line x1="5" y1="15" x2="17" y2="17" stroke="#72808E" stroke-width="1"/>
+          <rect x="-24" y="10" width="6.5" height="14" rx="1" fill="#FFFFFF"/>
+          <rect x="17.5" y="10" width="6.5" height="14" rx="1" fill="#FFFFFF"/>
+          <rect x="-16" y="22" width="32" height="5" fill="#0A0D10" stroke="#FF3366" stroke-width="1.5"/>
+          <ellipse cx="0" cy="-1" rx="3.2" ry="6" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.2"/>
+          <path d="M 0 -7 L 0 -1 M -3.2 0 Q 0 -3 3.2 0" fill="none" stroke="#00E5FF" stroke-width="1.2"/>
         </g>
-
-        <!-- Moving F1 Car & Wrapped CFD Streamlines (Facing Straight DOWN) -->
-        <g id="f1-cfd-assembly" transform="translate(80, 85)">
-          <!-- Symmetric CFD Pressure Streamlines curving around downward nosecone -->
-          <path class="cfd-f1-cyan" d="M -6 52 C -26 26, -38 -4, -48 -62" />
-          <path class="cfd-f1-red" d="M -2 56 C -16 30, -25 0, -30 -58" />
-          <path class="cfd-f1-white" d="M -12 40 C -34 15, -45 -15, -54 -65" />
-          <path class="cfd-f1-red" d="M 2 56 C 16 30, 25 0, 30 -58" />
-          <path class="cfd-f1-cyan" d="M 6 52 C 26 26, 38 -4, 48 -62" />
-          <path class="cfd-f1-white" d="M 12 40 C 34 15, 45 -15, 54 -65" />
-
-          <!-- Detailed Wireframe F1 Car rotated 180 deg (pointed straight DOWN) -->
-          <g transform="rotate(180)">
-            <!-- Diffuser Wake Plume -->
-            <line x1="-6" y1="24" x2="-9" y2="42" stroke="#00E5FF" stroke-width="1" opacity="0.5"/>
-            <line x1="6" y1="24" x2="9" y2="42" stroke="#00E5FF" stroke-width="1" opacity="0.5"/>
-            <!-- Sidepods & Aero Floor -->
-            <path d="M -12 -6 L -14 14 L 14 14 L 12 -6 Z" fill="#12161B" stroke="#72808E" stroke-width="1"/>
-            <!-- Main Monocoque & Nosecone -->
-            <path d="M -5 19 L -3 -18 L 0 -29 L 3 -18 L 5 19 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
-            <!-- Multi-Element Front Wing -->
-            <line x1="-19" y1="-24" x2="19" y2="-24" stroke="#00E5FF" stroke-width="2"/>
-            <line x1="-17" y1="-21" x2="17" y2="-21" stroke="#FFFFFF" stroke-width="1.2"/>
-            <!-- Rear Wing Assembly -->
-            <rect x="-15" y="19" width="30" height="4" fill="#0A0D10" stroke="#FF3B1F" stroke-width="1.5"/>
-            <!-- Front Tires -->
-            <rect x="-22" y="-20" width="4.5" height="10" rx="1" fill="#FFFFFF"/>
-            <rect x="17.5" y="-20" width="4.5" height="10" rx="1" fill="#FFFFFF"/>
-            <!-- Rear Tires -->
-            <rect x="-23" y="10" width="5.5" height="12" rx="1" fill="#FFFFFF"/>
-            <rect x="17.5" y="10" width="5.5" height="12" rx="1" fill="#FFFFFF"/>
-            <!-- Cockpit Halo Titanium Structure -->
-            <circle cx="0" cy="-2" r="3.2" fill="none" stroke="#00E5FF" stroke-width="1.3"/>
-          </g>
-        </g>
-      </svg>
-    </div>
-
-    <div class="track-hud">
-      <span>TRACK // SECTOR 01-06</span>
-      <strong id="f1-vel-readout">VEL: 210 KPH</strong>
-    </div>
+      </g>
+    </svg>
   </aside>
 
-  <!-- CENTER COLUMN: Original Minimalist Editorial Content + Winder Graphic & LinkedIn -->
+  <!-- CENTER MAIN PORTFOLIO CONTENT -->
   <main id="main">
     <div class="hero" id="top">
       <h1>Arsenii<br>Markov</h1>
       <p class="lede">I’m an engineering student at the Texas A&amp;M Engineering Academy at Austin Community College holding an Associate of Arts in General Studies. I build automated systems for making composite parts, and I hope to design structures for companies in motorsport and aerospace.</p>
       <div class="actions">
         <a class="btn" href="#projects">See my projects</a>
-        <button type="button" class="btn alt" data-open-resume="true" aria-haspopup="dialog">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <a class="btn alt" href="#contact">Get in touch</a>
+        <button type="button" class="btn alt" data-open-resume>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
-            <line x1="12" y1="18" x2="12" y2="12"/>
-            <polyline points="9 15 12 18 15 15"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
           </svg>
-          Resume PDF
+          Resume
         </button>
-        <a class="btn alt" href="#contact">Get in touch</a>
         <a class="btn alt" href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
           </svg>
           LinkedIn
         </a>
       </div>
+
       <dl class="facts">
         <div><dt>GPA</dt><dd>3.9</dd></div>
         <div><dt>Class rank</dt><dd>Top 10%</dd></div>
-        <div><dt>College credit earned</dt><dd>63 hours<small>A.A. in General Studies</small></dd></div>
+        <div><dt>Degree</dt><dd>A.A. General Studies</dd></div>
+        <div><dt>College credit earned</dt><dd>63 hours</dd></div>
         <div><dt>Based in</dt><dd>Round Rock, Texas</dd></div>
       </dl>
     </div>
@@ -615,7 +1101,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
     <section id="about"><div class="grid">
       <h2>About</h2>
       <div class="prose">
-        <p>I joined the Texas A&amp;M Engineering Academy at Austin Community College in Fall 2026 after earning my Associate of Arts in General Studies degree with 63 college credit hours. Along with strong grades, I have hands-on experience in design, manufacturing, and team leadership.</p>
+        <p>I joined the Texas A&amp;M Engineering Academy at Austin Community College in Fall 2026 after earning my Associate of Arts in General Studies (63 credit hours) and graduating in the top 10% of my class at Early College High School. Along with strong grades, I have hands-on experience in design, manufacturing, and team leadership.</p>
         <p>I want to design strong, lightweight structures for motorsport and aerospace applications. This includes aerodynamic parts and composite components that can handle heavy forces and tough conditions. I’m interested in companies developing advanced technology in these fields.</p>
         <p>Alongside my engineering projects, I worked for two years as an Aquatics Manager for the City of Round Rock. I helped enforce safety rules, prepared teams for emergencies, and managed staff across several city facilities.</p>
       </div>
@@ -625,25 +1111,36 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
       <h2>Education</h2>
       <div>
         <div class="role">
-          <header><h3>Texas A&amp;M Engineering Academy</h3><span class="meta">Fall 2026 to present</span></header>
-          <p class="meta">Austin Community College &amp; Texas A&amp;M University • 3.9 GPA • Top 10% Class Rank</p>
+          <header>
+            <h3>Texas A&amp;M Engineering Academy at Austin Community College</h3>
+            <span class="meta">Fall 2026 &ndash; Present</span>
+          </header>
+          <p class="meta">General Engineering Track &bull; GPA: 3.9</p>
           <ul>
-            <li>Co-enrolled engineering student focusing on composite manufacturing, automated systems, and structural design for motorsport and aerospace.</li>
-            <li>Active researcher and builder in the F.O.R.G.E. engineering lab at Austin Community College.</li>
+            <li>Co-enrolled engineering student completing foundational mechanical, computational (ENGR 102 Python), and manufacturing coursework.</li>
+            <li>Active researcher and builder within the F.O.R.G.E. composite automation laboratory.</li>
           </ul>
         </div>
+
         <div class="role">
-          <header><h3>Associate of Arts in General Studies</h3><span class="meta">2026 • 63 Credit Hours</span></header>
-          <p class="meta">Austin Community College</p>
+          <header>
+            <h3>Associate of Arts in General Studies</h3>
+            <span class="meta">Conferred 2026</span>
+          </header>
+          <p class="meta">Austin Community College &bull; 63 Credit Hours Earned</p>
           <ul>
-            <li>Completed 63 hours of college credit at Austin Community College to earn an Associate of Arts in General Studies alongside engineering and mathematics coursework.</li>
+            <li>Completed 63 hours of dual-credit university coursework in mathematics, sciences, and humanities while in high school.</li>
           </ul>
         </div>
+
         <div class="role">
-          <header><h3>Early College High School</h3><span class="meta">Graduated 2026</span></header>
-          <p class="meta">GPA: 3.9 • Ranked in the Top 10% of graduating class</p>
+          <header>
+            <h3>Early College High School</h3>
+            <span class="meta">Graduated 2026</span>
+          </header>
+          <p class="meta">Round Rock, TX &bull; Top 10% of Graduating Class &bull; GPA: 3.9</p>
           <ul>
-            <li>Graduated in the top 10% of high school graduating class while dual-enrolled full-time in college coursework at Austin Community College.</li>
+            <li>Graduated in the top decile while balancing collegiate coursework, competitive VEX V5 robotics, and municipal aquatics management.</li>
           </ul>
         </div>
       </div>
@@ -657,62 +1154,52 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
           <h3>Automated carbon fiber filament winder</h3>
           <p>This automated machine is designed to make carbon fiber composite tubes that are 3 feet long, have a 3-inch inner diameter, and 4 mm-thick walls. Its custom six-motor system controls the rotating mandrel, the moving carriage, and how the fiber is fed and angled.</p>
 
-          <!-- Interactive 6-Motor Carbon Fiber Filament Winder Graphic from Redesign -->
-          <div class="simulator-console" aria-label="Interactive Carbon Fiber Filament Winding Simulator">
-            <div class="sim-console-header">
-              <span class="sim-title">
-                <span class="sim-dot"></span>
-                LIVE KINEMATICS SIMULATOR // 6-AXIS MANDREL LAYUP
-              </span>
-              <div class="preset-group" role="group" aria-label="Winding Angle Presets">
-                <button type="button" class="preset-btn" data-angle="85" data-rpm="38">Hoop (85°)</button>
-                <button type="button" class="preset-btn active" data-angle="45" data-rpm="30">Helical (45°)</button>
-                <button type="button" class="preset-btn" data-angle="25" data-rpm="22">Axial (25°)</button>
+          <div class="spec-grid">
+            <div class="spec-card"><span class="spec-label">Tube Length</span><span class="spec-val">3 ft (914 mm)</span></div>
+            <div class="spec-card"><span class="spec-label">Inner Diameter</span><span class="spec-val">3.0 in (76.2 mm)</span></div>
+            <div class="spec-card"><span class="spec-label">Wall Thickness</span><span class="spec-val">4.0 mm</span></div>
+            <div class="spec-card"><span class="spec-label">Kinematics</span><span class="spec-val">6-Motor CNC</span></div>
+          </div>
+
+          <!-- Interactive 6-Motor Carbon Fiber Filament Winder Simulator -->
+          <div class="winder-sim" aria-label="Interactive 6-Motor Filament Winder Simulator">
+            <div class="winder-header">
+              <span class="winder-title">6-Axis Filament Winding Kinematics Simulator</span>
+              <div class="winder-presets">
+                <button type="button" class="preset-btn" data-angle="85" data-rpm="42">Hoop (85&deg;)</button>
+                <button type="button" class="preset-btn active" data-angle="45" data-rpm="36">Helical (45&deg;)</button>
+                <button type="button" class="preset-btn" data-angle="25" data-rpm="28">Axial (25&deg;)</button>
               </div>
             </div>
 
-            <div class="sim-canvas-stage">
-              <canvas id="winder-canvas" width="760" height="220"></canvas>
+            <div class="winder-canvas-wrap">
+              <canvas id="winder-canvas"></canvas>
             </div>
 
-            <div class="sim-controls-grid">
+            <div class="winder-controls">
               <div class="control-group">
-                <label for="sim-angle-slider">
-                  <span>FIBER WINDING ANGLE (&plusmn;&theta;)</span>
-                  <strong id="sim-angle-val">&plusmn;45&deg;</strong>
-                </label>
-                <input type="range" id="sim-angle-slider" class="control-slider" min="15" max="85" value="45" step="1">
+                <label for="angle-slider">Winding Angle (&pm;&theta;) <span id="angle-readout">45&deg;</span></label>
+                <input type="range" id="angle-slider" min="15" max="88" value="45">
               </div>
               <div class="control-group">
-                <label for="sim-rpm-slider">
-                  <span>MANDREL ROTATION SPEED (RPM)</span>
-                  <strong id="sim-rpm-val">30 RPM</strong>
-                </label>
-                <input type="range" id="sim-rpm-slider" class="control-slider" min="10" max="60" value="30" step="1">
+                <label for="rpm-slider">Mandrel Speed <span id="rpm-readout">36 RPM</span></label>
+                <input type="range" id="rpm-slider" min="10" max="80" value="36">
               </div>
             </div>
 
-            <div class="sim-telemetry-footer">
-              <div class="sim-metric">
-                <span class="sim-metric-label">Carriage Feed Rate</span>
-                <span class="sim-metric-val" id="sim-feed-readout">126.3 mm/s</span>
-              </div>
-              <div class="sim-metric">
-                <span class="sim-metric-label">Fiber Payout Speed</span>
-                <span class="sim-metric-val" id="sim-payout-readout">178.6 mm/s</span>
-              </div>
-              <div class="sim-metric">
-                <span class="sim-metric-label">Mandrel Geometry</span>
-                <span class="sim-metric-val">3 ft &times; 3.0 in ID (4 mm)</span>
-              </div>
-              <div class="sim-metric">
-                <span class="sim-metric-label">Structural Load Bias</span>
-                <span class="sim-metric-val" id="sim-bias-readout">Balanced Torsion/Shear</span>
-              </div>
+            <div class="winder-telemetry">
+              <div>Carriage Feed<strong id="feed-readout">143.6 mm/s</strong></div>
+              <div>Tow Payout<strong id="payout-readout">203.1 mm/s</strong></div>
+              <div>Load Bias<strong id="bias-readout">Balanced Torsion</strong></div>
             </div>
           </div>
 
-          <ul class="tags"><li>Six-motor motion system</li><li>Carbon fiber composites</li><li>Onshape CAD</li><li>Open-source publication</li></ul>
+          <ul class="tags">
+            <li>Six-motor motion system</li>
+            <li>Carbon fiber composites</li>
+            <li>Onshape CAD</li>
+            <li>Open-source publication</li>
+          </ul>
           <details>
             <summary>Technical details</summary>
             <ul>
@@ -722,11 +1209,17 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
             </ul>
           </details>
         </article>
+
         <article>
           <p class="meta">VEX Robotics Competition. Judges Award recipient.</p>
           <h3>VEX V5 competition robot</h3>
           <p>I designed, programmed, and improved the mechanical parts of a VEX V5 competition robot. I focused on gear ratios, intake systems, and making the frame strong enough to handle competition.</p>
-          <ul class="tags"><li>Judges Award</li><li>VEX V5</li><li>Mechanical kinematics</li><li>Competitive drivetrain</li></ul>
+          <ul class="tags">
+            <li>Judges Award</li>
+            <li>VEX V5</li>
+            <li>Mechanical kinematics</li>
+            <li>Competitive drivetrain</li>
+          </ul>
           <details>
             <summary>Technical details</summary>
             <ul>
@@ -763,7 +1256,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
           <header><h3>Volunteer and community leadership</h3></header>
           <ul>
             <li><strong>AVID Expo Student Ambassador:</strong> spoke publicly to represent my school and promote academic advancement.</li>
-            <li><strong>“Together to Serve” club:</strong> supported women facing breast cancer, assisted older adults in the community, and took part in conservation planting.</li>
+            <li><strong>“Together To Serve” club:</strong> supported women facing breast cancer, assisted older adults in the community, and took part in conservation planting.</li>
             <li><strong>STEM tutor:</strong> tutored peers in math and engineering principles.</li>
           </ul>
         </div>
@@ -773,9 +1266,18 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
     <section id="honors"><div class="grid">
       <h2>Honors</h2>
       <ul class="honors">
-        <li><h3>1st place, Texas State Lifeguard Competition</h3><p>Earned first place in the state while representing the City of Round Rock. The competition tested rescue speed, response to emergency scenarios, and endurance.</p></li>
-        <li><h3>“All American” Award</h3><p>Awarded by the City of Round Rock Aquatics Department for strong work ethic, safety leadership, and excellent performance.</p></li>
-        <li><h3>Judges Award, VEX Robotics</h3><p>Tournament judges recognized the team’s engineering records, robot design, and teamwork.</p></li>
+        <li>
+          <h3>1st place, Texas State Lifeguard Competition</h3>
+          <p>Earned first place in the state while representing the City of Round Rock. The competition tested rescue speed, response to emergency scenarios, and endurance.</p>
+        </li>
+        <li>
+          <h3>“All American” Award</h3>
+          <p>Awarded by the City of Round Rock Aquatics Department for strong work ethic, safety leadership, and excellent performance.</p>
+        </li>
+        <li>
+          <h3>Judges Award, VEX V5 Robotics Competition</h3>
+          <p>Tournament judges recognized the team’s engineering records, robot design, and teamwork.</p>
+        </li>
       </ul>
     </div></section>
 
@@ -783,12 +1285,24 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
       <h2>Skills</h2>
       <div class="skills">
         <div>
-          <h3>Technical Skills</h3>
-          <ul><li>Python (ENGR 102)</li><li>CAD (Onshape)</li><li>3D printing</li><li>Filament winding</li><li>Composites</li></ul>
+          <h3>Engineering &amp; CAD</h3>
+          <ul>
+            <li>Python (ENGR 102)</li>
+            <li>CAD (Onshape)</li>
+            <li>3D printing</li>
+            <li>Filament winding</li>
+            <li>Composites</li>
+          </ul>
         </div>
         <div>
-          <h3>Additional Skills</h3>
-          <ul><li>Team Leadership</li><li>Coaching</li><li>Athletic Training</li><li>CPR/AED/First Aid Certified</li><li>Public Speaking</li></ul>
+          <h3>Leadership &amp; Additional</h3>
+          <ul>
+            <li>Team Leadership</li>
+            <li>Coaching</li>
+            <li>Athletic Training</li>
+            <li>Public speaking</li>
+            <li>CPR/AED/First Aid Certified</li>
+          </ul>
         </div>
         <div>
           <h3>Languages</h3>
@@ -808,93 +1322,63 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
         <p>I’m looking for engineering internship opportunities and would be happy to talk about composite manufacturing, motorsport technology, or working together on projects.</p>
         <div class="mail-row">
           <a class="mail" href="mailto:arsenii.markov2020@gmail.com?subject=Hello%20Arsenii">arsenii.markov2020@gmail.com</a>
-          <button type="button" class="copy-btn" id="copy-email-btn">Copy email</button>
-          <button type="button" class="copy-btn" data-open-resume="true" aria-haspopup="dialog">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-              <polyline points="14 2 14 8 20 8"/>
-            </svg>
-            Resume PDF
-          </button>
-          <span class="copy-status" id="copy-status" role="status" aria-live="polite">Copied!</span>
+          <button type="button" class="copy-btn" id="copy-email-btn" data-email="arsenii.markov2020@gmail.com">Copy email</button>
         </div>
         <div class="contact-links">
-          <span>Prefer to call? <a href="tel:+16502018605">650-201-8605</a></span>
-          <span>LinkedIn: <a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/arsenii-markov</a></span>
+          <span>Phone: <a href="tel:+16502018605">650-201-8605</a></span>
+          <span>LinkedIn: <a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">linkedin.com/in/arsenii-markov</a></span>
+          <span>Resume: <a href="#resume" data-open-resume>View / Download PDF</a></span>
         </div>
       </div>
     </div></section>
   </main>
 
-  <!-- RIGHT STICKY TRACK: Space Rocket & CFD Wind Lines from Redesign (Moving Bottom to Top on Scroll) -->
+  <!-- RIGHT STICKY TRACK (PC): Detailed Space Rocket Facing Up, Flying Bottom -> Top on Scroll -->
   <aside class="side-track" aria-hidden="true">
-    <div class="track-hud">
-      <span>CFD // ASCENT VEHICLE</span>
-      <strong id="rocket-mach-readout" class="accent-cyan">MACH: 0.85</strong>
-    </div>
-
-    <div class="track-svg-wrap">
-      <svg class="track-svg" viewBox="0 0 160 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <!-- Vertical Datum & Altitude Ticks -->
-        <line x1="80" y1="20" x2="80" y2="780" stroke="#222930" stroke-width="1" stroke-dasharray="3 6"/>
-        <g stroke="#222930" stroke-width="1">
-          <line x1="136" y1="80" x2="148" y2="80"/><line x1="140" y1="200" x2="148" y2="200"/>
-          <line x1="136" y1="320" x2="148" y2="320"/><line x1="140" y1="440" x2="148" y2="440"/>
-          <line x1="136" y1="560" x2="148" y2="560"/><line x1="140" y1="680" x2="148" y2="680"/>
+    <svg class="track-svg" viewBox="0 0 200 800" xmlns="http://www.w3.org/2000/svg">
+      <line x1="100" y1="30" x2="100" y2="770" stroke="#222930" stroke-width="1" stroke-dasharray="4 8"/>
+      <g id="rocket-assembly" transform="translate(100, 710)">
+        <path class="cfd-stream-down" d="M -3 -46 C -14 -20, -28 8, -38 58" stroke="#00E5FF" stroke-width="1.3"/>
+        <path class="cfd-stream-down fast" d="M -10 -38 C -25 -10, -42 18, -54 68" stroke="#FFFFFF" stroke-width="1.15"/>
+        <path class="cfd-stream-down" d="M -18 -24 C -36 4, -54 32, -68 76" stroke="#FF3366" stroke-width="1.1"/>
+        <path class="cfd-stream-down" d="M 3 -46 C 14 -20, 28 8, 38 58" stroke="#00E5FF" stroke-width="1.3"/>
+        <path class="cfd-stream-down fast" d="M 10 -38 C 25 -10, 42 18, 54 68" stroke="#FFFFFF" stroke-width="1.15"/>
+        <path class="cfd-stream-down" d="M 18 -24 C 36 4, 54 32, 68 76" stroke="#FF3366" stroke-width="1.1"/>
+        <g>
+          <path d="M -6 28 L 0 64 L 6 28 Z" fill="#FF3366" opacity="0.82"/>
+          <path d="M -3 28 L 0 48 L 3 28 Z" fill="#FFFFFF"/>
+          <path d="M -5 24 L -7 29 L 7 29 L 5 24 Z" fill="#12161B" stroke="#FFFFFF" stroke-width="1.2"/>
+          <path d="M 0 -42 C 8 -24, 10 -4, 10 24 L -10 24 C -10 -4, -8 -24, 0 -42 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
+          <path d="M -9 -6 L 9 6 M -10 6 L 10 18 M 9 -6 L -9 6 M 10 6 L -10 18" stroke="#72808E" stroke-width="0.9" opacity="0.75"/>
+          <line x1="-9.5" y1="-12" x2="9.5" y2="-12" stroke="#00E5FF" stroke-width="1.3"/>
+          <path d="M -10 8 L -22 26 L -10 24 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.4"/>
+          <path d="M 10 8 L 22 26 L 10 24 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.4"/>
+          <circle cx="0" cy="-20" r="3" fill="#0A0D10" stroke="#00E5FF" stroke-width="1.2"/>
         </g>
-
-        <!-- Moving Space Rocket & Wrapped CFD Shockwave Streamlines (Facing Straight UP) -->
-        <g id="rocket-cfd-assembly" transform="translate(80, 715)">
-          <!-- Symmetric CFD Bow-Shock & Slipstream Lines curving downward around nosecone -->
-          <path class="cfd-rocket-cyan" d="M -6 -52 C -26 -24, -38 10, -48 64" />
-          <path class="cfd-rocket-red" d="M -2 -56 C -16 -28, -24 8, -29 60" />
-          <path class="cfd-rocket-white" d="M -12 -42 C -34 -14, -44 18, -54 68" />
-          <path class="cfd-rocket-red" d="M 2 -56 C 16 -28, 24 8, 29 60" />
-          <path class="cfd-rocket-cyan" d="M 6 -52 C 26 -24, 38 10, 48 64" />
-          <path class="cfd-rocket-white" d="M 12 -42 C 34 -14, 44 18, 54 68" />
-
-          <!-- Detailed Aerospace Launch Vehicle Pointed Straight UP -->
-          <!-- Mach Plume Core -->
-          <path d="M -5 26 L 0 58 L 5 26 Z" fill="#FF3B1F" opacity="0.85"/>
-          <path d="M -2.5 26 L 0 46 L 2.5 26 Z" fill="#00E5FF" opacity="0.9"/>
-          <!-- Composite Filament-Wound Airframe Fuselage -->
-          <path d="M 0 -38 C 7 -22, 10 -6, 10 24 L -10 24 C -10 -6, -7 -22, 0 -38 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
-          <!-- Interstage Ring Detail -->
-          <line x1="-9.5" y1="-2" x2="9.5" y2="-2" stroke="#00E5FF" stroke-width="1.2"/>
-          <!-- Swept Delta Grid/Aero Fins -->
-          <path d="M -10 10 L -20 28 L -10 24 Z" fill="#FFFFFF"/>
-          <path d="M 10 10 L 20 28 L 10 24 Z" fill="#FFFFFF"/>
-          <!-- Telemetry Sensor Viewport -->
-          <circle cx="0" cy="-14" r="3" fill="none" stroke="#00E5FF" stroke-width="1.2"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="track-hud">
-      <span>ALTITUDE // APOGEE</span>
-      <strong id="rocket-alt-readout">ALT: 0.0 KM</strong>
-    </div>
+      </g>
+    </svg>
   </aside>
 
 </div>
 
 <footer>
-  <div class="wrap">
-    <span>&copy; 2026 Arsenii Markov. Texas A&amp;M Engineering Academy at Austin Community College.</span>
-    <div style="display:flex;gap:1.25rem;flex-wrap:wrap;align-items:center">
-      <a href="#resume" data-open-resume="true">Resume PDF</a>
-      <a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">www.linkedin.com/in/arsenii-markov</a>
+  <div class="wrap footer-inner">
+    <div>&copy; 2026 Arsenii Markov. Texas A&amp;M Engineering Academy at Austin Community College.</div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="mailto:arsenii.markov2020@gmail.com">Email</a>
+      <a href="#resume" data-open-resume>Resume</a>
     </div>
   </div>
 </footer>
 
-<!-- INTERACTIVE RESUME PDF MODAL / PRINTABLE 1-PAGE SHEET -->
+<!-- INTERACTIVE RESUME PDF MODAL -->
 <div class="resume-modal-backdrop" id="resume-modal" role="dialog" aria-modal="true" aria-labelledby="resume-modal-title" aria-hidden="true">
   <div class="resume-modal-dialog">
     <div class="resume-modal-toolbar">
       <div class="resume-toolbar-title">
         <span class="resume-toolbar-badge">PDF</span>
-        <span id="resume-modal-title">arsenii-markov-resume.pdf</span>
+        <span id="resume-modal-title">arsenii-markov-resume-bw (4).pdf</span>
       </div>
       <div class="resume-toolbar-actions">
         <button type="button" class="toolbar-btn" id="download-pdf-btn">
@@ -927,106 +1411,83 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
           <p class="resume-paper-contact">
             Round Rock, TX &nbsp;|&nbsp;
             <a href="tel:+16502018605">650-201-8605</a> &nbsp;|&nbsp;
-            <a href="mailto:arsenii.markov2020@gmail.com">arsenii.markov2020@gmail.com</a> &nbsp;|&nbsp;
-            <a href="https://www.linkedin.com/in/arsenii-markov" target="_blank" rel="noopener noreferrer">linkedin.com/in/arsenii-markov</a>
+            <a href="mailto:arsenii.markov2020@gmail.com">arsenii.markov2020@gmail.com</a>
           </p>
         </div>
 
         <div class="resume-sec">
-          <h3 class="resume-sec-title">About Me</h3>
+          <h3 class="resume-sec-title">ABOUT ME</h3>
           <p>Engineering student in the Texas A&amp;M Engineering Academy at Austin Community College, combining leadership experience in aquatics with hands-on engineering project work. Seeking an engineering internship to apply technical and teamwork skills.</p>
         </div>
 
         <div class="resume-sec">
-          <h3 class="resume-sec-title">Education</h3>
-          <div class="resume-entry">
-            <div class="resume-entry-line">
-              <strong>Texas A&amp;M Engineering Academy at Austin Community College</strong>
-              <span>Fall 2026 &ndash; Present</span>
-            </div>
-            <div class="resume-entry-line">
-              <strong>Associate of Arts in General Studies &ndash; Austin Community College</strong>
-              <span>2026</span>
-            </div>
-            <div class="resume-entry-line">
-              <strong>Early College High School</strong>
-              <span>2026</span>
-            </div>
-            <ul>
-              <li>GPA: 3.9 &nbsp;&bull;&nbsp; Ranked in the top 10% of high school graduating class</li>
-              <li>63 hours earned at Austin Community College</li>
-            </ul>
-          </div>
+          <h3 class="resume-sec-title">EDUCATION</h3>
+          <p class="resume-line">Texas A&amp;M Engineering Academy at Austin Community College - Fall 2026 - Present</p>
+          <p class="resume-line">Associate of Arts in General Studies - Austin Community College, 2026</p>
+          <p class="resume-line">Early College High School - 2026</p>
+          <ul>
+            <li>GPA: 3.9</li>
+            <li>Ranked in the top 10% of high school graduating class</li>
+            <li>63 hours at Austin Community College</li>
+          </ul>
         </div>
 
         <div class="resume-sec">
-          <h3 class="resume-sec-title">Technical Skills</h3>
+          <h3 class="resume-sec-title">TECHNICAL SKILLS</h3>
           <p>Python (ENGR 102) &nbsp;&bull;&nbsp; CAD (Onshape) &nbsp;&bull;&nbsp; 3D printing</p>
         </div>
 
         <div class="resume-sec">
-          <h3 class="resume-sec-title">Projects</h3>
-          <div class="resume-entry">
-            <div class="resume-entry-line">
-              <strong>Filament Winder &ndash; F.O.R.G.E., Austin Community College</strong>
-              <span>Oct 2026 &ndash; Present</span>
-            </div>
-            <ul>
-              <li>Building an automated filament winder to manufacture carbon fiber composite tubes (3 ft long, 3&Prime; inner diameter, 4 mm walls)</li>
-              <li>6-motor motion system: mandrel rotation, carriage translation, and fiber delivery/angle control</li>
-              <li>Team project under F.O.R.G.E.; all work documented open-source for publication</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="resume-sec">
-          <h3 class="resume-sec-title">Work Experience</h3>
-          <div class="resume-entry">
-            <div class="resume-entry-line">
-              <strong>City of Round Rock Aquatics Manager</strong>
-              <span>2 Years</span>
-            </div>
-            <ul>
-              <li>2 years of experience managing 3 City of Round Rock facilities &ndash; Rock n&rsquo; River, Lake Creek Pool, and Micki Krebsbach Pool &ndash; within a city aquatics program employing 365 lifeguards</li>
-              <li>Provided lifeguard coverage for a Water Polo tournament</li>
-            </ul>
-          </div>
-          <div class="resume-entry">
-            <div class="resume-entry-line">
-              <strong>Water Safety Instructor Manager</strong>
-              <span>City of Round Rock</span>
-            </div>
-            <ul>
-              <li>Provided swim instruction to children and adults, ages 6 months to 13+ years</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="resume-sec">
-          <h3 class="resume-sec-title">Volunteer Experience</h3>
+          <h3 class="resume-sec-title">PROJECTS</h3>
+          <p class="resume-line">Filament Winder - F.O.R.G.E., Austin Community College - Oct 2026 - Present</p>
           <ul>
-            <li>Volunteered with &ldquo;Together To Serve&rdquo; club &ndash; supported women with breast cancer, assisted elderly community members, and assisted with conservation planting</li>
-            <li>Served as a Student Ambassador at AVID Expo, representing the school&rsquo;s voice by advocating for students through public speaking</li>
+            <li>Building an automated filament winder to manufacture carbon fiber composite tubes (3 ft long, 3&Prime; inner diameter, 4 mm walls)</li>
+            <li>6-motor motion system: mandrel rotation, carriage translation, and fiber delivery/angle control</li>
+            <li>Team project under F.O.R.G.E.; all work documented open-source for publication</li>
+          </ul>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">WORK EXPERIENCE</h3>
+          <p class="resume-line">City of Round Rock Aquatics Manager</p>
+          <ul>
+            <li>2 years of experience managing 3 City of Round Rock facilities - Rock n&rsquo; River, Lake Creek Pool, and Micky Kresbach Pool - within a city aquatics program employing 365 lifeguards</li>
+            <li>Provided lifeguard coverage for a Water Polo tournament</li>
+          </ul>
+          <p class="resume-line">Water Safety Instructor Manager</p>
+          <ul>
+            <li>Provided swim instruction to children and adults, ages 6 months to 13+ years</li>
+          </ul>
+        </div>
+
+        <div class="resume-sec">
+          <h3 class="resume-sec-title">VOLUNTEER EXPERIENCE</h3>
+          <ul>
+            <li>Volunteered with &ldquo;Together To Serve&rdquo; club - supported women with breast cancer, assisted elderly community members, and assisted with conservation planting</li>
+            <li>Served as a Student Ambassador at Avid Expo, representing the school&rsquo;s voice by advocating for students through public speaking</li>
             <li>Tutored fellow students as a school volunteer, supporting their academic success</li>
           </ul>
         </div>
 
         <div class="resume-sec">
-          <h3 class="resume-sec-title">Competitions &amp; Awards</h3>
+          <h3 class="resume-sec-title">COMPETITIONS &amp; AWARDS</h3>
           <ul>
-            <li><strong>Texas State Lifeguard Competition</strong> representing City of Round Rock &mdash; First Place</li>
-            <li><strong>&ldquo;All American&rdquo; Award</strong> from City of Round Rock</li>
-            <li><strong>VEX V5 Robotics Competition</strong> &mdash; Judges Award</li>
+            <li>Texas state lifeguard competition representing City of Round Rock &mdash; first place</li>
+            <li>&ldquo;All American&rdquo; award from City of Round Rock</li>
+          </ul>
+          <p class="resume-line">VEX V5 Robotics Competition</p>
+          <ul>
+            <li>Judges Award</li>
           </ul>
         </div>
 
         <div class="resume-sec">
-          <h3 class="resume-sec-title">Languages</h3>
+          <h3 class="resume-sec-title">LANGUAGES</h3>
           <p>English (Fluent) &nbsp;&bull;&nbsp; Russian (Fluent) &nbsp;&bull;&nbsp; Ukrainian (Basic Reading) &nbsp;&bull;&nbsp; Serbian (Basic Reading)</p>
         </div>
 
         <div class="resume-sec">
-          <h3 class="resume-sec-title">Additional Skills</h3>
+          <h3 class="resume-sec-title">ADDITIONAL SKILLS</h3>
           <p>Coaching &nbsp;&bull;&nbsp; Team Leadership &nbsp;&bull;&nbsp; Athletic Training &nbsp;&bull;&nbsp; CPR/AED/First Aid Certified &nbsp;&bull;&nbsp; Public Speaking</p>
         </div>
       </div>
@@ -1036,46 +1497,32 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
 
 <script>
 (function() {
-  /* 1. Scroll-Driven F1 Car (Top -> Bottom) & Space Rocket (Bottom -> Top) */
-  const f1Assembly = document.getElementById('f1-cfd-assembly');
-  const rocketAssembly = document.getElementById('rocket-cfd-assembly');
-  const hairline = document.getElementById('scroll-hairline');
-  const f1DownforceReadout = document.getElementById('f1-downforce-readout');
-  const f1VelReadout = document.getElementById('f1-vel-readout');
-  const rocketMachReadout = document.getElementById('rocket-mach-readout');
-  const rocketAltReadout = document.getElementById('rocket-alt-readout');
+  const f1Assembly = document.getElementById('f1-assembly');
+  const rocketAssembly = document.getElementById('rocket-assembly');
+  const scrollProgress = document.getElementById('scroll-progress');
 
   let ticking = false;
 
-  function updateVehiclesOnScroll() {
-    const scrollY = window.scrollY || window.pageYOffset;
-    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    const frac = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+  function updateScrollAnimations() {
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const maxScroll = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      1
+    );
+    const f = Math.min(Math.max(scrollY / maxScroll, 0), 1);
 
-    const f1Y = 85 + (frac * 630);
-    const rocketY = 715 - (frac * 630);
-
+    const f1Y = 90 + f * 620;
     if (f1Assembly) {
-      f1Assembly.setAttribute('transform', 'translate(80, ' + f1Y.toFixed(2) + ')');
-    }
-    if (rocketAssembly) {
-      rocketAssembly.setAttribute('transform', 'translate(80, ' + rocketY.toFixed(2) + ')');
-    }
-    if (hairline) {
-      hairline.style.width = (frac * 100).toFixed(2) + '%';
+      f1Assembly.setAttribute('transform', 'translate(100, ' + f1Y.toFixed(1) + ')');
     }
 
-    if (f1DownforceReadout) {
-      f1DownforceReadout.textContent = 'DF: ' + (1.20 + frac * 3.65).toFixed(2) + ' G';
+    const rocketY = 710 - f * 620;
+    if (rocketAssembly) {
+      rocketAssembly.setAttribute('transform', 'translate(100, ' + rocketY.toFixed(1) + ')');
     }
-    if (f1VelReadout) {
-      f1VelReadout.textContent = 'VEL: ' + Math.round(210 + frac * 132) + ' KPH';
-    }
-    if (rocketMachReadout) {
-      rocketMachReadout.textContent = 'MACH: ' + (0.85 + frac * 6.40).toFixed(2);
-    }
-    if (rocketAltReadout) {
-      rocketAltReadout.textContent = 'ALT: ' + (frac * 142.0).toFixed(1) + ' KM';
+
+    if (scrollProgress) {
+      scrollProgress.style.width = (f * 100).toFixed(2) + '%';
     }
 
     ticking = false;
@@ -1083,61 +1530,90 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
 
   window.addEventListener('scroll', function() {
     if (!ticking) {
-      window.requestAnimationFrame(updateVehiclesOnScroll);
+      window.requestAnimationFrame(updateScrollAnimations);
       ticking = true;
     }
   }, { passive: true });
 
-  window.addEventListener('resize', updateVehiclesOnScroll, { passive: true });
-  updateVehiclesOnScroll();
+  window.addEventListener('resize', updateScrollAnimations, { passive: true });
+  updateScrollAnimations();
 
-  /* 2. Interactive 6-Motor Carbon Fiber Filament Winder Simulator */
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('header.site-header nav a[href^="#"]');
+
+  if ('IntersectionObserver' in window && sections.length) {
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          const id = '#' + entry.target.id;
+          navLinks.forEach(function(link) {
+            link.classList.toggle('active', link.getAttribute('href') === id);
+          });
+        }
+      });
+    }, { rootMargin: '-25% 0px -65% 0px' });
+
+    sections.forEach(function(sec) { observer.observe(sec); });
+  }
+
   const canvas = document.getElementById('winder-canvas');
-  const angleSlider = document.getElementById('sim-angle-slider');
-  const rpmSlider = document.getElementById('sim-rpm-slider');
-  const angleValEl = document.getElementById('sim-angle-val');
-  const rpmValEl = document.getElementById('sim-rpm-val');
-  const feedReadoutEl = document.getElementById('sim-feed-readout');
-  const payoutReadoutEl = document.getElementById('sim-payout-readout');
-  const biasReadoutEl = document.getElementById('sim-bias-readout');
+  const angleSlider = document.getElementById('angle-slider');
+  const rpmSlider = document.getElementById('rpm-slider');
+  const angleReadout = document.getElementById('angle-readout');
+  const rpmReadout = document.getElementById('rpm-readout');
+  const feedReadout = document.getElementById('feed-readout');
+  const payoutReadout = document.getElementById('payout-readout');
+  const biasReadout = document.getElementById('bias-readout');
   const presetBtns = document.querySelectorAll('.preset-btn');
 
   if (canvas && angleSlider && rpmSlider) {
     const ctx = canvas.getContext('2d');
-    let windingAngleDeg = 45;
-    let mandrelRpm = 30;
+    let windingAngle = 45;
+    let mandrelRpm = 36;
     let phase = 0;
-    let carriageX = 0.25;
+    let carriagePos = 0.5;
     let carriageDir = 1;
 
-    function updateSimTelemetry() {
-      windingAngleDeg = parseInt(angleSlider.value, 10);
-      mandrelRpm = parseInt(rpmSlider.value, 10);
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(rect.width * dpr, 280);
+      canvas.height = Math.max(rect.height * dpr, 150);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
 
-      angleValEl.innerHTML = '&plusmn;' + windingAngleDeg + '&deg;';
-      rpmValEl.textContent = mandrelRpm + ' RPM';
+    function updateTelemetry() {
+      windingAngle = parseFloat(angleSlider.value) || 45;
+      mandrelRpm = parseFloat(rpmSlider.value) || 36;
+      angleReadout.textContent = windingAngle + '\u00B0';
+      rpmReadout.textContent = mandrelRpm + ' RPM';
 
-      const radiusMm = 42.1;
-      const omegaRadSec = (mandrelRpm * 2 * Math.PI) / 60;
-      const surfaceTangentialSpeed = omegaRadSec * radiusMm;
-      const angleRad = (windingAngleDeg * Math.PI) / 180;
+      const surfaceVel = (mandrelRpm / 60) * 264.5;
+      const rad = (windingAngle * Math.PI) / 180;
+      const feedSpeed = surfaceVel / Math.tan(rad);
+      const payoutSpeed = Math.sqrt(surfaceVel * surfaceVel + feedSpeed * feedSpeed);
 
-      const carriageFeedMmSec = surfaceTangentialSpeed / Math.tan(angleRad);
-      const fiberPayoutMmSec = Math.sqrt(
-        Math.pow(surfaceTangentialSpeed, 2) + Math.pow(carriageFeedMmSec, 2)
-      );
+      feedReadout.textContent = feedSpeed.toFixed(1) + ' mm/s';
+      payoutReadout.textContent = payoutSpeed.toFixed(1) + ' mm/s';
 
-      feedReadoutEl.textContent = carriageFeedMmSec.toFixed(1) + ' mm/s';
-      payoutReadoutEl.textContent = fiberPayoutMmSec.toFixed(1) + ' mm/s';
-
-      if (windingAngleDeg >= 70) {
-        biasReadoutEl.textContent = 'Hoop / Burst Pressure';
-      } else if (windingAngleDeg >= 38) {
-        biasReadoutEl.textContent = 'Balanced Torsion/Shear';
+      if (windingAngle >= 70) {
+        biasReadout.textContent = 'Hoop / Burst Pressure';
+      } else if (windingAngle >= 38) {
+        biasReadout.textContent = 'Balanced Torsion';
       } else {
-        biasReadoutEl.textContent = 'Axial Bending Stiffness';
+        biasReadout.textContent = 'Axial Bending Stiffness';
       }
     }
+
+    angleSlider.addEventListener('input', function() {
+      presetBtns.forEach(function(b) { b.classList.remove('active'); });
+      updateTelemetry();
+    });
+
+    rpmSlider.addEventListener('input', function() {
+      presetBtns.forEach(function(b) { b.classList.remove('active'); });
+      updateTelemetry();
+    });
 
     presetBtns.forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -1145,173 +1621,140 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
         btn.classList.add('active');
         angleSlider.value = btn.getAttribute('data-angle');
         rpmSlider.value = btn.getAttribute('data-rpm');
-        updateSimTelemetry();
+        updateTelemetry();
       });
     });
 
-    angleSlider.addEventListener('input', function() {
-      presetBtns.forEach(function(b) { b.classList.remove('active'); });
-      updateSimTelemetry();
-    });
+    function drawWinder() {
+      const w = canvas.clientWidth || 400;
+      const h = canvas.clientHeight || 185;
+      ctx.clearRect(0, 0, w, h);
 
-    rpmSlider.addEventListener('input', updateSimTelemetry);
+      const tubeLeft = 40;
+      const tubeRight = w - 40;
+      const tubeLen = Math.max(tubeRight - tubeLeft, 100);
+      const tubeY = 66;
+      const tubeRadius = 24;
 
-    function resizeCanvas() {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    window.addEventListener('resize', resizeCanvas, { passive: true });
-    resizeCanvas();
-    updateSimTelemetry();
-
-    function renderWinderFrame() {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = canvas.width / dpr;
-      const height = canvas.height / dpr;
-      ctx.clearRect(0, 0, width, height);
-
-      const leftX = Math.max(44, width * 0.1);
-      const rightX = Math.min(width - 44, width * 0.9);
-      const tubeLen = rightX - leftX;
-      const centerY = height * 0.43;
-      const tubeRadius = 32;
-
-      const speedFactor = mandrelRpm / 30;
-      phase += 0.045 * speedFactor;
-      const tanTheta = Math.tan((windingAngleDeg * Math.PI) / 180);
-      const carriageStep = (0.0055 * speedFactor) / Math.max(tanTheta, 0.35);
-      carriageX += carriageDir * carriageStep;
-      if (carriageX >= 0.94) {
-        carriageX = 0.94;
-        carriageDir = -1;
-      } else if (carriageX <= 0.06) {
-        carriageX = 0.06;
-        carriageDir = 1;
-      }
-
-      // Headstock & Tailstock Chuck Mounts
-      ctx.strokeStyle = '#2E3B4E';
-      ctx.fillStyle = '#0E1318';
-      ctx.lineWidth = 1.5;
-      ctx.fillRect(leftX - 20, centerY - 40, 20, 80);
-      ctx.strokeRect(leftX - 20, centerY - 40, 20, 80);
-      ctx.fillRect(rightX, centerY - 36, 16, 72);
-      ctx.strokeRect(rightX, centerY - 36, 16, 72);
-
-      // Cylindrical Mandrel Body (3 ft / 914 mm)
-      const grad = ctx.createLinearGradient(0, centerY - tubeRadius, 0, centerY + tubeRadius);
-      grad.addColorStop(0, '#161F2B');
-      grad.addColorStop(0.5, '#263345');
-      grad.addColorStop(1, '#0D131A');
-      ctx.fillStyle = grad;
-      ctx.fillRect(leftX, centerY - tubeRadius, tubeLen, tubeRadius * 2);
+      ctx.fillStyle = '#192028';
       ctx.strokeStyle = '#72808E';
-      ctx.strokeRect(leftX, centerY - tubeRadius, tubeLen, tubeRadius * 2);
+      ctx.lineWidth = 1.2;
+      ctx.fillRect(12, tubeY - 32, 20, 64);
+      ctx.strokeRect(12, tubeY - 32, 20, 64);
+      ctx.fillRect(w - 32, tubeY - 26, 20, 52);
+      ctx.strokeRect(w - 32, tubeY - 26, 20, 52);
 
-      // Helical / Hoop Carbon Fiber Weave Pattern clipped to Mandrel
+      ctx.strokeStyle = '#72808E';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(32, tubeY);
+      ctx.lineTo(w - 32, tubeY);
+      ctx.stroke();
+
+      ctx.fillStyle = '#0D1318';
+      ctx.strokeStyle = '#F0F4F8';
+      ctx.lineWidth = 1.5;
+      ctx.fillRect(tubeLeft, tubeY - tubeRadius, tubeLen, tubeRadius * 2);
+
       ctx.save();
       ctx.beginPath();
-      ctx.rect(leftX, centerY - tubeRadius, tubeLen, tubeRadius * 2);
+      ctx.rect(tubeLeft, tubeY - tubeRadius, tubeLen, tubeRadius * 2);
       ctx.clip();
 
-      const pitchPx = Math.max(12, 95 * Math.cos((windingAngleDeg * Math.PI) / 180));
-      const numWaves = Math.ceil(tubeLen / pitchPx) + 4;
+      const pitch = Math.max(12, Math.tan(((90 - windingAngle) * Math.PI) / 180) * 52 + 14);
+      const offset = (phase * 22) % pitch;
 
-      ctx.strokeStyle = 'rgba(0, 229, 255, 0.55)';
-      ctx.lineWidth = 1.3;
-      for (let i = -2; i < numWaves; i++) {
-        const startX = leftX + i * pitchPx + ((phase * 14) % pitchPx);
+      ctx.strokeStyle = 'rgba(0, 229, 255, 0.38)';
+      ctx.lineWidth = 1.15;
+      for (let x = tubeLeft - tubeLen; x < tubeRight + tubeLen; x += pitch) {
         ctx.beginPath();
-        ctx.moveTo(startX - pitchPx * 0.6, centerY - tubeRadius);
-        ctx.lineTo(startX + pitchPx * 0.6, centerY + tubeRadius);
+        ctx.moveTo(x + offset, tubeY - tubeRadius);
+        ctx.lineTo(x + offset + pitch * 0.85, tubeY + tubeRadius);
         ctx.stroke();
-      }
 
-      ctx.strokeStyle = 'rgba(240, 244, 248, 0.42)';
-      ctx.lineWidth = 1.2;
-      for (let i = -2; i < numWaves; i++) {
-        const startX = leftX + i * pitchPx - ((phase * 14) % pitchPx);
         ctx.beginPath();
-        ctx.moveTo(startX - pitchPx * 0.6, centerY + tubeRadius);
-        ctx.lineTo(startX + pitchPx * 0.6, centerY - tubeRadius);
+        ctx.moveTo(x - offset + pitch * 0.85, tubeY - tubeRadius);
+        ctx.lineTo(x - offset, tubeY + tubeRadius);
         ctx.stroke();
       }
       ctx.restore();
 
-      // Linear Carriage Guide Rail
-      const railY = height * 0.80;
-      ctx.strokeStyle = '#222930';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(leftX - 10, railY);
-      ctx.lineTo(rightX + 10, railY);
-      ctx.stroke();
-
-      // Reciprocating Payout Carriage & Active Carbon Tow Feed
-      const curCarriagePx = leftX + carriageX * tubeLen;
-      const towTouchX = Math.min(Math.max(curCarriagePx - carriageDir * (28 / Math.max(tanTheta, 0.4)), leftX + 6), rightX - 6);
-
-      ctx.strokeStyle = '#FF3B1F';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(curCarriagePx, railY - 14);
-      ctx.lineTo(towTouchX, centerY + tubeRadius);
-      ctx.stroke();
-
-      ctx.fillStyle = '#00E5FF';
-      ctx.beginPath();
-      ctx.arc(towTouchX, centerY + tubeRadius, 3.5, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#12161B';
-      ctx.strokeStyle = '#00E5FF';
+      ctx.strokeStyle = '#F0F4F8';
       ctx.lineWidth = 1.5;
-      ctx.fillRect(curCarriagePx - 20, railY - 14, 40, 20);
-      ctx.strokeRect(curCarriagePx - 20, railY - 14, 40, 20);
+      ctx.strokeRect(tubeLeft, tubeY - tubeRadius, tubeLen, tubeRadius * 2);
+
+      const railY = 148;
+      ctx.strokeStyle = '#222930';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(tubeLeft, railY);
+      ctx.lineTo(tubeRight, railY);
+      ctx.stroke();
+
+      const angularRate = (mandrelRpm / 60) * 0.04;
+      phase += angularRate;
+      const carriageSpeed = (angularRate * 0.25) / Math.max(Math.tan((windingAngle * Math.PI) / 180), 0.25);
+      carriagePos += carriageDir * carriageSpeed;
+      if (carriagePos >= 0.92) {
+        carriagePos = 0.92;
+        carriageDir = -1;
+      } else if (carriagePos <= 0.08) {
+        carriagePos = 0.08;
+        carriageDir = 1;
+      }
+
+      const cx = tubeLeft + carriagePos * tubeLen;
+      const lag = carriageDir * Math.max(8, (90 - windingAngle) * 0.35);
+      const contactX = Math.min(Math.max(cx - lag, tubeLeft + 4), tubeRight - 4);
+      
+      ctx.strokeStyle = '#FF3366';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, railY - 14);
+      ctx.lineTo(contactX, tubeY + tubeRadius);
+      ctx.stroke();
+
+      ctx.fillStyle = '#0A0D10';
+      ctx.strokeStyle = '#00E5FF';
+      ctx.lineWidth = 1.6;
+      ctx.fillRect(cx - 14, railY - 12, 28, 18);
+      ctx.strokeRect(cx - 14, railY - 12, 28, 18);
 
       ctx.beginPath();
-      ctx.arc(curCarriagePx, railY - 14, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#FF3B1F';
+      ctx.arc(cx, railY - 14, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#FFFFFF';
       ctx.fill();
 
-      ctx.fillStyle = '#72808E';
-      ctx.font = '600 10px "JetBrains Mono", monospace';
-      ctx.fillText('MANDREL: L = 3 FT (914 MM) // ID = 3.0 IN (76.2 MM) // WALL = 4.0 MM', leftX, 20);
-
-      window.requestAnimationFrame(renderWinderFrame);
+      window.requestAnimationFrame(drawWinder);
     }
 
-    window.requestAnimationFrame(renderWinderFrame);
+    resizeCanvas();
+    updateTelemetry();
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+    window.requestAnimationFrame(drawWinder);
   }
 
-  /* 3. Copy Email Button */
   const copyBtn = document.getElementById('copy-email-btn');
-  const copyStatus = document.getElementById('copy-status');
-  if (copyBtn && copyStatus) {
+  if (copyBtn) {
     copyBtn.addEventListener('click', function() {
-      const textarea = document.createElement('textarea');
-      textarea.value = 'arsenii.markov2020@gmail.com';
-      textarea.setAttribute('readonly', '');
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
+      const email = copyBtn.getAttribute('data-email') || 'arsenii.markov2020@gmail.com';
+      const tempInput = document.createElement('textarea');
+      tempInput.value = email;
+      tempInput.style.position = 'fixed';
+      tempInput.style.left = '-9999px';
+      document.body.appendChild(tempInput);
+      tempInput.select();
       try {
         document.execCommand('copy');
-        copyStatus.classList.add('show');
-        setTimeout(function() {
-          copyStatus.classList.remove('show');
-        }, 2000);
-      } catch (err) {}
-      document.body.removeChild(textarea);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(function() { copyBtn.textContent = 'Copy email'; }, 2000);
+      } catch (err) {
+        copyBtn.textContent = email;
+      }
+      document.body.removeChild(tempInput);
     });
   }
 
-  /* 4. Interactive Resume PDF Viewer Modal & Direct PDF Download / Print */
   const resumeModal = document.getElementById('resume-modal');
   const openResumeBtns = document.querySelectorAll('[data-open-resume]');
   const closeResumeBtn = document.getElementById('close-resume-btn');
@@ -1319,6 +1762,117 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
   const downloadPdfBtn = document.getElementById('download-pdf-btn');
   const downloadPdfLabel = document.getElementById('download-pdf-label');
   const printableSheet = document.getElementById('resume-printable-sheet');
+
+  function buildExactResumePdfDoc() {
+    if (!window.jspdf || !window.jspdf.jsPDF) return null;
+    const jsPDF = window.jspdf.jsPDF;
+    const doc = new jsPDF({ unit: 'pt', format: 'letter', orientation: 'portrait' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const marginX = 42;
+    const contentW = pageW - marginX * 2;
+    let y = 42;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(17);
+    doc.text('Arsenii Markov', pageW / 2, y, { align: 'center' });
+    y += 15;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10.5);
+    doc.text('Texas A&M Engineering Academy at Austin Community College', pageW / 2, y, { align: 'center' });
+    y += 14;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    doc.text('Round Rock, TX  |  650-201-8605  |  arsenii.markov2020@gmail.com', pageW / 2, y, { align: 'center' });
+    y += 10;
+
+    doc.setLineWidth(1.1);
+    doc.line(marginX, y, pageW - marginX, y);
+    y += 15;
+
+    function addSectionHeader(title) {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9.5);
+      doc.text(title, marginX, y);
+      y += 4;
+      doc.setLineWidth(0.6);
+      doc.line(marginX, y, pageW - marginX, y);
+      y += 12;
+    }
+
+    function addParagraph(text, isBold) {
+      doc.setFont('helvetica', isBold ? 'bold' : 'normal');
+      doc.setFontSize(9.5);
+      const lines = doc.splitTextToSize(text, contentW);
+      doc.text(lines, marginX, y);
+      y += lines.length * 12.2;
+    }
+
+    function addBullet(text) {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      const bulletIndent = 12;
+      const lines = doc.splitTextToSize(text, contentW - bulletIndent);
+      doc.text('\u2022', marginX + 2, y);
+      doc.text(lines, marginX + bulletIndent, y);
+      y += lines.length * 12.2;
+    }
+
+    addSectionHeader('ABOUT ME');
+    addParagraph('Engineering student in the Texas A&M Engineering Academy at Austin Community College, combining leadership experience in aquatics with hands-on engineering project work. Seeking an engineering internship to apply technical and teamwork skills.', false);
+    y += 5;
+
+    addSectionHeader('EDUCATION');
+    addParagraph('Texas A&M Engineering Academy at Austin Community College - Fall 2026 - Present', true);
+    addParagraph('Associate of Arts in General Studies - Austin Community College, 2026', true);
+    addParagraph('Early College High School - 2026', true);
+    addBullet('GPA: 3.9');
+    addBullet('Ranked in the top 10% of high school graduating class');
+    addBullet('63 hours at Austin Community College');
+    y += 5;
+
+    addSectionHeader('TECHNICAL SKILLS');
+    addParagraph('Python (ENGR 102)  \u2022  CAD (Onshape)  \u2022  3D printing', false);
+    y += 5;
+
+    addSectionHeader('PROJECTS');
+    addParagraph('Filament Winder - F.O.R.G.E., Austin Community College - Oct 2026 - Present', true);
+    addBullet('Building an automated filament winder to manufacture carbon fiber composite tubes (3 ft long, 3" inner diameter, 4 mm walls)');
+    addBullet('6-motor motion system: mandrel rotation, carriage translation, and fiber delivery/angle control');
+    addBullet('Team project under F.O.R.G.E.; all work documented open-source for publication');
+    y += 5;
+
+    addSectionHeader('WORK EXPERIENCE');
+    addParagraph('City of Round Rock Aquatics Manager', true);
+    addBullet("2 years of experience managing 3 City of Round Rock facilities - Rock n' River, Lake Creek Pool, and Micky Kresbach Pool - within a city aquatics program employing 365 lifeguards");
+    addBullet('Provided lifeguard coverage for a Water Polo tournament');
+    addParagraph('Water Safety Instructor Manager', true);
+    addBullet('Provided swim instruction to children and adults, ages 6 months to 13+ years');
+    y += 5;
+
+    addSectionHeader('VOLUNTEER EXPERIENCE');
+    addBullet('Volunteered with "Together To Serve" club - supported women with breast cancer, assisted elderly community members, and assisted with conservation planting');
+    addBullet("Served as a Student Ambassador at Avid Expo, representing the school's voice by advocating for students through public speaking");
+    addBullet('Tutored fellow students as a school volunteer, supporting their academic success');
+    y += 5;
+
+    addSectionHeader('COMPETITIONS & AWARDS');
+    addBullet('Texas state lifeguard competition representing City of Round Rock \u2014 first place');
+    addBullet('"All American" award from City of Round Rock');
+    addParagraph('VEX V5 Robotics Competition', true);
+    addBullet('Judges Award');
+    y += 5;
+
+    addSectionHeader('LANGUAGES');
+    addParagraph('English (Fluent)  \u2022  Russian (Fluent)  \u2022  Ukrainian (Basic Reading)  \u2022  Serbian (Basic Reading)', false);
+    y += 5;
+
+    addSectionHeader('ADDITIONAL SKILLS');
+    addParagraph('Coaching  \u2022  Team Leadership  \u2022  Athletic Training  \u2022  CPR/AED/First Aid Certified  \u2022  Public Speaking', false);
+
+    return doc;
+  }
 
   function openResumeModal(e) {
     if (e) e.preventDefault();
@@ -1363,14 +1917,20 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
     });
   }
 
-  if (downloadPdfBtn && printableSheet) {
+  if (downloadPdfBtn) {
     downloadPdfBtn.addEventListener('click', function() {
-      if (typeof window.html2pdf !== 'undefined') {
+      const doc = buildExactResumePdfDoc();
+      if (doc) {
+        doc.save('arsenii-markov-resume-bw.pdf');
+        return;
+      }
+
+      if (typeof window.html2pdf !== 'undefined' && printableSheet) {
         const origText = downloadPdfLabel ? downloadPdfLabel.textContent : 'Download PDF';
         if (downloadPdfLabel) downloadPdfLabel.textContent = 'Generating PDF...';
         const opt = {
           margin: [0.35, 0.4, 0.35, 0.4],
-          filename: 'Arsenii-Markov-Resume.pdf',
+          filename: 'arsenii-markov-resume-bw.pdf',
           image: { type: 'jpeg', quality: 0.98 },
           html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
           jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
