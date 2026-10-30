@@ -30,8 +30,8 @@ nav a:hover{color:var(--ink);text-decoration:underline;text-decoration-color:var
 
 .main-layout{display:grid;grid-template-columns:1fr;gap:2rem}
 @media (min-width:1024px){
-  .main-layout{grid-template-columns:1fr 320px;align-items:start}
-  .f1-track-stage{position:sticky;top:80px;height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:center;align-items:center}
+  .main-layout{grid-template-columns:1fr 280px;align-items:start}
+  .f1-stage{position:sticky;top:80px;height:calc(100vh - 100px);display:flex;flex-direction:column;justify-content:center;align-items:center}
 }
 
 .hero{padding-block:clamp(3rem,9vw,6.5rem) 3rem}
@@ -45,26 +45,26 @@ h1{margin:0;font-weight:800;font-stretch:125%;font-size:clamp(2.7rem,9vw,6rem);l
 .facts dt{font:500 .85rem Archivo,sans-serif;color:var(--muted)}
 .facts dd{margin:.15rem 0 0;font:700 1.35rem Archivo,sans-serif}
 
-/* Minimalist Canvas Track Container */
-.f1-track-stage{width:100%;height:100%;min-height:500px;position:relative;overflow:hidden}
-.f1-track-svg{width:100%;height:100%;display:block}
+/* Minimalist Air & F1 Car Container */
+.f1-stage{width:100%;height:100%;min-height:500px;position:relative;overflow:hidden}
+.f1-svg{width:100%;height:100%;display:block}
 
-/* Air Streamlines Animation */
+/* Continuous Air Streamlines */
 @keyframes airFlow {
-  0% { stroke-dashoffset: 120; opacity: 0.1; }
-  50% { opacity: 0.5; }
+  0% { stroke-dashoffset: 160; opacity: 0.1; }
+  50% { opacity: 0.55; }
   100% { stroke-dashoffset: 0; opacity: 0.1; }
 }
 .air-line {
   stroke: #FFFFFF;
   stroke-width: 1;
-  stroke-dasharray: 20 40;
+  stroke-dasharray: 25 50;
   stroke-linecap: round;
-  animation: airFlow 3s linear infinite;
-  opacity: 0.3;
+  animation: airFlow 2.8s linear infinite;
+  opacity: 0.35;
 }
 .air-line-fast {
-  animation-duration: 1.8s;
+  animation-duration: 1.6s;
 }
 
 section{border-top:1px solid var(--rule);padding-block:clamp(2.5rem,6vw,4.5rem)}
@@ -250,36 +250,35 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
     </div></section>
   </main>
 
-  <aside class="f1-track-stage">
-    <svg class="f1-track-svg" viewBox="0 0 300 800" xmlns="http://www.w3.org/2000/svg">
-      <!-- Ambient Air Lines flowing in background -->
-      <path class="air-line" d="M 30 50 Q 80 120 40 220" fill="none" />
-      <path class="air-line air-line-fast" d="M 260 100 Q 200 250 250 380" fill="none" />
-      <path class="air-line" d="M 20 300 Q 120 450 30 600" fill="none" />
-      <path class="air-line air-line-fast" d="M 270 520 Q 180 650 240 760" fill="none" />
+  <aside class="f1-stage">
+    <svg class="f1-svg" viewBox="0 0 240 800" xmlns="http://www.w3.org/2000/svg">
+      <!-- Atmospheric Streamlines in Space -->
+      <path class="air-line" d="M 40 40 L 40 760" fill="none" />
+      <path class="air-line air-line-fast" d="M 80 100 L 80 720" fill="none" />
+      <path class="air-line" d="M 160 80 L 160 740" fill="none" />
+      <path class="air-line air-line-fast" d="M 200 30 L 200 770" fill="none" />
 
-      <!-- Minimalist Track Outline (White Lines) -->
-      <path id="track-edge-left" d="M 135 40 Q 255 180 235 320 T 65 520 Q 45 660 165 760" fill="none" stroke="#222930" stroke-width="28" stroke-linecap="round"/>
-      <path id="track-path" d="M 135 40 Q 255 180 235 320 T 65 520 Q 45 660 165 760" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="6 6" opacity="0.6"/>
+      <!-- F1 Wireframe Car Group Moving Vertically -->
+      <g id="f1-car" transform="translate(120, 50)">
+        <!-- Aerodynamic Car Air Trails -->
+        <path class="air-line air-line-fast" d="M -16 -12 L -16 -60" fill="none"/>
+        <path class="air-line air-line-fast" d="M 16 -12 L 16 -60" fill="none"/>
+        <path class="air-line" d="M 0 -22 L 0 -80" fill="none"/>
 
-      <!-- Minimal Start / Finish Line -->
-      <line x1="120" y1="50" x2="150" y2="50" stroke="#FFFFFF" stroke-width="3"/>
-      <line x1="150" y1="750" x2="180" y2="750" stroke="#FFFFFF" stroke-width="3"/>
-
-      <!-- Minimalist F1 Wireframe Car Group -->
-      <g id="f1-car" transform="translate(135, 40) rotate(0)">
-        <path class="air-line air-line-fast" d="M -12 -10 L -12 -35" fill="none"/>
-        <path class="air-line air-line-fast" d="M 12 -10 L 12 -35" fill="none"/>
-        <path class="air-line" d="M 0 -15 L 0 -45" fill="none"/>
-
-        <path d="M -5 15 L -3 -15 L 0 -22 L 3 -15 L 5 15 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
-        <line x1="-14" y1="-20" x2="14" y2="-20" stroke="#FFFFFF" stroke-width="2"/>
-        <line x1="-12" y1="18" x2="12" y2="18" stroke="#FFFFFF" stroke-width="2.5"/>
-        <rect x="-16" y="-22" width="3" height="8" fill="#FFFFFF"/>
-        <rect x="13" y="-22" width="3" height="8" fill="#FFFFFF"/>
-        <rect x="-17" y="12" width="4" height="10" fill="#FFFFFF"/>
-        <rect x="13" y="12" width="4" height="10" fill="#FFFFFF"/>
-        <circle cx="0" cy="-2" r="2.5" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+        <!-- Chassis Wireframe -->
+        <path d="M -6 20 L -3 -20 L 0 -30 L 3 -20 L 6 20 Z" fill="#0A0D10" stroke="#FFFFFF" stroke-width="1.5"/>
+        <!-- Front Wing -->
+        <line x1="-18" y1="-26" x2="18" y2="-26" stroke="#FFFFFF" stroke-width="2"/>
+        <!-- Rear Wing -->
+        <line x1="-16" y1="24" x2="16" y2="24" stroke="#FFFFFF" stroke-width="2.5"/>
+        <!-- Front Tires -->
+        <rect x="-22" y="-28" width="4" height="11" fill="#FFFFFF"/>
+        <rect x="18" y="-28" width="4" height="11" fill="#FFFFFF"/>
+        <!-- Rear Tires -->
+        <rect x="-23" y="16" width="5" height="13" fill="#FFFFFF"/>
+        <rect x="18" y="16" width="5" height="13" fill="#FFFFFF"/>
+        <!-- Cockpit Halo -->
+        <circle cx="0" cy="-2" r="3.5" fill="none" stroke="#FFFFFF" stroke-width="1.2"/>
       </g>
     </svg>
   </aside>
@@ -289,26 +288,20 @@ footer{border-top:1px solid var(--rule);padding:2rem 0;color:var(--muted);font:.
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const trackPath = document.getElementById('track-path');
     const f1Car = document.getElementById('f1-car');
+    if (!f1Car) return;
 
-    if (!trackPath || !f1Car) return;
-
-    const pathLength = trackPath.getTotalLength();
+    // Movement boundaries in SVG coordinates
+    const startY = 50;
+    const endY = 750;
 
     function updateCarPosition() {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollTop = window.scrollY;
-      const progress = Math.min(Math.max(scrollTop / (scrollHeight || 1), 0), 0.999);
+      const progress = Math.min(Math.max(scrollTop / (scrollHeight || 1), 0), 1);
 
-      const point = trackPath.getPointAtLength(progress * pathLength);
-      const nextPoint = trackPath.getPointAtLength(Math.min((progress + 0.005) * pathLength, pathLength));
-
-      const dx = nextPoint.x - point.x;
-      const dy = nextPoint.y - point.y;
-      const angle = Math.atan2(dy, dx) * (180 / Math.PI) - 90;
-
-      f1Car.setAttribute('transform', `translate(${point.x}, ${point.y}) rotate(${angle})`);
+      const currentY = startY + progress * (endY - startY);
+      f1Car.setAttribute('transform', `translate(120, ${currentY})`);
     }
 
     window.addEventListener('scroll', updateCarPosition, { passive: true });
